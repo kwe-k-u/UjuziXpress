@@ -1,8 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.duala.sandbox.ujuzi_xpress">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
    <application
         android:label="ujuzi_xpress"
         android:icon="@mipmap/ic_launcher">
+
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyBWBFTMmcjXwA3vABEEYl_gw0mqpT_x0x8"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
