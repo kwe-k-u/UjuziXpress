@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
+import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
+import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
+import 'package:ujuzi_xpress/utils/Person.dart';
+import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
 class RequestDeliveryPage extends StatefulWidget {
@@ -77,6 +81,17 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
               text: "create order".toUpperCase(),
               onPressed: (){
                 //todo schedule delivery
+
+                DeliveryRequest(
+                  requestingUser: new UjuziUser(),
+                  dropOffLocation: new DeliveryLocation(),
+                  pickupLocation: new DeliveryLocation(),
+                  pickupPerson: new Person(),
+                  dropOffPerson: new Person(),
+                  requestDate: new DateTime.now(),
+                  status: DeliveryStatus.pending,
+                  packageType: PackageType.parcel
+                );
               },
             )
 

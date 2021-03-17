@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/Person.dart';
@@ -35,18 +36,17 @@ DeliveryLocation get dropOffLocation => this.__dropOffLocation;
 
   DeliveryRequest({
     String deliveryID,
-    UjuziUser requestingUser,
-    DeliveryLocation dropOffLocation,
-    DeliveryLocation pickupLocation,
+    @required UjuziUser requestingUser,
+    @required DeliveryLocation dropOffLocation,
+    @required DeliveryLocation pickupLocation,
     DateTime startDate,
     DateTime completionDate,
-    DateTime requestDate,
-    Person dropOffPerson,
-    Person pickupPerson,
-    DeliveryStatus status,
-    PackageType packageType,
+    @required DateTime requestDate,
+    @required Person dropOffPerson,
+    @required Person pickupPerson,
+    @required DeliveryStatus status,
+    @required PackageType packageType,
   }){
-    this.__deliveryID = deliveryID;
     this.__requestingUser = requestingUser;
     this.__dropOffLocation = dropOffLocation;
     this.__pickupLocation = pickupLocation;
@@ -56,6 +56,11 @@ DeliveryLocation get dropOffLocation => this.__dropOffLocation;
     this.__dropoffPerson = dropOffPerson;
     this.__pickupPerson = pickupPerson;
     this.__status = status;
+
+    //assigning delivery id
+    deliveryID == null //if no delivery id is given
+    ? this.__deliveryID = __generateID() //generate id
+        : this.__deliveryID = deliveryID; //use given id
   }
 
 
@@ -99,9 +104,81 @@ DeliveryLocation get dropOffLocation => this.__dropOffLocation;
   }
 
 
-  String generateID(){
-    //todo generate id
-    return 'id';
+  String __generateID(){
+    //todo include useraccount pointer
+    /**
+     * format for delivery id (uuidd-dd-mm-yy-hh-mm-ss)
+     *  pointer for requesting user (last 5 letters in id for app)
+     *  dateCreated
+     *  timeCreated
+     *algorithm for mapping
+     *
+     * encrypting the delivery id
+     *  shuffled using an offset of 4
+     *  letter index -> newIndex
+     *  0 -> 0
+     *  1 -> 5
+        2 -> 7
+        3 -> 9
+        4 ->11
+        5 ->8
+        6 ->13
+        7 ->3
+        8 ->15
+        9 -> 14
+        10 -> 2
+        11 -> 1
+        12 -> 4
+        13 -> 12
+        14 -> 10
+        15 -> 6
+        16 -> 16
+     */
+
+     /**
+     *  decrypting the delivery id
+     *  new index <-old index
+     *  0 <- 0
+     *  1 <-7
+        2 <- 9
+        3 <-11
+        4 <-8
+        5 <-13
+        6 <-3
+        7 <-15
+        8 <-14
+        9 <-2
+        10 <-1
+        11 <-4
+        12 <-12
+        13 <-10
+        14 <-6
+        15 <-16
+     *  16 <- 16
+     */
+    String id = "";
+    String source = "UUIDD" //todo get user id characters
+        + __parseInt(this.requestDate.day)
+        + __parseInt(this.requestDate.month)
+        + __parseInt(this.requestDate.year) //obtaining last two digits
+        + __parseInt(this.requestDate.hour)
+        + __parseInt(this.requestDate.minute)
+        + __parseInt(this.requestDate.second);
+
+    //shuffling the deliveryid
+    for (int index in [0,5,7,9,11,8,13,3,15,14,2,1,4,12,10,6,16])
+      id += source[index];
+
+    return id;
+  }
+
+
+  /// Returns a two digit string of the passed [number]
+  String __parseInt(int number){
+    number %= 100;
+    if (number <10)
+      return number.toString().padLeft(2,"0");
+    return number.toString();
   }
 
 
