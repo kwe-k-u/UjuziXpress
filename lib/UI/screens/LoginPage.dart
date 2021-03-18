@@ -14,12 +14,17 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
+      backgroundColor: Colors.white70,
       body: Container(
-        padding: EdgeInsets.all(12.0),
-        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.only(left: 16.0, top: size.height * 0.08, right: 8.0, bottom: size.height * 0.08),
+        width: size.width,
+        height: size.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
             Row(
@@ -28,7 +33,9 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
 
-            Text("Connect with"),
+            Spacer(flex: 1,),
+
+            Center(child: Text("Connect with",)),
 
             ButtonBar(
               alignment: MainAxisAlignment.spaceAround,
@@ -45,26 +52,32 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
             //Password
-            CustomTextField(
-              label: "Password",
-              obscureText: true,
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: CustomTextField(
+                label: "Password",
+                obscureText: true,
+              ),
             ),
 
 
-            CustomTextButton(
-              actionText: "Don't have an account yet? Sign up",
-              onPressed: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=> SignupPage())
-                );
-              },
+            Spacer(flex: 2,),
+            Center(
+              child: CustomTextButton(
+                actionText: "Don't have an account yet? Sign up",
+                onPressed: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=> SignupPage())
+                  );
+                },
+              ),
             ),
 
 
             Padding(
               padding: const EdgeInsets.only(right:8.0, top: 12.0),
               child: Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.bottomRight,
                 child: CustomIconButton(
                   color: Colors.purple,
                   onPressed: (){

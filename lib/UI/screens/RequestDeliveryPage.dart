@@ -17,6 +17,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white70,
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
