@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 
 
@@ -33,104 +34,117 @@ String displayDate(){
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(12.0),
-      margin: EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.0),
-        border: Border.all(color: Colors.black, )
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ListTile(
-            title: Text("Order No: ${deliveryRequest.deliveryID}"),
-            subtitle: Text("order date: ${displayDate()}"),
-            trailing: Column(
-              children: [
-                Text("Status"),
-                displayStatus(),
-              ],
+    return GestureDetector(
+
+      onTap: (){
+        //only pending requests can be changed
+        if (deliveryRequest.status == DeliveryStatus.pending){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context)=> RequestDeliveryPage())
+          )
+          ;
+        }
+      },
+
+      child: Container(
+        padding: EdgeInsets.all(12.0),
+        margin: EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(color: Colors.black, )
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ListTile(
+              title: Text("Order No: ${deliveryRequest.deliveryID}"),
+              subtitle: Text("order date: ${displayDate()}"),
+              trailing: Column(
+                children: [
+                  Text("Status"),
+                  displayStatus(),
+                ],
+              ),
             ),
-          ),
 
-          Divider(
-            thickness: 2.0,
-            indent: 12.0,
-            endIndent: 12.0,
-            color: Colors.black,
-          ),
+            Divider(
+              thickness: 2.0,
+              indent: 12.0,
+              endIndent: 12.0,
+              color: Colors.black,
+            ),
 
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Icon(Icons.send,color: Colors.deepPurple,), //todo rotate icon
-              ),
-              RichText(
-                text: TextSpan(
-
-                    children: [
-                      TextSpan(
-                          text: "From: \t",
-                        style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
-                        ),
-                      ),
-
-                      TextSpan(
-
-                        text: deliveryRequest.pickupLocation.locationName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-
-                          color: Colors.black
-                        ),
-                      )
-                    ]
-                ),
-              ),
-              // Text("From: Billy's house"),
-            ],
-          ),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Row(
+            Row(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: Icon(Icons.location_on, color: Colors.deepPurple,),
+                  child: Icon(Icons.send,color: Colors.deepPurple,), //todo rotate icon
                 ),
                 RichText(
                   text: TextSpan(
 
                       children: [
                         TextSpan(
-                          text: "To: \t",
+                            text: "From: \t",
                           style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
                           ),
                         ),
 
                         TextSpan(
 
-                          text: deliveryRequest.dropOffLocation.locationName,
+                          text: deliveryRequest.pickupLocation.locationName,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
 
-                              color: Colors.black
+                            color: Colors.black
                           ),
                         )
                       ]
                   ),
                 ),
+                // Text("From: Billy's house"),
               ],
             ),
-          ),
-        ],
+
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Icon(Icons.location_on, color: Colors.deepPurple,),
+                  ),
+                  RichText(
+                    text: TextSpan(
+
+                        children: [
+                          TextSpan(
+                            text: "To: \t",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                            ),
+                          ),
+
+                          TextSpan(
+
+                            text: deliveryRequest.dropOffLocation.locationName,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+
+                                color: Colors.black
+                            ),
+                          )
+                        ]
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

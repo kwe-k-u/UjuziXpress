@@ -14,6 +14,7 @@ class RequestDeliveryPage extends StatefulWidget {
 }
 
 class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
+  //todo make it possible to receive deliveryRequest and edit its contents
   @override
   Widget build(BuildContext context) {
     return Scaffold(
