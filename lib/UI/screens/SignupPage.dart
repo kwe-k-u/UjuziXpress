@@ -15,6 +15,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white70,
       body: Container(
         padding: EdgeInsets.all(12.0),
         width: MediaQuery.of(context).size.width,

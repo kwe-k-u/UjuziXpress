@@ -18,6 +18,7 @@ class CustomTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Material(
+        color: Colors.transparent,
         shape: Border(
           bottom: BorderSide(color: Colors.deepPurple)
         ),

@@ -20,7 +20,7 @@ class CustomIconButton extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       color: color,
         onPressed: onPressed,
-      child: Icon(icon, size: 32.0,),
+      child: Icon(icon, size: 32.0, color: Colors.white,),
       shape: CircleBorder(),
     );
   }
