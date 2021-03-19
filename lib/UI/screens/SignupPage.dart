@@ -14,15 +14,20 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+
     return Scaffold(
       backgroundColor: Colors.white70,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(12.0),
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          padding: EdgeInsets.only(left: 20.0, top: size.height * 0.08, right: 8.0, bottom: size.height * 0.08),
+          width: size.width,
+          height: size.height,
+
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
               Spacer(flex: 1,),
@@ -35,7 +40,7 @@ class _SignupPageState extends State<SignupPage> {
 
 
               Spacer(flex: 1,),
-              Text("SIGN UP WITH"),
+              Center(child: Text("SIGN UP WITH", )),
 
               ButtonBar(
                 alignment: MainAxisAlignment.spaceAround,
@@ -49,11 +54,13 @@ class _SignupPageState extends State<SignupPage> {
               //Name
               CustomTextField(
                 label: "Name",
+                inputType: TextInputType.name,
               ),
 
               //Email
               CustomTextField(
                 label: "Email",
+                inputType: TextInputType.emailAddress,
               ),
 
               //Password
@@ -65,13 +72,14 @@ class _SignupPageState extends State<SignupPage> {
               //number
               CustomTextField(
                 label: "Phone number",
+                inputType: TextInputType.phone,
               ),
 
 
               Spacer(flex: 1,),
 
-              Align(
-                alignment: Alignment.centerLeft,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: CustomTextButton(
                   actionText: "Login",
                   onPressed: (){

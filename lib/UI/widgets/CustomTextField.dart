@@ -9,6 +9,7 @@ class CustomTextField extends StatefulWidget {
   final Color labelColor;
   final Color selectedColor;
   final Widget icon;
+  final TextInputType inputType;
 
   CustomTextField({
     this.label,
@@ -18,6 +19,7 @@ class CustomTextField extends StatefulWidget {
     this.color = Colors.white,
     this.selectedColor = Colors.pink,
     this.labelColor = Colors.white,
+    this.inputType
 
 });
 
@@ -42,6 +44,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         child: TextField(
           obscureText: widget.obscureText,
           controller: widget.controller,
+          keyboardType: widget.inputType,
           decoration: InputDecoration(
 
             enabledBorder: UnderlineInputBorder(
