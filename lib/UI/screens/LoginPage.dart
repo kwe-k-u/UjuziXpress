@@ -52,7 +52,8 @@ class _LoginPageState extends State<LoginPage> {
 
 
             CustomTextButton(
-              actionText: "Don't have an account yet? Sign up",
+              foreText: "Don't have an account yet?",
+                actionText: " Sign up",
               onPressed: (){
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context)=> SignupPage())

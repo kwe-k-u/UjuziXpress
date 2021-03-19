@@ -16,9 +16,39 @@ class CustomTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-        child: Text(actionText),
-        onPressed: onPressed,
-      );
+    return GestureDetector(
+      child: Material(
+        shape: Border(
+          bottom: BorderSide(color: Colors.deepPurple)
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: RichText(
+            text: TextSpan(
+                text: foreText,
+                style: TextStyle(
+                  fontWeight: FontWeight.w300,
+                  color: Colors.black,
+                ),
+
+                children: [
+
+                  TextSpan(
+                      text: actionText,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.deepPurple,
+                      )
+                  )
+                ]
+            ),
+            strutStyle: StrutStyle(
+
+            ),
+          ),
+        ),
+      ),
+      onTap: onPressed,
+    );
   }
 }
