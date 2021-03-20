@@ -40,18 +40,24 @@ class BackgroundPainter extends CustomPainter {
 
 
     Path upperShape = Path();
-    upperShape.moveTo(0,0); //correct
-    upperShape.lineTo(0, cy);
-    upperShape.lineTo(cx*2, cy);
-    upperShape.lineTo(cx * 2, 0);
-    upperShape.lineTo(0, 0);
+    Path lowerShape = Path();
+
+
+
+    upperShape.moveTo(0,0); //top left point
+    upperShape.lineTo(0, cy); // line to bottom left
+    upperShape.lineTo(cx*2, cy); //line to bottom right
+    upperShape.lineTo(cx * 2, 0); //line to top right
+    upperShape.lineTo(0, 0); //line to top left
     upperShape.close();
 
-    Path lowerShape = Path();
-    lowerShape.moveTo(0,cy * 1.3); //correct
-    lowerShape.cubicTo(cx *-0.8, -cy *1.2 , -cx *0.5 , cy * 3, cx * 2.0, cy  ); //correct
-    lowerShape.lineTo(cx * 2, cy * 0.4);
-    lowerShape.cubicTo(cx * -1.0, cy * 0.4, -cx, cy * 0.8, 0, cy* 0.7);
+    lowerShape.moveTo(0, cy ); // top left point
+    lowerShape.lineTo(0, cy); // line to bottom left point
+    lowerShape.cubicTo(cx * 0.8, cy *1.9, cx, cy * 1.5, cx *2, cy ); //curve to bottom right point
+    lowerShape.lineTo(cx*2, cy * 0.4); // line to top right point
+    lowerShape.cubicTo(cx* 2, cy*0.2, cx *0.6 , cy *0.3, 0, cy * 0.5); //curve to top left point
+
+
     lowerShape.close();
     
     canvas.drawPath(upperShape, lighterPurple);
