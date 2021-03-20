@@ -10,6 +10,8 @@ class CustomTextField extends StatefulWidget {
   final Color selectedColor;
   final Widget icon;
   final TextInputType inputType;
+  final double widthFactor;
+  final bool expanded;
 
   CustomTextField({
     this.label,
@@ -19,7 +21,9 @@ class CustomTextField extends StatefulWidget {
     this.color = Colors.white,
     this.selectedColor = Colors.pink,
     this.labelColor = Colors.white,
-    this.inputType
+    this.inputType,
+    this.widthFactor =0.7,
+    this.expanded = false,
 
 });
 
@@ -38,9 +42,45 @@ class _CustomTextFieldState extends State<CustomTextField> {
       data: new ThemeData(
         primaryColor: widget.selectedColor
       ),
-      child: Container(
+      child: widget.expanded ?
+          //Expanded textField
+      Container(
         padding: EdgeInsets.only(left: 8.0),
-        width: size.width * 0.7,
+        width: size.width * widget.widthFactor,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0, bottom: 20),
+              child: Text(
+                  widget.label,
+                  style: TextStyle(color: widget.labelColor)
+              ),
+            ),
+            TextField(
+              obscureText: widget.obscureText,
+              controller: widget.controller,
+              minLines: 4,
+              maxLines: 9,
+              keyboardType: widget.inputType,
+              decoration: InputDecoration(
+
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: widget.color, width: 1.5)
+                ),
+                suffixIcon: widget.icon,
+
+                alignLabelWithHint: true,
+              ),
+            ),
+          ],
+        ),
+      )
+      :
+          //regular textField
+      Container(
+        padding: EdgeInsets.only(left: 8.0),
+        width: size.width * widget.widthFactor,
         child: TextField(
           obscureText: widget.obscureText,
           controller: widget.controller,
@@ -48,7 +88,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           decoration: InputDecoration(
 
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: widget.color)
+                borderSide: BorderSide(color: widget.color)
             ),
             suffixIcon: widget.icon,
             labelText: widget.label ,
