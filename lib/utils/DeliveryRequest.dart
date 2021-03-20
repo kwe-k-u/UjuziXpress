@@ -16,8 +16,8 @@ class DeliveryRequest{
   PackageType __package; // the type of package delivered
   Person __dropoffPerson; // person to whom the package will be dropped off
   Person __pickupPerson; // person to whom the package will be dropped off //todo make this null if pickup details are those of the ujuzi user
-  DeliveryLocation __pickupLocation ; // the location where the package is to be picked up
-  DeliveryLocation __dropOffLocation; // the location where the package is to be dropped off
+  // DeliveryLocation __pickupLocation ; // the location where the package is to be picked up
+  // DeliveryLocation __dropOffLocation; // the location where the package is to be dropped off
 
 
 String get deliveryID => this.__deliveryID;
@@ -29,8 +29,8 @@ Person get dropOffPerson => this.__dropoffPerson;
 DateTime get requestDate => this.__requestDate;
 DateTime get startDate => this.__startDate;
 DateTime get completionDate => this.__completionDate;
-DeliveryLocation get pickupLocation => this.__pickupLocation;
-DeliveryLocation get dropOffLocation => this.__dropOffLocation;
+DeliveryLocation get pickupLocation => this.__pickupPerson.location;
+DeliveryLocation get dropOffLocation => this.__dropoffPerson.location;
 
 
 
@@ -48,14 +48,14 @@ DeliveryLocation get dropOffLocation => this.__dropOffLocation;
     @required PackageType packageType,
   }){
     this.__requestingUser = requestingUser;
-    this.__dropOffLocation = dropOffLocation;
-    this.__pickupLocation = pickupLocation;
     this.__requestDate = requestDate;
     this.__startDate = startDate;
     this.__completionDate = completionDate;
     this.__dropoffPerson = dropOffPerson;
     this.__pickupPerson = pickupPerson;
     this.__status = status;
+    this.__dropoffPerson.setLocation(dropOffLocation);
+    this.__pickupPerson.setLocation(pickupLocation);
 
     //assigning delivery id
     deliveryID == null //if no delivery id is given
@@ -96,11 +96,11 @@ DeliveryLocation get dropOffLocation => this.__dropOffLocation;
 
 
   void setPickupLocation(DeliveryLocation location){
-    this.__pickupLocation = location;
+    this.__pickupPerson.setLocation(location);
   }
 
   void setDropOffLocation(DeliveryLocation location){
-    this.__dropOffLocation = location;
+    this.__dropoffPerson.setLocation(location);
   }
 
 

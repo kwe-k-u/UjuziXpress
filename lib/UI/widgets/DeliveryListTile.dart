@@ -14,13 +14,13 @@ DeliveryListTile({@required this.deliveryRequest});
 Widget displayStatus(){
   switch(deliveryRequest.status){
     case DeliveryStatus.complete:
-      return Text("COMPLETE",style: TextStyle(color: Colors.teal),);
+      return Text("COMPLETE",style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),);
     case DeliveryStatus.ongoing:
-      return Text("IN PROGRESS",style: TextStyle(color: Colors.indigo),);
+      return Text("IN PROGRESS",style: TextStyle(color: Colors.indigo, fontWeight: FontWeight.bold),);
     case DeliveryStatus.pending:
-      return Text("PENDING",style: TextStyle(color: Colors.yellow),);
+      return Text("PENDING",style: TextStyle(color: Colors.yellow, fontWeight: FontWeight.bold),);
     case DeliveryStatus.cancelled:
-      return Text("CANCELLED",style: TextStyle(color: Colors.red),);
+      return Text("CANCELLED",style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),);
     default:
       return Text("Error");
   }
@@ -47,7 +47,7 @@ String displayDate(){
       },
 
       child: Container(
-        padding: EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(10.0),
         margin: EdgeInsets.all(12.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
@@ -58,7 +58,10 @@ String displayDate(){
           children: [
             ListTile(
               title: Text("Order No: ${deliveryRequest.deliveryID}"),
-              subtitle: Text("order date: ${displayDate()}"),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top:4.0),
+                child: Text("order date: ${displayDate()}"),
+              ),
               trailing: Column(
                 children: [
                   Text("Status"),

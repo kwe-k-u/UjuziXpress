@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/screens/HomePage.dart';
 import 'package:ujuzi_xpress/UI/screens/LoginPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomIconButton.dart';
+import 'package:ujuzi_xpress/UI/widgets/CustomImageButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 
@@ -45,9 +46,27 @@ class _SignupPageState extends State<SignupPage> {
               ButtonBar(
                 alignment: MainAxisAlignment.spaceAround,
                 children: [
-                  OutlinedButton.icon(onPressed: (){}, icon: Icon(Icons.face), label: Text("")),
-                  OutlinedButton.icon(onPressed: (){}, icon: Icon(Icons.face), label: Text("")),
-                  OutlinedButton.icon(onPressed: (){}, icon: Icon(Icons.face), label: Text("")),
+                  CustomImageButton(
+                    path: "assets/google_logo.png",
+                    onPressed: (){
+
+                    },
+                  ),
+
+                  CustomImageButton(
+                    path: "assets/facebook_logo.png",
+                    onPressed: (){
+
+                    },
+                  ),
+
+                  CustomImageButton(
+                    path: "assets/twitter_logo.png",
+                    widthFactor: 0.14,
+                    onPressed: (){
+
+                    },
+                  ),
                 ],
               ),
 
