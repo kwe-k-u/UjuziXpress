@@ -22,8 +22,10 @@ class CustomImageButton extends StatelessWidget {
 
     return GestureDetector(
         onTap: onPressed,
-        child: Image.asset(path,
-          width: size.width * widthFactor,),
+        child: Image.asset(
+          path,
+          width: size.width * widthFactor,
+        ),
     );
   }
 }
