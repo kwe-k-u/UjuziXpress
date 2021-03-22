@@ -63,7 +63,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
               minLines: 4,
               maxLines: 9,
               keyboardType: widget.inputType,
+
               decoration: InputDecoration(
+                focusedBorder:  OutlineInputBorder(
+                    borderSide: BorderSide(color: widget.selectedColor, width: 1.5),
+                ),
 
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: widget.color, width: 1.5)

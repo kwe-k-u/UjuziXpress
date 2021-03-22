@@ -37,13 +37,27 @@ class _SignupPageState extends State<SignupPage> {
 
                 Row(
                   children: [
-                    Text("SIGN UP")
+                    Text("SIGN UP",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24.0
+                    ),
+                    )
                   ],
                 ),
 
 
                 Spacer(flex: 1,),
-                Center(child: Text("SIGN UP WITH", )),
+                Center(
+                    child: Text("SIGN UP WITH",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0
+                      ),
+                    )
+                ),
 
                 ButtonBar(
                   alignment: MainAxisAlignment.spaceAround,
@@ -131,6 +145,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
           ),
         ),
+
       ),
     );
   }

@@ -32,13 +32,27 @@ class _LoginPageState extends State<LoginPage> {
 
                 Row(
                   children: [
-                    Text("LOGIN IN")
+                    Text("LOGIN IN",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24.0
+                      ),
+                    )
                   ],
                 ),
 
                 Spacer(flex: 1,),
 
-                Center(child: Text("Connect with",)),
+                Center(
+                    child: Text("Connect with",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0
+                      ),
+                    )
+                ),
 
                 ButtonBar(
                   alignment: MainAxisAlignment.spaceAround,
