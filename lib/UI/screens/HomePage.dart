@@ -1,6 +1,9 @@
+import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/screens/HistoryPage.dart';
 import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
+import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
 
 
@@ -50,16 +53,51 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      body: Container(
-        child: MapUi(),
+      body: Stack(
+        children: [
+          MapUi(),
+
+
+          DraggableScrollableSheet(
+              initialChildSize: 0.1,
+              minChildSize: 0.1,
+              maxChildSize: 0.2,
+              builder: (context, controller){
+                return Container(
+                  padding: EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                      color: Colors.deepPurple,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(12.0))
+                  ),
+                  child: SingleChildScrollView(
+                    controller: controller,
+                    child: Column(
+                      children: [
+
+                        CustomRoundedButton(
+                            onPressed: (){},
+                            buttonColor: Colors.white,
+                            textColor: Colors.black,
+                            text: "create order".toUpperCase()
+                        ),
+
+                        CustomRoundedButton(
+                            onPressed: (){},
+                            buttonColor: Colors.white,
+                            textColor: Colors.black,
+                            text: "update order".toUpperCase()
+                        ),
+
+
+                      ],
+                    ),
+            ),
+                );
+          })
+        ],
       ),
 
-      floatingActionButton: FloatingActionButton(
-        child: Text("temp"),
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> RequestDeliveryPage()));
-        },
-      ),
+
     );
   }
 }

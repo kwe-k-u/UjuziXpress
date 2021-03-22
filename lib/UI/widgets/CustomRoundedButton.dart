@@ -6,12 +6,16 @@ class CustomRoundedButton extends StatelessWidget {
   final String text;
   final Color buttonColor;
   final double widthFactor;
+  final Color textColor;
+  final double elevation;
 
   CustomRoundedButton({
     this.text,
     this.onPressed,
     this.buttonColor = Colors.deepPurple,
     this.widthFactor = 0.15,
+    this.textColor,
+    this.elevation
 });
 
   @override
@@ -20,6 +24,7 @@ class CustomRoundedButton extends StatelessWidget {
 
     return ElevatedButton(
       style: ButtonStyle(
+        elevation: MaterialStateProperty.all(elevation),
         padding: MaterialStateProperty.all<EdgeInsets>(
             EdgeInsets.symmetric(vertical: 12.0, horizontal: width)
         ),
@@ -31,7 +36,9 @@ class CustomRoundedButton extends StatelessWidget {
           )
       ),
         onPressed: onPressed,
-            child: Text(text),
+            child: Text(text,
+              style: TextStyle(color: textColor,),
+            )
         );
   }
 }
