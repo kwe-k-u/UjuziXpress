@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:ujuzi_xpress/UI/screens/DeliveryReceiptPage.dart';
 import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 
@@ -41,8 +42,16 @@ String displayDate(){
         if (deliveryRequest.status == DeliveryStatus.pending){
           Navigator.push(context,
               MaterialPageRoute(builder: (context)=> RequestDeliveryPage())
-          )
-          ;
+          );
+        } else {
+          showDialog(
+              context: context,
+              builder: (context)=> AlertDialog(
+                contentPadding: EdgeInsets.all(2.0),
+
+                content: DeliveryReceiptPage(deliveryRequest: deliveryRequest,),
+              )
+          );
         }
       },
 
