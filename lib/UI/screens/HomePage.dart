@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
           DraggableScrollableSheet(
               initialChildSize: 0.1,
               minChildSize: 0.1,
-              maxChildSize: 0.2,
+              maxChildSize: 0.3,
               builder: (context, controller){
                 return Container(
                   padding: EdgeInsets.all(12.0),
@@ -75,17 +75,34 @@ class _HomePageState extends State<HomePage> {
                       children: [
 
                         CustomRoundedButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context)=> RequestDeliveryPage()));
+                            },
+
                             buttonColor: Colors.white,
+                            elevation: 0,
+                            heightPadding: MediaQuery.of(context).size.height * 0.02,
                             textColor: Colors.black,
+                            widthFactor: 0.3,
                             text: "create order".toUpperCase()
                         ),
 
-                        CustomRoundedButton(
-                            onPressed: (){},
-                            buttonColor: Colors.white,
-                            textColor: Colors.black,
-                            text: "update order".toUpperCase()
+                        Container(
+                          margin: EdgeInsets.only(top:12.0),
+                          child: CustomRoundedButton(
+                              onPressed: (){
+                                Navigator.push(context,
+                                MaterialPageRoute(builder: (context)=> HistoryPage()));
+                              },
+
+                              buttonColor: Colors.white,
+                              widthFactor: 0.3,
+                              elevation: 0,
+                              heightPadding: MediaQuery.of(context).size.height * 0.02,
+                              textColor: Colors.black,
+                              text: "view order".toUpperCase()
+                          ),
                         ),
 
 
