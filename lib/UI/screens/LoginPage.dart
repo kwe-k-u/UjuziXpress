@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ujuzi_xpress/UI/screens/HomePage.dart';
 import 'package:ujuzi_xpress/UI/screens/SignupPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/BackgroundWidget.dart';
@@ -6,6 +8,7 @@ import 'package:ujuzi_xpress/UI/widgets/CustomIconButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomImageButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
+import 'package:ujuzi_xpress/utils/Resources.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -14,6 +17,28 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    emailController.clear();
+    passwordController.clear();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -60,6 +85,15 @@ class _LoginPageState extends State<LoginPage> {
                     CustomImageButton(
                       path: "assets/google_logo.png",
                       onPressed: (){
+                        signInWithGoogle().then((value) {
+
+                          //todo recognise user data with change provider
+                          //todo check if we have user's phone number in the database
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                              builder: (context)=> HomePage()
+                          ));
+                        });
+
 
                       },
                     ),
@@ -84,6 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                 //Email
                 CustomTextField(
                   label: "Email",
+                  controller: emailController,
                 ),
 
                 //Password

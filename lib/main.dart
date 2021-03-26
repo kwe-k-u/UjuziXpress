@@ -1,22 +1,31 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ujuzi_xpress/UI/screens/Splash.dart';
-import 'package:ujuzi_xpress/UI/widgets/MapBox.dart';
-import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
+
+import 'UI/screens/Splash.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Ujuzi Express',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: SplashPage(),
+      home: FutureBuilder(
+        future: Firebase.initializeApp(),
+        builder: (context,future){
+          if (future.connectionState == ConnectionState.done && !future.hasError)
+            return SplashPage();
+
+          return Center(child: CircularProgressIndicator(),);
+        },
+      ),
     );
   }
 }

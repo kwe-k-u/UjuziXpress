@@ -6,6 +6,7 @@ import 'package:ujuzi_xpress/UI/widgets/CustomIconButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomImageButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
+import 'package:ujuzi_xpress/utils/Resources.dart';
 
 
 class SignupPage extends StatefulWidget {
@@ -65,6 +66,14 @@ class _SignupPageState extends State<SignupPage> {
                     CustomImageButton(
                       path: "assets/google_logo.png",
                       onPressed: (){
+                        signInWithGoogle().then((value) {
+
+                          //todo recognise user data
+                          //todo collect user phone number (navigate to update user profile)
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                              builder: (context)=> HomePage()
+                          ));
+                        });
 
                       },
                     ),
