@@ -12,6 +12,7 @@ class CustomTextField extends StatefulWidget {
   final TextInputType inputType;
   final double widthFactor;
   final bool expanded;
+  final Function(String value) onChanged;
 
   CustomTextField({
     this.label,
@@ -24,6 +25,7 @@ class CustomTextField extends StatefulWidget {
     this.inputType,
     this.widthFactor =0.7,
     this.expanded = false,
+    this.onChanged
 
 });
 
@@ -58,6 +60,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
             ),
             TextField(
+
+              onChanged: widget.onChanged,
               obscureText: widget.obscureText,
               controller: widget.controller,
               minLines: 4,

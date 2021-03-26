@@ -95,6 +95,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   return DeliveryListTile(
                     deliveryRequest: new DeliveryRequest(
                         requestingUser: UjuziUser(),
+                        paymentMethod: PaymentMethod.creditCard,
                         dropOffLocation: DeliveryLocation(name: "SomePlace"),
                         pickupLocation: DeliveryLocation(name: "other"),
                         requestDate: DateTime.now(),

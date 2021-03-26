@@ -7,4 +7,6 @@ class UjuziUser extends Person{
   String __mobileNumber;
   String __email;
 
+
+
 }

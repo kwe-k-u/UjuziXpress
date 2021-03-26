@@ -1,5 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
@@ -9,12 +10,48 @@ import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
 class RequestDeliveryPage extends StatefulWidget {
+  final DeliveryRequest request;
+
+  RequestDeliveryPage({this.request});
+
+
   @override
   _RequestDeliveryPageState createState() => _RequestDeliveryPageState();
 }
 
 class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
-  //todo make it possible to receive deliveryRequest and edit its contents
+  //todo replace with current user
+  UjuziUser requestingUser = new UjuziUser(); // the ujuzi user who requested the delivery //todo is this a duplicate of pickup person?
+  DateTime requestDate = DateTime.now(); // the date and time at which the delivery request was made
+  DateTime startDate; //the date and time at which the delivery commenced
+  DateTime completionDate; //the date and time at which the delivery completed
+  DeliveryStatus  status = DeliveryStatus.pending; // the status of the delivery
+  PackageType packageType = PackageType.parcel;
+  PaymentMethod paymentMethod;
+  Person dropOffPerson = new Person(location: new DeliveryLocation());
+  Person pickupPerson = new Person(location: new DeliveryLocation());
+  String notes = "";
+
+
+
+
+//todo locations should return json of long lat as string
+  @override
+  void initState() {
+    super.initState();
+     if (widget.request != null){
+       setState(() {
+         requestDate = widget.request.requestDate;
+         startDate = widget.request.startDate;
+         completionDate = widget.request.completionDate;
+         status = widget.request.status;
+         packageType = widget.request.packageType;
+         dropOffPerson = widget.request.dropOffPerson;
+         pickupPerson = widget.request.pickupPerson;
+       });
+     }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -60,7 +97,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   collapsed: Container(
                     padding: EdgeInsets.all(8),
                     width: size.width,
-                      child: Text("Billy's house, 0559581254, Martins Gardens"),
+                      child: Text("${pickupPerson.name}, ${pickupPerson.mobileNumber}, ${pickupPerson.location.locationName}"),
                     color: Colors.white54,
                   ),
                   expanded: Container(
@@ -75,7 +112,12 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                         CustomTextField(
                           label: "Pickup person name",
                           color: Colors.black,
+                          onChanged: (value){
+                            setState(() {
+                              pickupPerson.setName(value);
 
+                            });
+                          },
                           widthFactor: 0.85,
                           labelColor: Colors.grey,
                         ),
@@ -86,6 +128,12 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                           color: Colors.black,
                           labelColor: Colors.grey,
                           widthFactor: 0.85,
+                          onChanged: (value){
+                            setState(() {
+                              pickupPerson.setMobileNumber(value);
+
+                            });
+                          },
                         ),
 
 
@@ -98,6 +146,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                           icon: IconButton(
                               icon:Icon(Icons.my_location),
                             onPressed: (){
+
                                 //todo location picker
                             },
                           ),
@@ -115,6 +164,12 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 color: Colors.black,
                 labelColor: Colors.grey,
                 widthFactor: 0.85,
+                icon: IconButton(
+                  icon:Icon(Icons.my_location),
+                  onPressed: (){
+                    //todo location picker
+                  },
+                ),
               ),
 
               Align(
@@ -134,7 +189,11 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
               CustomTextField(
                 label: "DropOff person name",
                 color: Colors.black,
-
+                onChanged: (value){
+                  setState(() {
+                    dropOffPerson.setName(value);
+                  });
+                },
                 widthFactor: 0.85,
                 labelColor: Colors.grey,
               ),
@@ -145,22 +204,16 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 color: Colors.black,
                 labelColor: Colors.grey,
                 widthFactor: 0.85,
+                onChanged: (value){
+                  setState(() {
+                    dropOffPerson.setMobileNumber(value);
+                  });
+
+                },
               ),
 
 
 
-              CustomTextField(
-                label: "DropOff person location",
-                color: Colors.black,
-                labelColor: Colors.grey,
-                widthFactor: 0.85,
-                icon: IconButton(
-                  icon:Icon(Icons.my_location),
-                  onPressed: (){
-                    //todo location picker
-                  },
-                ),
-              ),
 
 
 
@@ -170,6 +223,11 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 labelColor: Colors.grey,
                 widthFactor: 0.85,
                 expanded: true,
+                onChanged: (value){
+                  setState(() {
+                    notes = value;
+                  });
+                },
               ),
 
 
@@ -185,14 +243,16 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                     padding: const EdgeInsets.only(left: 24.0),
                     child: DropdownButton(
                       onChanged: (value){
-
+                        setState(() {
+                          packageType = value;
+                        });
                       },
-                      hint: Text("Payment method"),
-                      value: "parcel",
+                      hint: Text("Package type"),
+                      value: packageType,
                       items: [
-                        DropdownMenuItem(value: "letter", child: Text("Letter")),
-                        DropdownMenuItem(value: "parcel", child: Text("Parcel")),
-                        DropdownMenuItem(value: "large", child: Text("Large")),
+                        DropdownMenuItem(value: PackageType.letter, child: Text("Letter")),
+                        DropdownMenuItem(value: PackageType.parcel, child: Text("Parcel")),
+                        DropdownMenuItem(value: PackageType.large, child: Text("Large")),
                       ],
                     ),
                   ),
@@ -211,14 +271,16 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                       padding: const EdgeInsets.only(left: 12.0),
                       child: DropdownButton(
                         onChanged: (value){
-
+                          setState(() {
+                            paymentMethod = value;
+                          });
                         },
                         hint: Text("Payment method"),
-                        value: "now",
+                        value: paymentMethod,
                         items: [
-                          DropdownMenuItem(value: "delivery", child: Text("Payment on delivery")),
-                          DropdownMenuItem(value: "pickup", child: Text("Payment on pickup")),
-                          DropdownMenuItem(value: "now", child: Text("Payment now")),
+                          DropdownMenuItem(value: PaymentMethod.paymentOnDelivery, child: Text("Payment on delivery")),
+                          DropdownMenuItem(value: PaymentMethod.paymentOnPickup, child: Text("Payment on pickup")),
+                          DropdownMenuItem(value: PaymentMethod.creditCard, child: Text("Payment via Credit Card")),
                         ],
                       ),
                     ),
@@ -233,16 +295,17 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 text: "request delivery".toUpperCase(),
                 onPressed: (){
                   //todo schedule delivery
-
+                  //todo if widget.request is null then create a new request else update existing request with matching id
                   DeliveryRequest(
-                    requestingUser: new UjuziUser(),
-                    dropOffLocation: new DeliveryLocation(),
-                    pickupLocation: new DeliveryLocation(),
-                    pickupPerson: new Person(),
-                    dropOffPerson: new Person(),
-                    requestDate: new DateTime.now(),
+                    requestingUser: requestingUser,
+                    dropOffLocation: dropOffPerson.location,
+                    pickupLocation: pickupPerson.location,
+                    pickupPerson: pickupPerson,
+                    dropOffPerson: dropOffPerson,
+                    requestDate: requestDate,
                     status: DeliveryStatus.pending,
-                    packageType: PackageType.parcel
+                    paymentMethod: paymentMethod,
+                    packageType: packageType
                   );
                 },
               )

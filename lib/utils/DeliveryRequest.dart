@@ -16,9 +16,8 @@ class DeliveryRequest{
   PackageType __package; // the type of package delivered
   Person __dropoffPerson; // person to whom the package will be dropped off
   Person __pickupPerson; // person to whom the package will be dropped off //todo make this null if pickup details are those of the ujuzi user
-  // DeliveryLocation __pickupLocation ; // the location where the package is to be picked up
-  // DeliveryLocation __dropOffLocation; // the location where the package is to be dropped off
-
+  String __notes;
+  PaymentMethod _paymentMethod;
 
 String get deliveryID => this.__deliveryID;
 UjuziUser get requestingUser => this.__requestingUser;
@@ -31,6 +30,10 @@ DateTime get startDate => this.__startDate;
 DateTime get completionDate => this.__completionDate;
 DeliveryLocation get pickupLocation => this.__pickupPerson.location;
 DeliveryLocation get dropOffLocation => this.__dropoffPerson.location;
+String get notes => this.__notes;
+PaymentMethod get paymentMethod => this._paymentMethod;
+
+
 
 
 
@@ -46,6 +49,8 @@ DeliveryLocation get dropOffLocation => this.__dropoffPerson.location;
     @required Person pickupPerson,
     @required DeliveryStatus status,
     @required PackageType packageType,
+    @required PaymentMethod paymentMethod,
+    String note,
   }){
     this.__requestingUser = requestingUser;
     this.__requestDate = requestDate;
@@ -56,6 +61,8 @@ DeliveryLocation get dropOffLocation => this.__dropoffPerson.location;
     this.__status = status;
     this.__dropoffPerson.setLocation(dropOffLocation);
     this.__pickupPerson.setLocation(pickupLocation);
+    this.__notes = note;
+    this._paymentMethod = paymentMethod;
 
     //assigning delivery id
     deliveryID == null //if no delivery id is given
@@ -78,10 +85,18 @@ DeliveryLocation get dropOffLocation => this.__dropoffPerson.location;
     this.__startDate = date;
   }
 
+  void setPaymentMethod(PaymentMethod method){
+    this._paymentMethod = method;
+  }
+
 
   void setCompletionDate(DateTime date){
     //todo check if the date is not before start and request date
     this.__completionDate = date;
+  }
+
+  void setNotes(String newNote){
+    this.__notes = newNote;
   }
 
 
@@ -202,4 +217,10 @@ enum PackageType{
   letter,
   parcel,
   large
+}
+
+enum PaymentMethod{
+  creditCard,
+  paymentOnDelivery,
+  paymentOnPickup
 }

@@ -2,6 +2,7 @@ import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/screens/HistoryPage.dart';
+import 'package:ujuzi_xpress/UI/screens/LoginPage.dart';
 import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
@@ -28,8 +29,26 @@ class _HomePageState extends State<HomePage> {
       ),
 
       drawer: Drawer(
+
         child: Column(
           children: [
+
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.purpleAccent
+              ),
+              child: ClipRect(
+
+                child: Image.network(
+                    "https://blog.hubspot.com/hubfs/image8-2.jpg", //todo replace with account image
+                height: 100.0,
+                width: 100),
+              ),
+            ),
+
+
+            Text("Welcom Billy"),
+
 
             ListTile(
               title: Text("Profile"),
@@ -47,8 +66,17 @@ class _HomePageState extends State<HomePage> {
             ),
 
             ListTile(
-              title: Text("Sign out"),
+              title: Text("Terms and Conditions"),
             ),
+
+            OutlinedButton(
+              child: Text("Sign out"),
+                onPressed: (){
+
+              Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (context) =>LoginPage()
+              ));
+            })
           ],
         ),
       ),
@@ -61,7 +89,7 @@ class _HomePageState extends State<HomePage> {
           DraggableScrollableSheet(
               initialChildSize: 0.1,
               minChildSize: 0.1,
-              maxChildSize: 0.3,
+              maxChildSize: 0.25,
               builder: (context, controller){
                 return Container(
                   padding: EdgeInsets.all(12.0),
@@ -97,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                               },
 
                               buttonColor: Colors.white,
-                              widthFactor: 0.3,
+                              widthFactor: 0.33,
                               elevation: 0,
                               heightPadding: MediaQuery.of(context).size.height * 0.02,
                               textColor: Colors.black,
