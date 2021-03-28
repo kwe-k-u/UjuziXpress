@@ -1,4 +1,4 @@
-package com.duala.sandbox.ujuzi_xpress
+package com.duala.ujuzi_xpress
 
 import io.flutter.embedding.android.FlutterActivity
 

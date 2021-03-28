@@ -15,6 +15,12 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+
+
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -105,12 +111,14 @@ class _SignupPageState extends State<SignupPage> {
                 CustomTextField(
                   label: "Email",
                   inputType: TextInputType.emailAddress,
+                  controller: emailController,
                 ),
 
                 //Password
                 CustomTextField(
                   label: "Password",
                   obscureText: true,
+                  controller: passwordController,
                 ),
 
                 //number
@@ -143,9 +151,11 @@ class _SignupPageState extends State<SignupPage> {
                       color: Colors.purple,
                       onPressed: (){
                         //todo authenticate
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                          builder: (context)=> HomePage()
-                        ));
+                        signUpWithEmail(emailController.text, passwordController.text);
+
+                        // Navigator.pushReplacement(context, MaterialPageRoute(
+                        //   builder: (context)=> HomePage()
+                        // ));
                       },
                     ),
                   ),
