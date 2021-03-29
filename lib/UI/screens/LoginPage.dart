@@ -8,7 +8,8 @@ import 'package:ujuzi_xpress/UI/widgets/CustomIconButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomImageButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
-import 'package:ujuzi_xpress/utils/Resources.dart';
+import 'package:ujuzi_xpress/utils/Auth.dart';
+import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -87,10 +88,11 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: (){
                         signInWithGoogle().then((value) {
 
+
                           //todo recognise user data with change provider
                           //todo check if we have user's phone number in the database
                           Navigator.pushReplacement(context, MaterialPageRoute(
-                              builder: (context)=> HomePage()
+                              builder: (context)=> HomePage(user:new UjuziUser(credential: value))
                           ));
                         });
 
@@ -126,6 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: CustomTextField(
                     label: "Password",
+                    controller: passwordController,
                     obscureText: true,
                   ),
                 ),

@@ -182,68 +182,68 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
                         ),
                       ),
 
-                      TextSpan(
-
-                        text: deliveryRequest.pickupPerson.name,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-
-                            color: Colors.black
-                        ),
-                      )
+                      // TextSpan(
+                      //
+                      //   text: deliveryRequest.pickupPerson.name,
+                      //   style: TextStyle(
+                      //       fontWeight: FontWeight.bold,
+                      //
+                      //       color: Colors.black
+                      //   ),
+                      // )
                     ]
                 ),
               ),
 
-              RichText(
-                text: TextSpan(
+              // RichText(
+              //   text: TextSpan(
+              //
+              //       children: [
+              //         TextSpan(
+              //           text: "Number: \t",
+              //           style: TextStyle(
+              //             fontWeight: FontWeight.normal,
+              //             color: Colors.black,
+              //           ),
+              //         ),
+              //
+              //         TextSpan(
+              //
+              //           text: deliveryRequest.pickupPerson.mobileNumber,
+              //           style: TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //
+              //               color: Colors.black
+              //           ),
+              //         )
+              //       ]
+              //   ),
+              // ),
 
-                    children: [
-                      TextSpan(
-                        text: "Number: \t",
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
-                        ),
-                      ),
-
-                      TextSpan(
-
-                        text: deliveryRequest.pickupPerson.mobileNumber,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-
-                            color: Colors.black
-                        ),
-                      )
-                    ]
-                ),
-              ),
-
-              RichText(
-                text: TextSpan(
-
-                    children: [
-                      TextSpan(
-                        text: "Location: \t",
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
-                        ),
-                      ),
-
-                      TextSpan(
-
-                        text: deliveryRequest.pickupPerson.location.locationName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-
-                            color: Colors.black
-                        ),
-                      )
-                    ]
-                ),
-              ),
+              // RichText(
+              //   text: TextSpan(
+              //
+              //       children: [
+              //         TextSpan(
+              //           text: "Location: \t",
+              //           style: TextStyle(
+              //             fontWeight: FontWeight.normal,
+              //             color: Colors.black,
+              //           ),
+              //         ),
+              //
+              //         TextSpan(
+              //
+              //           text: deliveryRequest.pickupPerson.location.locationName,
+              //           style: TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //
+              //               color: Colors.black
+              //           ),
+              //         )
+              //       ]
+              //   ),
+              // ),
 
 
               Padding(
@@ -300,7 +300,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                       TextSpan(
 
-                        text: deliveryRequest.pickupPerson.name,
+                        text: deliveryRequest.dropOffPerson.name,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
 
@@ -325,7 +325,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                       TextSpan(
 
-                        text: deliveryRequest.pickupPerson.mobileNumber,
+                        text: deliveryRequest.dropOffPerson.mobileNumber,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
 
@@ -350,7 +350,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                       TextSpan(
 
-                        text: deliveryRequest.pickupPerson.location.locationName,
+                        text: deliveryRequest.dropOffPerson.location.locationName,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
 

@@ -1,4 +1,5 @@
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/screens/HistoryPage.dart';
@@ -6,17 +7,25 @@ import 'package:ujuzi_xpress/UI/screens/LoginPage.dart';
 import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
+import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
 class HomePage extends StatefulWidget {
+  @required final UjuziUser user;
+  HomePage({this.user});
+
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 //todo check permission requests
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
+    assert(widget.user != null);
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -74,10 +83,12 @@ class _HomePageState extends State<HomePage> {
 
               child: Text("Sign out"),
                 onPressed: (){
-                
-              Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) =>LoginPage()
-              ));
+                FirebaseAuth.instance.signOut().then((value) {
+
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) =>LoginPage()
+                  ));
+                });
             })
           ],
         ),
@@ -107,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                         CustomRoundedButton(
                             onPressed: (){
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context)=> RequestDeliveryPage()));
+                                  MaterialPageRoute(builder: (context)=> RequestDeliveryPage(requestingUser: widget.user)));
                             },
 
                             buttonColor: Colors.white,

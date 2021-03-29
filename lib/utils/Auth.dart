@@ -24,12 +24,16 @@ Future<UserCredential> signInWithGoogle() async {
 
 
 
-void signUpWithEmail(String email, String password) async{
+Future<UserCredential> signUpWithEmail(String email, String password) async{
   try {
     UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: "kwekuappiah11@gmail.com",
-        password: "klweianlfke@32a;lskdf?"
+        email: email,
+        password: password
     );
+    return userCredential;
+
+
+
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
       print('The password provided is too weak.');
@@ -39,4 +43,5 @@ void signUpWithEmail(String email, String password) async{
   } catch (e) {
     print(e);
   }
+  return null;
 }

@@ -5,14 +5,16 @@ import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
+import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 import 'package:ujuzi_xpress/utils/Person.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
 class RequestDeliveryPage extends StatefulWidget {
   final DeliveryRequest request;
+  final UjuziUser requestingUser;
 
-  RequestDeliveryPage({this.request});
+  RequestDeliveryPage({this.request, this.requestingUser});
 
 
   @override
@@ -21,7 +23,7 @@ class RequestDeliveryPage extends StatefulWidget {
 
 class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
   //todo replace with current user
-  UjuziUser requestingUser = new UjuziUser(); // the ujuzi user who requested the delivery //todo is this a duplicate of pickup person?
+  UjuziUser requestingUser ; // the ujuzi user who requested the delivery //todo is this a duplicate of pickup person?
   DateTime requestDate = DateTime.now(); // the date and time at which the delivery request was made
   DateTime startDate; //the date and time at which the delivery commenced
   DateTime completionDate; //the date and time at which the delivery completed
@@ -39,15 +41,21 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      requestingUser = widget.requestingUser;
+    });
+
+
      if (widget.request != null){
        setState(() {
+
          requestDate = widget.request.requestDate;
          startDate = widget.request.startDate;
          completionDate = widget.request.completionDate;
          status = widget.request.status;
          packageType = widget.request.packageType;
          dropOffPerson = widget.request.dropOffPerson;
-         pickupPerson = widget.request.pickupPerson;
+         // pickupPerson = widget.request.pickupPerson;
        });
      }
   }
@@ -97,7 +105,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   collapsed: Container(
                     padding: EdgeInsets.all(8),
                     width: size.width,
-                      child: Text("${pickupPerson.name}, ${pickupPerson.mobileNumber}, ${pickupPerson.location.locationName}"),
+                      child: Text("${requestingUser.username}, ${requestingUser.number}, ${pickupPerson.location.locationName}"),
                     color: Colors.white54,
                   ),
                   expanded: Container(
@@ -203,6 +211,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 label: "DropOff person Number",
                 color: Colors.black,
                 labelColor: Colors.grey,
+                inputType: TextInputType.number,
                 widthFactor: 0.85,
                 onChanged: (value){
                   setState(() {
@@ -296,7 +305,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 onPressed: (){
                   //todo schedule delivery
                   //todo if widget.request is null then create a new request else update existing request with matching id
-                  DeliveryRequest(
+                  DeliveryRequest request = DeliveryRequest(
                     requestingUser: requestingUser,
                     dropOffLocation: dropOffPerson.location,
                     pickupLocation: pickupPerson.location,
@@ -307,6 +316,9 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                     paymentMethod: paymentMethod,
                     packageType: packageType
                   );
+
+
+                  requestDelivery(request).then((value) => Navigator.pop(context));
                 },
               )
 

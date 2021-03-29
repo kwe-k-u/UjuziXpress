@@ -94,7 +94,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   itemBuilder: (context,index){
                   return DeliveryListTile(
                     deliveryRequest: new DeliveryRequest(
-                        requestingUser: UjuziUser(),
+                        requestingUser: null,
                         paymentMethod: PaymentMethod.creditCard,
                         dropOffLocation: DeliveryLocation(name: "SomePlace"),
                         pickupLocation: DeliveryLocation(name: "other"),

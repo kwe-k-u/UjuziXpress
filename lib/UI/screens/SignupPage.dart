@@ -6,7 +6,8 @@ import 'package:ujuzi_xpress/UI/widgets/CustomIconButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomImageButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
-import 'package:ujuzi_xpress/utils/Resources.dart';
+import 'package:ujuzi_xpress/utils/Auth.dart';
+import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
 class SignupPage extends StatefulWidget {
@@ -17,6 +18,8 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController numberController = new TextEditingController();
 
 
 
@@ -73,11 +76,9 @@ class _SignupPageState extends State<SignupPage> {
                       path: "assets/google_logo.png",
                       onPressed: (){
                         signInWithGoogle().then((value) {
-
-                          //todo recognise user data
-                          //todo collect user phone number (navigate to update user profile)
+                          UjuziUser user = UjuziUser(credential: value);
                           Navigator.pushReplacement(context, MaterialPageRoute(
-                              builder: (context)=> HomePage()
+                              builder: (context)=> HomePage(user: user,)
                           ));
                         });
 
@@ -105,6 +106,7 @@ class _SignupPageState extends State<SignupPage> {
                 CustomTextField(
                   label: "Name",
                   inputType: TextInputType.name,
+                  controller: nameController,
                 ),
 
                 //Email
@@ -125,6 +127,7 @@ class _SignupPageState extends State<SignupPage> {
                 CustomTextField(
                   label: "Phone number",
                   inputType: TextInputType.phone,
+                  controller: numberController,
                 ),
 
 
@@ -149,13 +152,20 @@ class _SignupPageState extends State<SignupPage> {
                     alignment: Alignment.centerRight,
                     child: CustomIconButton(
                       color: Colors.purple,
-                      onPressed: (){
-                        //todo authenticate
-                        signUpWithEmail(emailController.text, passwordController.text);
+                      onPressed: ()async{
+                        //todo check password length
 
-                        // Navigator.pushReplacement(context, MaterialPageRoute(
-                        //   builder: (context)=> HomePage()
-                        // ));
+                        signUpWithEmail(emailController.text, passwordController.text).then((value) {
+                          UjuziUser user = new UjuziUser(credential: value, name: nameController.text, number: numberController.text);
+
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage(user: user,)
+                              ));
+
+
+                        });
+
                       },
                     ),
                   ),

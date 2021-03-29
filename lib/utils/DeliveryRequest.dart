@@ -15,7 +15,7 @@ class DeliveryRequest{
   DeliveryStatus  __status; // the status of the delivery
   PackageType __package; // the type of package delivered
   Person __dropoffPerson; // person to whom the package will be dropped off
-  Person __pickupPerson; // person to whom the package will be dropped off //todo make this null if pickup details are those of the ujuzi user
+  // Person __pickupPerson; // person to whom the package will be dropped off //todo make this null if pickup details are those of the ujuzi user
   String __notes;
   PaymentMethod _paymentMethod;
 
@@ -23,12 +23,12 @@ String get deliveryID => this.__deliveryID;
 UjuziUser get requestingUser => this.__requestingUser;
 DeliveryStatus get status => this.__status;
 PackageType get packageType => this.__package;
-Person get pickupPerson => this.__pickupPerson;
+// Person get pickupPerson => this.__pickupPerson;
 Person get dropOffPerson => this.__dropoffPerson;
 DateTime get requestDate => this.__requestDate;
 DateTime get startDate => this.__startDate;
 DateTime get completionDate => this.__completionDate;
-DeliveryLocation get pickupLocation => this.__pickupPerson.location;
+// DeliveryLocation get pickupLocation => this.__pickupPerson.location;
 DeliveryLocation get dropOffLocation => this.__dropoffPerson.location;
 String get notes => this.__notes;
 PaymentMethod get paymentMethod => this._paymentMethod;
@@ -57,10 +57,10 @@ PaymentMethod get paymentMethod => this._paymentMethod;
     this.__startDate = startDate;
     this.__completionDate = completionDate;
     this.__dropoffPerson = dropOffPerson;
-    this.__pickupPerson = pickupPerson;
+    // this.__pickupPerson = pickupPerson;
     this.__status = status;
     this.__dropoffPerson.setLocation(dropOffLocation);
-    this.__pickupPerson.setLocation(pickupLocation);
+    // this.__pickupPerson.setLocation(pickupLocation);
     this.__notes = note;
     this._paymentMethod = paymentMethod;
 
@@ -105,14 +105,14 @@ PaymentMethod get paymentMethod => this._paymentMethod;
   }
 
 
-  void setPickupPerson(Person person){
-    this.__pickupPerson = person;
-  }
+  // void setPickupPerson(Person person){
+  //   this.__pickupPerson = person;
+  // }
 
 
-  void setPickupLocation(DeliveryLocation location){
-    this.__pickupPerson.setLocation(location);
-  }
+  // void setPickupLocation(DeliveryLocation location){
+  //   this.__pickupPerson.setLocation(location);
+  // }
 
   void setDropOffLocation(DeliveryLocation location){
     this.__dropoffPerson.setLocation(location);
@@ -194,6 +194,19 @@ PaymentMethod get paymentMethod => this._paymentMethod;
     if (number <10)
       return number.toString().padLeft(2,"0");
     return number.toString();
+  }
+
+
+  Map<String, dynamic> asMap(){
+    return {
+      "deliveryID" : deliveryID ?? __generateID(),
+      "requestingUser" : requestingUser.asMap(),
+      'requestDate' : requestDate.toString(),
+      'startDate' : startDate,
+      'completionDate' : completionDate,
+      'status' :status.index,
+      'packageType' : packageType
+    };
   }
 
 
