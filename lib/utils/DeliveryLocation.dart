@@ -16,7 +16,9 @@ class DeliveryLocation{
 
 
   void setLocationName(String newName){
+
     this.__placeName = newName;
+
   }
 
 

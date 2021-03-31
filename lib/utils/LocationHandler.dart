@@ -48,7 +48,14 @@ Future<String> getAddressFromLatLng(LatLng latLng) async {
   } catch (e) {
     return "${e.toString()}";
   }
-}// From a query
+}
+
+
+
+
+Future<LatLng> getLatLngFromAddress(String place){
+
+}
 
 
 
