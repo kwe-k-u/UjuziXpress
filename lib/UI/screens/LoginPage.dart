@@ -37,7 +37,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
-    _googleSignIn.signOut();
   }
 
   @override

@@ -37,6 +37,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
   DeliveryLocation pickupLocation = new DeliveryLocation();
   // Person pickupPerson = new Person(location: new DeliveryLocation());
   String notes = "";
+  TextEditingController pickupLocationController = new TextEditingController();
 
 
 
@@ -154,11 +155,16 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                           color: Colors.black,
                           labelColor: Colors.grey,
                           widthFactor: 0.85,
+                          controller: pickupLocationController,
                           icon: IconButton(
                               icon:Icon(Icons.my_location),
                             onPressed: (){
-
-                                //todo location picker
+                                determinePosition().then((value) {
+                                  setState(() {
+                                    pickupLocation = value;
+                                    pickupLocationController.text = value.locationName;
+                                  });
+                                });
                             },
                           ),
                         ),
@@ -175,20 +181,26 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 color: Colors.black,
                 labelColor: Colors.grey,
                 widthFactor: 0.85,
-                value: pickupLocation.locationName,
+                value: dropOffLocation.locationName,
                 icon: IconButton(
                   icon:Icon(Icons.my_location),
                   onPressed: (){
 
-                    determinePosition().then((value) {
-                      setState(() {
-                        pickupLocation = value;
-                      });
+                    pickLocation(context).then((value) {
 
+                      setState(() {
+                        if (value != null) dropOffLocation = value;
+                      });
                     });
+
+
                   },
                 ),
               ),
+
+
+
+
 
               Align(
                 alignment: Alignment.centerLeft,
