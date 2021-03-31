@@ -12,10 +12,12 @@ class CustomTextField extends StatefulWidget {
   final TextInputType inputType;
   final double widthFactor;
   final bool expanded;
+  final String value;
   final Function(String value) onChanged;
 
   CustomTextField({
     this.label,
+    this.value,
     this.icon,
     this.controller,
     this.obscureText = false,
@@ -59,8 +61,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   style: TextStyle(color: widget.labelColor)
               ),
             ),
-            TextField(
-
+            TextFormField(
+              initialValue: widget.value,
               onChanged: widget.onChanged,
               obscureText: widget.obscureText,
               controller: widget.controller,

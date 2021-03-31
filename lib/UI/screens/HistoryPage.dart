@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/widgets/DeliveryListTile.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
-import 'package:ujuzi_xpress/utils/Person.dart';
-import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
 
@@ -94,27 +92,17 @@ class _HistoryPageState extends State<HistoryPage> {
                   itemBuilder: (context,index){
                   return DeliveryListTile(
                     deliveryRequest: new DeliveryRequest(
-                        requestingUser: null,
-                        paymentMethod: PaymentMethod.creditCard,
-                        dropOffLocation: DeliveryLocation(name: "SomePlace"),
-                        pickupLocation: DeliveryLocation(name: "other"),
-                        requestDate: DateTime.now(),
-                        dropOffPerson:new Person(
-                            name: "Billy",
-                            number: "0556598",
-                            location: new DeliveryLocation(
-                                name: "Accra new town"
-                            )
-                        ),
-                        pickupPerson: new Person(
-                            name: "Billy",
-                            number: "0556598",
-                            location: new DeliveryLocation(
-                                name: "Accra new town"
-                            )
-                        ),
-                        status: DeliveryStatus.complete,
-                        packageType: PackageType.parcel
+                      requestingUser: null,
+                      paymentMethod: PaymentMethod.creditCard,
+                      dropOffLocation: DeliveryLocation(name: "SomePlace"),
+                      pickupLocation: DeliveryLocation(name: "other"),
+                      requestDate: DateTime.now(),
+                      status: DeliveryStatus.complete,
+                      packageType: PackageType.parcel,
+                      pickupPersonNumber: '565545',
+                      pickupPersonName: 'Billy',
+                      dropOffPersonNumber: '65465654',
+                      dropOffPersonName: 'Kwesi',
                     ),
                   );
               }),

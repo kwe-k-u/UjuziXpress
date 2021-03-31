@@ -300,7 +300,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                       TextSpan(
 
-                        text: deliveryRequest.dropOffPerson.name,
+                        text: deliveryRequest.dropOffPersonName,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
 
@@ -325,7 +325,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                       TextSpan(
 
-                        text: deliveryRequest.dropOffPerson.mobileNumber,
+                        text: deliveryRequest.dropOffPersonNumber,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
 
@@ -350,7 +350,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                       TextSpan(
 
-                        text: deliveryRequest.dropOffPerson.location.locationName,
+                        text: deliveryRequest.dropOffLocation.locationName,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
 

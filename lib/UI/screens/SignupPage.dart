@@ -22,7 +22,15 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController numberController = new TextEditingController();
 
 
+@override
+  void initState() {
+    super.initState();
+    emailController.clear();
+    passwordController.clear();
+    nameController.clear();
+    numberController.clear();
 
+  }
 
   @override
   Widget build(BuildContext context) {

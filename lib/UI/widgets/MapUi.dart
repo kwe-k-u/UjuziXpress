@@ -3,6 +3,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 class MapUi extends StatefulWidget {
+  // final Function(LatLng cordinate) onTap;
+
+  // MapUi({this.onTap});
+
 
 
   @override

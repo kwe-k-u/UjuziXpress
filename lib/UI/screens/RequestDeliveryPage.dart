@@ -1,18 +1,17 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
-import 'package:ujuzi_xpress/utils/Person.dart';
+import 'package:ujuzi_xpress/utils/LocationHandler.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
 class RequestDeliveryPage extends StatefulWidget {
   final DeliveryRequest request;
-  final UjuziUser requestingUser;
+  @required final UjuziUser requestingUser;
 
   RequestDeliveryPage({this.request, this.requestingUser});
 
@@ -30,8 +29,13 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
   DeliveryStatus  status = DeliveryStatus.pending; // the status of the delivery
   PackageType packageType = PackageType.parcel;
   PaymentMethod paymentMethod;
-  Person dropOffPerson = new Person(location: new DeliveryLocation());
-  Person pickupPerson = new Person(location: new DeliveryLocation());
+  String dropOffPersonName = "";
+  String dropOffPersonNumber ="";
+  DeliveryLocation dropOffLocation = new DeliveryLocation();
+  String pickupPersonName ="";
+  String pickupPersonNumber ="";
+  DeliveryLocation pickupLocation = new DeliveryLocation();
+  // Person pickupPerson = new Person(location: new DeliveryLocation());
   String notes = "";
 
 
@@ -54,8 +58,6 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
          completionDate = widget.request.completionDate;
          status = widget.request.status;
          packageType = widget.request.packageType;
-         dropOffPerson = widget.request.dropOffPerson;
-         // pickupPerson = widget.request.pickupPerson;
        });
      }
   }
@@ -105,7 +107,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   collapsed: Container(
                     padding: EdgeInsets.all(8),
                     width: size.width,
-                      child: Text("${requestingUser.username}, ${requestingUser.number}, ${pickupPerson.location.locationName}"),
+                      child: Text("${requestingUser.username}, ${requestingUser.number}, ${pickupLocation.locationName}"),
                     color: Colors.white54,
                   ),
                   expanded: Container(
@@ -122,7 +124,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                           color: Colors.black,
                           onChanged: (value){
                             setState(() {
-                              pickupPerson.setName(value);
+                              pickupPersonName = value;
 
                             });
                           },
@@ -134,11 +136,12 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                         CustomTextField(
                           label: "Pickup person Number",
                           color: Colors.black,
+                          inputType: TextInputType.number,
                           labelColor: Colors.grey,
                           widthFactor: 0.85,
                           onChanged: (value){
                             setState(() {
-                              pickupPerson.setMobileNumber(value);
+                              pickupPersonNumber = value;
 
                             });
                           },
@@ -172,10 +175,17 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 color: Colors.black,
                 labelColor: Colors.grey,
                 widthFactor: 0.85,
+                value: pickupLocation.locationName,
                 icon: IconButton(
                   icon:Icon(Icons.my_location),
                   onPressed: (){
-                    //todo location picker
+
+                    determinePosition().then((value) {
+                      setState(() {
+                        pickupLocation = value;
+                      });
+
+                    });
                   },
                 ),
               ),
@@ -199,7 +209,8 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 color: Colors.black,
                 onChanged: (value){
                   setState(() {
-                    dropOffPerson.setName(value);
+
+                    dropOffPersonName = value;
                   });
                 },
                 widthFactor: 0.85,
@@ -215,7 +226,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 widthFactor: 0.85,
                 onChanged: (value){
                   setState(() {
-                    dropOffPerson.setMobileNumber(value);
+                    dropOffPersonNumber = value;
                   });
 
                 },
@@ -303,14 +314,14 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
               CustomRoundedButton(
                 text: "request delivery".toUpperCase(),
                 onPressed: (){
-                  //todo schedule delivery
-                  //todo if widget.request is null then create a new request else update existing request with matching id
                   DeliveryRequest request = DeliveryRequest(
                     requestingUser: requestingUser,
-                    dropOffLocation: dropOffPerson.location,
-                    pickupLocation: pickupPerson.location,
-                    pickupPerson: pickupPerson,
-                    dropOffPerson: dropOffPerson,
+                    dropOffLocation: dropOffLocation,
+                    dropOffPersonName: dropOffPersonName,
+                    dropOffPersonNumber: dropOffPersonNumber,
+                    pickupPersonName: pickupPersonNumber,
+                    pickupPersonNumber: pickupPersonName,
+                    pickupLocation: pickupLocation,
                     requestDate: requestDate,
                     status: DeliveryStatus.pending,
                     paymentMethod: paymentMethod,

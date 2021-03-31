@@ -25,8 +25,11 @@ class DeliveryHistory{
           dropOffLocation: value["dropOffLocation"],
           pickupLocation: value["pickupLocation"],//todo change: this is also a map
           requestDate: value["requestDate"],//todo parse
-          dropOffPerson: value["dropOffPerson"],//todo change this is also a map
-          pickupPerson: value["pickupPerson"],//todo change, this is also a map
+          dropOffPersonName: value["dropOffPersonName"],
+          dropOffPersonNumber: value["dropOffPersonNumber"],
+          pickupPersonName: value["dropOffPersonName"],
+          pickupPersonNumber: value["dropOffPersonNumber"],
+          // pickupPerson: value["pickupPerson"],//todo change, this is also a map
           status: value["status"],
           packageType: value["packageType"],
           paymentMethod: value["paymentMethod"]
