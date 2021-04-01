@@ -84,9 +84,13 @@ class _SignupPageState extends State<SignupPage> {
                       path: "assets/google_logo.png",
                       onPressed: (){
                         signInWithGoogle().then((value) {
-                          UjuziUser user = UjuziUser(credential: value);
+
+
+
+
+
                           Navigator.pushReplacement(context, MaterialPageRoute(
-                              builder: (context)=> HomePage(user: user,)
+                              builder: (context)=> HomePage(user: new UjuziUser(credential: value),)
                           ));
                         });
 
@@ -164,11 +168,11 @@ class _SignupPageState extends State<SignupPage> {
                         //todo check password length
 
                         signUpWithEmail(emailController.text, passwordController.text).then((value) {
-                          UjuziUser user = new UjuziUser(credential: value, name: nameController.text, number: numberController.text);
+
 
                           Navigator.pushReplacement(context,
                               MaterialPageRoute(
-                                  builder: (context) => HomePage(user: user,)
+                                  builder: (context) => HomePage(user: new UjuziUser(credential: value, name: nameController.text, number: numberController.text),)
                               ));
 
 

@@ -6,6 +6,7 @@ import 'package:ujuzi_xpress/UI/screens/LoginPage.dart';
 import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
+import 'package:ujuzi_xpress/utils/Auth.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    assert(widget.user != null);
+    assert(widget.user != null); //ensure that the user is signed in
 
     return Scaffold(
       appBar: AppBar(
@@ -56,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             ),
 
 
-            Text("Welcom Billy"),
+            Text("Welcome ${widget.user.username}"),
 
 
             ListTile(
@@ -117,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                         CustomRoundedButton(
                             onPressed: (){
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context)=> RequestDeliveryPage(requestingUser: widget.user)));
+                                  MaterialPageRoute(builder: (context)=> RequestDeliveryPage(requestingUser: widget.user,)));
                             },
 
                             buttonColor: Colors.white,

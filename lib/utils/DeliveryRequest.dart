@@ -103,6 +103,7 @@ PaymentMethod get paymentMethod => this._paymentMethod;
     this.__dropOffLocation = dropOffLocation;
     this.__status = status;
     this.__notes = note;
+    this.__package = packageType;
     this._paymentMethod = paymentMethod;
 
     //assigning delivery id
@@ -228,7 +229,8 @@ PaymentMethod get paymentMethod => this._paymentMethod;
      *  16 <- 16
      */
     String id = "";
-    String source = this.requestingUser.id.substring(this.requestingUser.id.length-4)
+    // String source = "UUIDD"
+    String source = this.requestingUser.id.substring(this.requestingUser.id.length-5)
         + __parseInt(this.requestDate.day)
         + __parseInt(this.requestDate.month)
         + __parseInt(this.requestDate.year) //obtaining last two digits

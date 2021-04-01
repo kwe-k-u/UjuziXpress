@@ -2,12 +2,11 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 
 
 
-class UjuziUser extends ChangeNotifier{
+class UjuziUser{
   String __username;
   String __id;
   String __mobileNumber;
@@ -23,8 +22,8 @@ class UjuziUser extends ChangeNotifier{
 
   UjuziUser({UserCredential credential,String number,String name}){
 
+    __createUser(credential.user);
     if (credential.additionalUserInfo.isNewUser){
-      __createUser(credential.user);
       if (name != null) updateUserName(name);
       if (number != null) updateNumber(number);
 
@@ -49,17 +48,14 @@ class UjuziUser extends ChangeNotifier{
 
   void setReference(DocumentReference ref){
     this._reference = ref;
-    notifyListeners();
   }
 
   void updateNumber(String newNumber) {
     this.__mobileNumber = newNumber;
-    notifyListeners();
   }
 
   void updateUserName(String name) {
     this.__username = name;
-    notifyListeners();
   }
 
 

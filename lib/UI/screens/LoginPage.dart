@@ -90,8 +90,9 @@ class _LoginPageState extends State<LoginPage> {
 
                           //todo recognise user data with change provider
                           //todo check if we have user's phone number in the database
+
                           Navigator.pushReplacement(context, MaterialPageRoute(
-                              builder: (context)=> HomePage(user:new UjuziUser(credential: value))
+                              builder: (context)=> HomePage(user: new UjuziUser(credential: value),)
                           ));
                         });
 

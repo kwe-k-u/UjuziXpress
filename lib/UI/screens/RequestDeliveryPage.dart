@@ -2,6 +2,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
+import 'package:ujuzi_xpress/utils/Auth.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
@@ -21,18 +22,18 @@ class RequestDeliveryPage extends StatefulWidget {
 }
 
 class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
-  //todo replace with current user
+  String deliveryID;
   UjuziUser requestingUser ; // the ujuzi user who requested the delivery //todo is this a duplicate of pickup person?
   DateTime requestDate = DateTime.now(); // the date and time at which the delivery request was made
   DateTime startDate; //the date and time at which the delivery commenced
   DateTime completionDate; //the date and time at which the delivery completed
   DeliveryStatus  status = DeliveryStatus.pending; // the status of the delivery
   PackageType packageType = PackageType.parcel;
-  PaymentMethod paymentMethod;
+  PaymentMethod paymentMethod = PaymentMethod.paymentOnPickup;
   String dropOffPersonName = "";
   String dropOffPersonNumber ="";
   DeliveryLocation dropOffLocation = new DeliveryLocation();
-  String pickupPersonName ="";
+  String pickupPersonName = "";
   String pickupPersonNumber ="";
   DeliveryLocation pickupLocation = new DeliveryLocation();
   // Person pickupPerson = new Person(location: new DeliveryLocation());
@@ -48,6 +49,8 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
     super.initState();
     setState(() {
       requestingUser = widget.requestingUser;
+      pickupPersonName = widget.requestingUser.username;
+      pickupPersonNumber = widget.requestingUser.number;
     });
 
 
@@ -126,6 +129,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                           color: Colors.black,
                           onChanged: (value){
                             setState(() {
+                              // requestingUser.updateUserName(value);
                               pickupPersonName = value;
 
                             });
@@ -144,7 +148,8 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                           value: requestingUser.number,
                           onChanged: (value){
                             setState(() {
-                              pickupPersonNumber = value;
+                              requestingUser.updateNumber(value);
+                              // pickupPersonNumber = value;
 
                             });
                           },
@@ -279,6 +284,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                       onChanged: (value){
                         setState(() {
                           packageType = value;
+
                         });
                       },
                       hint: Text("Package type"),
@@ -339,9 +345,14 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                     requestDate: requestDate,
                     status: DeliveryStatus.pending,
                     paymentMethod: paymentMethod,
-                    packageType: packageType
+                    packageType: packageType,
+                    startDate: startDate,
+                    completionDate: completionDate,
+                    deliveryID: deliveryID,
+                    note: notes
                   );
 
+                  // print(request.asMap().toString());
 
                   requestDelivery(request).then((value) => Navigator.pop(context));
                 },
