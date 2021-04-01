@@ -5,6 +5,35 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
+
+
+DeliveryRequest deliveryRequestFromMap(Map<String, dynamic>value){
+  return new DeliveryRequest(
+    deliveryID: value["deliveyID"],
+    requestingUser: value["requestingUser"],
+    dropOffLocation: new DeliveryLocation(
+        name: value["dropOffLocation"]["locationName"],
+        lat: LatLng(value["dropOffLocation"]["latitude"], value["dropOffLocation"]["longitude"])),
+
+    pickupLocation: new DeliveryLocation(
+        name: value["pickupLocation"]["locationName"],
+        lat: LatLng(value["pickupLocation"]["latitude"], value["pickupLocation"]["longitude"])),
+    requestDate: DateTime.parse(value["requestDate"]),//todo parse
+    dropOffPersonName: value["dropOffPersonName"],
+    dropOffPersonNumber: value["dropOffPersonNumber"],
+    completionDate: value["complet"],
+    pickupPersonName: value["dropOffPersonName"],
+    pickupPersonNumber: value["dropOffPersonNumber"],
+    status: DeliveryStatus.values[value["status"]],
+    packageType: PackageType.values[value["packageType"]],
+    paymentMethod: PaymentMethod.values[value["paymentMethod"]],
+
+  );
+}
+
+
+
+
 class DeliveryRequest{
   String __deliveryID; // unique identifier for deliveries
   UjuziUser __requestingUser; // the ujuzi user who requested the delivery //todo is this a duplicate of pickup person?
@@ -231,7 +260,7 @@ PaymentMethod get paymentMethod => this._paymentMethod;
       'startDate' : startDate,
       'completionDate' : completionDate,
       'status' :status.index,
-      'packageType' : packageType
+      'packageType' : packageType.index
     };
   }
 

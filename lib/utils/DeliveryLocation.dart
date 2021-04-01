@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ujuzi_xpress/utils/LocationHandler.dart';
 
 class DeliveryLocation{
   String __placeName;
@@ -18,12 +19,16 @@ class DeliveryLocation{
   void setLocationName(String newName){
 
     this.__placeName = newName;
+    getLatLngFromAddress(newName).then((value) {
+      this.__location = value;
+    });
 
   }
 
 
   void setLocation(LatLng newLatLng){
     this.__location = newLatLng;
+    getAddressFromLatLng(newLatLng).then((value) => this.__placeName = value);
   }
 
   LatLng get location => __location;
@@ -38,5 +43,12 @@ class DeliveryLocation{
         && this.locationName == loc.locationName;
   }
 
+  Map<String, dynamic> asMap(){
+    return {
+      "locationName" : this.locationName,
+      "latitude" : this.location.latitude,
+      "longitude" : this.location.longitude
+    };
+  }
 
 }

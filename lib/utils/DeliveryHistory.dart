@@ -1,5 +1,7 @@
 //data structure to contain the list of deliveries in a sorted lists
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 
 class DeliveryHistory{
@@ -14,26 +16,13 @@ class DeliveryHistory{
 
 
   //list of deliveries from firebase
-  DeliveryHistory(Map<dynamic, dynamic> map){
+  DeliveryHistory(Map<String, dynamic> map){
     __pendingDeliveries = [];
     __canceledDeliveries = [];
     __completedDeliveries = [];
 
     map.forEach((key, value) {
-      DeliveryRequest request = new DeliveryRequest(
-          requestingUser: value["requestingUser"],
-          dropOffLocation: value["dropOffLocation"],
-          pickupLocation: value["pickupLocation"],//todo change: this is also a map
-          requestDate: value["requestDate"],//todo parse
-          dropOffPersonName: value["dropOffPersonName"],
-          dropOffPersonNumber: value["dropOffPersonNumber"],
-          pickupPersonName: value["dropOffPersonName"],
-          pickupPersonNumber: value["dropOffPersonNumber"],
-          // pickupPerson: value["pickupPerson"],//todo change, this is also a map
-          status: value["status"],
-          packageType: value["packageType"],
-          paymentMethod: value["paymentMethod"]
-      );
+      DeliveryRequest request = deliveryRequestFromMap(value);
 
 
       switch(request.status){
