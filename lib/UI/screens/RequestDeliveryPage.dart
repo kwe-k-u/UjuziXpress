@@ -122,6 +122,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
                         CustomTextField(
                           label: "Pickup person name",
+                          value: requestingUser.username,
                           color: Colors.black,
                           onChanged: (value){
                             setState(() {
@@ -140,6 +141,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                           inputType: TextInputType.number,
                           labelColor: Colors.grey,
                           widthFactor: 0.85,
+                          value: requestingUser.number,
                           onChanged: (value){
                             setState(() {
                               pickupPersonNumber = value;

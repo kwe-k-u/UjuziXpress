@@ -62,12 +62,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
             ),
             TextFormField(
-              initialValue: widget.value,
               onChanged: widget.onChanged,
               obscureText: widget.obscureText,
               controller: widget.controller,
               minLines: 4,
               maxLines: 9,
+
+              initialValue: widget.value,
               keyboardType: widget.inputType,
 
               decoration: InputDecoration(

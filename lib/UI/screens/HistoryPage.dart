@@ -103,6 +103,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       pickupPersonName: 'Billy',
                       dropOffPersonNumber: '65465654',
                       dropOffPersonName: 'Kwesi',
+
                     ),
                   );
               }),

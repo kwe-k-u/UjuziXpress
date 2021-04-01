@@ -9,8 +9,8 @@ import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 DeliveryRequest deliveryRequestFromMap(Map<String, dynamic>value){
   return new DeliveryRequest(
-    deliveryID: value["deliveyID"],
-    requestingUser: value["requestingUser"],
+    deliveryID: value["deliveryID"],
+    requestingUser: UjuziUser().fromMap( value["requestingUser"]),
     dropOffLocation: new DeliveryLocation(
         name: value["dropOffLocation"]["locationName"],
         lat: LatLng(value["dropOffLocation"]["latitude"], value["dropOffLocation"]["longitude"])),
@@ -18,12 +18,14 @@ DeliveryRequest deliveryRequestFromMap(Map<String, dynamic>value){
     pickupLocation: new DeliveryLocation(
         name: value["pickupLocation"]["locationName"],
         lat: LatLng(value["pickupLocation"]["latitude"], value["pickupLocation"]["longitude"])),
-    requestDate: DateTime.parse(value["requestDate"]),//todo parse
+
+    requestDate: DateTime.parse(value["requestDate"]),
     dropOffPersonName: value["dropOffPersonName"],
     dropOffPersonNumber: value["dropOffPersonNumber"],
-    completionDate: value["complet"],
-    pickupPersonName: value["dropOffPersonName"],
-    pickupPersonNumber: value["dropOffPersonNumber"],
+    completionDate: DateTime.parse(value["completionDate"]),
+    startDate: DateTime.parse(value["startDate"]),
+    pickupPersonName: value["pickupPersonName"],
+    pickupPersonNumber: value["pickupPersonNumber"],
     status: DeliveryStatus.values[value["status"]],
     packageType: PackageType.values[value["packageType"]],
     paymentMethod: PaymentMethod.values[value["paymentMethod"]],
@@ -175,7 +177,6 @@ PaymentMethod get paymentMethod => this._paymentMethod;
 
 
   String __generateID(){
-    //todo include useraccount pointer
     /**
      * format for delivery id (uuidd-dd-mm-yy-hh-mm-ss)
      *  pointer for requesting user (last 5 letters in id for app)
@@ -227,7 +228,7 @@ PaymentMethod get paymentMethod => this._paymentMethod;
      *  16 <- 16
      */
     String id = "";
-    String source = "UUIDD" //todo get user id characters
+    String source = this.requestingUser.id.substring(this.requestingUser.id.length-4)
         + __parseInt(this.requestDate.day)
         + __parseInt(this.requestDate.month)
         + __parseInt(this.requestDate.year) //obtaining last two digits
@@ -257,10 +258,17 @@ PaymentMethod get paymentMethod => this._paymentMethod;
       "deliveryID" : deliveryID ?? __generateID(),
       "requestingUser" : requestingUser.asMap(),
       'requestDate' : requestDate.toString(),
-      'startDate' : startDate,
-      'completionDate' : completionDate,
+      'startDate' : startDate.toString(),
+      'dropOffLocation' : dropOffLocation.asMap(),
+      'pickupLocation' : pickupLocation.asMap(),
+      'completionDate' : completionDate.toString(),
       'status' :status.index,
-      'packageType' : packageType.index
+      'packageType' : packageType.index,
+      'dropOffPersonName' : dropOffPersonName,
+      'dropOffPersonNumber' : dropOffPersonNumber,
+      'pickupPersonNumber' : pickupPersonNumber,
+      'pickupPersonName' : pickupPersonName,
+      'paymentMethod' : paymentMethod.index
     };
   }
 

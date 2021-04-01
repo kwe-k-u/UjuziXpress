@@ -1,7 +1,4 @@
 //data structure to contain the list of deliveries in a sorted lists
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 
 class DeliveryHistory{
