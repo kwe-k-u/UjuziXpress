@@ -40,7 +40,7 @@ String displayDate(){
         //only pending requests can be changed
         if (deliveryRequest.status == DeliveryStatus.pending){
           Navigator.push(context,
-              MaterialPageRoute(builder: (context)=> RequestDeliveryPage())
+              MaterialPageRoute(builder: (context)=> RequestDeliveryPage(request: deliveryRequest,))
           );
         } else {
           Navigator.push(context, MaterialPageRoute(
@@ -88,30 +88,32 @@ String displayDate(){
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Icon(Icons.send,color: Colors.deepPurple,), //todo rotate icon
                 ),
-                // RichText(
-                //   text: TextSpan(
-                //
-                //       children: [
-                //         TextSpan(
-                //             text: "From: \t",
-                //           style: TextStyle(
-                //               fontWeight: FontWeight.normal,
-                //               color: Colors.black,
-                //           ),
-                //         ),
-                //
-                //         TextSpan(
-                //
-                //           text: deliveryRequest.pickupLocation.locationName,
-                //           style: TextStyle(
-                //               fontWeight: FontWeight.bold,
-                //
-                //             color: Colors.black
-                //           ),
-                //         )
-                //       ]
-                //   ),
-                // ),
+                RichText(
+                  overflow: TextOverflow.ellipsis,
+                  text: TextSpan(
+
+                      children: [
+                        TextSpan(
+                            text: "From: \t",
+                          style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                          ),
+                        ),
+
+                        TextSpan(
+
+                          text: deliveryRequest.pickupLocation.locationName,
+
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+
+                            color: Colors.black
+                          ),
+                        )
+                      ]
+                  ),
+                ),
                 // Text("From: Billy's house"),
               ],
             ),

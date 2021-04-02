@@ -22,6 +22,7 @@ DeliveryRequest deliveryRequestFromMap(Map<String, dynamic>value){
   DeliveryRequest request = new DeliveryRequest(
     deliveryID: value["deliveryID"],
     requestingUser: requestingUser,
+    note: value["note"],
     dropOffLocation: new DeliveryLocation(
         name: value["dropOffLocation"]["locationName"],
         lat: LatLng(value["dropOffLocation"]["latitude"], value["dropOffLocation"]["longitude"])),
@@ -281,6 +282,7 @@ DocumentReference get reference => this.__reference;
       'completionDate' : completionDate.toString(),
       'status' :status.index,
       'packageType' : packageType.index,
+      'note' : notes,
       'dropOffPersonName' : dropOffPersonName,
       'dropOffPersonNumber' : dropOffPersonNumber,
       'pickupPersonNumber' : pickupPersonNumber,

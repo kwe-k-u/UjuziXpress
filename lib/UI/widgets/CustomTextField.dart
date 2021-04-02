@@ -38,6 +38,7 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
+  // FocusNode focusNode = new FocusNode();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -79,7 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: widget.color, width: 1.5)
                 ),
-                suffixIcon: widget.icon,
+                suffixIcon:  widget.icon,
 
                 alignLabelWithHint: true,
               ),
@@ -93,15 +94,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
         padding: EdgeInsets.only(left: 8.0),
         width: size.width * widget.widthFactor,
         child: TextField(
+          // focusNode: focusNode,
           obscureText: widget.obscureText,
           controller: widget.controller,
           keyboardType: widget.inputType,
+          // onTap: (){
+          //   focusNode.requestFocus();
+          // },
           decoration: InputDecoration(
 
             enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: widget.color)
             ),
             suffixIcon: widget.icon,
+            // suffixIcon: focusNode.hasFocus ? widget.icon : null,
             labelText: widget.label ,
             labelStyle: TextStyle(color: widget.labelColor),
           ),

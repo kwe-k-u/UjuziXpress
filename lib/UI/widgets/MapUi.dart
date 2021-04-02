@@ -25,6 +25,7 @@ class _MapUiState extends State<MapUi> {
   Widget build(BuildContext context) {
     return ClipRect(
       child: GoogleMap(
+        zoomControlsEnabled: false,
         initialCameraPosition: position,
         markers: markers.toSet(),
         onMapCreated: (controler){

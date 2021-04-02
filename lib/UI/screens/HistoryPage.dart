@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/widgets/DeliveryListTile.dart';
-import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
+import 'package:ujuzi_xpress/utils/DeliveryHistory.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
@@ -9,7 +9,7 @@ import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
 class HistoryPage extends StatefulWidget {
-  @required UjuziUser user;
+  @required final UjuziUser user;
   HistoryPage({this.user});
 
   @override
@@ -17,9 +17,10 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  // DeliveryStatus __status = DeliveryStatus.pending;
   List<bool> selectedArray = [true, false, false];
-
+  int __index;
+  List<DeliveryRequest> requests = [];
+  DeliveryHistory history;
 
 
 
@@ -28,7 +29,6 @@ class _HistoryPageState extends State<HistoryPage> {
     backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
 
   );
-  // ButtonStyle deSelectedStyle = ButtonStyle();
 
 
   TextStyle selectedText = TextStyle(color: Colors.white);
@@ -36,8 +36,32 @@ class _HistoryPageState extends State<HistoryPage> {
 
 
 
+  void update(int index){
+
+    setState(() {
+      __index = index;
+      selectedArray = [false, false, false];
+      selectedArray[index] = true;
+
+      switch(index){
+        case 0:
+          requests = history.pending;
+          break;
+        case 1:
+          requests = history.completed;
+          break;
+        case 2:
+          requests = history.canceled;
+          break;
+        default:
+          requests = history.pending;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('My Orders'),
@@ -51,6 +75,8 @@ class _HistoryPageState extends State<HistoryPage> {
           builder: (context, snapshot){
 
             if (snapshot.connectionState == ConnectionState.done){
+              history = new DeliveryHistory(snapshot.data);
+              if (__index == null)  requests = history.pending;
               return Column(
                 children: [
 
@@ -66,11 +92,9 @@ class _HistoryPageState extends State<HistoryPage> {
                       borderRadius: BorderRadius.all(Radius.circular(24.0)),
                       fillColor: Colors.deepPurple,
                       onPressed: (index){
-                        setState(() {
-                          selectedArray = [false, false, false];
-                          selectedArray[index] = true;
-                        });
+                        update(index);
                       },
+
                       children: [
                         Container(
                           width: MediaQuery.of(context).size.width * 0.3,
@@ -79,6 +103,7 @@ class _HistoryPageState extends State<HistoryPage> {
                             textAlign: TextAlign.center,
                             style: selectedArray.elementAt(0) ? selectedText : TextStyle(fontWeight: FontWeight.bold),),
                         ),
+
 
                         Container(
                           width: MediaQuery.of(context).size.width * 0.3,
@@ -98,16 +123,18 @@ class _HistoryPageState extends State<HistoryPage> {
                   ),
 
                   Expanded(
-                    child: ListView.builder(
-                        itemCount: snapshot.data.length,
+                    child:  requests.isNotEmpty ? ListView.builder(
+                        itemCount: requests.length,
                         itemBuilder: (context,index){
                           return DeliveryListTile(
-                            deliveryRequest: snapshot.data.elementAt(index),
+                            deliveryRequest: requests.elementAt(index),
                           );
-                        }),
+                        })
+                    : Center(child: Text("No requests"),),
                   )
                 ],
-              );}
+              );
+            }
 
 
             return Center(

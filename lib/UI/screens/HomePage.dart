@@ -6,7 +6,6 @@ import 'package:ujuzi_xpress/UI/screens/LoginPage.dart';
 import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
-import 'package:ujuzi_xpress/utils/Auth.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
@@ -67,7 +66,9 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: Text("View History"),//
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>HistoryPage(user: widget.user)));
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context)=>HistoryPage(user: widget.user))
+                );
               },// report problem
             ),
 

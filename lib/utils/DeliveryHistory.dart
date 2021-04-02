@@ -31,7 +31,7 @@ class DeliveryHistory{
           break;
 
         default:
-          __pendingDeliveries.add(request); //todo sort by grouping ongoing first, then pending before sorting each by date
+          __pendingDeliveries.add(request);
       }
     });
 

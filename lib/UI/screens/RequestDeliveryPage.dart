@@ -2,7 +2,6 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
-import 'package:ujuzi_xpress/utils/Auth.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
@@ -30,15 +29,15 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
   DeliveryStatus  status = DeliveryStatus.pending; // the status of the delivery
   PackageType packageType = PackageType.parcel;
   PaymentMethod paymentMethod = PaymentMethod.paymentOnPickup;
-  String dropOffPersonName = "";
-  String dropOffPersonNumber ="";
+  TextEditingController dropOffPersonName = new TextEditingController();
+  TextEditingController dropOffPersonNumber = new TextEditingController();
   DeliveryLocation dropOffLocation = new DeliveryLocation();
-  String pickupPersonName = "";
-  String pickupPersonNumber ="";
+  TextEditingController pickupPersonName = new TextEditingController();
+  TextEditingController pickupPersonNumber = new TextEditingController();
   DeliveryLocation pickupLocation = new DeliveryLocation();
-  // Person pickupPerson = new Person(location: new DeliveryLocation());
-  String notes = "";
+  TextEditingController notes = new TextEditingController();
   TextEditingController pickupLocationController = new TextEditingController();
+  TextEditingController dropOffLocationController = new TextEditingController();
 
 
 
@@ -48,9 +47,9 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
   void initState() {
     super.initState();
     setState(() {
-      requestingUser = widget.requestingUser;
-      pickupPersonName = widget.requestingUser.username;
-      pickupPersonNumber = widget.requestingUser.number;
+      requestingUser = widget.requestingUser ?? widget.request.requestingUser;
+      pickupPersonName.text = requestingUser.username;
+      pickupPersonNumber.text = requestingUser.number;
     });
 
 
@@ -130,7 +129,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                           onChanged: (value){
                             setState(() {
                               // requestingUser.updateUserName(value);
-                              pickupPersonName = value;
+                              pickupPersonName.text = value;
 
                             });
                           },
@@ -188,6 +187,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 color: Colors.black,
                 labelColor: Colors.grey,
                 widthFactor: 0.85,
+                controller: dropOffLocationController,
                 value: dropOffLocation.locationName,
                 icon: IconButton(
                   icon:Icon(Icons.my_location),
@@ -195,9 +195,13 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
                     pickLocation(context).then((value) {
 
-                      setState(() {
-                        if (value != null) dropOffLocation = value;
-                      });
+                      if (value != null) {
+                        setState(() {
+                          dropOffLocation = value;
+                          dropOffLocationController.text = value.locationName;
+
+                        });
+                      }
                     });
 
 
@@ -224,13 +228,10 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
               ),
 
               CustomTextField(
+                controller: dropOffPersonName,
                 label: "DropOff person name",
                 color: Colors.black,
                 onChanged: (value){
-                  setState(() {
-
-                    dropOffPersonName = value;
-                  });
                 },
                 widthFactor: 0.85,
                 labelColor: Colors.grey,
@@ -242,11 +243,9 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 color: Colors.black,
                 labelColor: Colors.grey,
                 inputType: TextInputType.number,
+                controller: dropOffPersonNumber,
                 widthFactor: 0.85,
                 onChanged: (value){
-                  setState(() {
-                    dropOffPersonNumber = value;
-                  });
 
                 },
               ),
@@ -262,10 +261,11 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 labelColor: Colors.grey,
                 widthFactor: 0.85,
                 expanded: true,
+                controller: notes,
                 onChanged: (value){
-                  setState(() {
-                    notes = value;
-                  });
+                  // setState(() {
+                  //   notes = value;
+                  // });
                 },
               ),
 
@@ -337,10 +337,10 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   DeliveryRequest request = DeliveryRequest(
                     requestingUser: requestingUser,
                     dropOffLocation: dropOffLocation,
-                    dropOffPersonName: dropOffPersonName,
-                    dropOffPersonNumber: dropOffPersonNumber,
-                    pickupPersonName: pickupPersonNumber,
-                    pickupPersonNumber: pickupPersonName,
+                    dropOffPersonName: dropOffPersonName.text,
+                    dropOffPersonNumber: dropOffPersonNumber.text,
+                    pickupPersonName: pickupPersonNumber.text,
+                    pickupPersonNumber: pickupPersonName.text,
                     pickupLocation: pickupLocation,
                     requestDate: requestDate,
                     status: DeliveryStatus.pending,
@@ -349,7 +349,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                     startDate: startDate,
                     completionDate: completionDate,
                     deliveryID: deliveryID,
-                    note: notes
+                    note: notes.text
                   );
 
                   // print(request.asMap().toString());

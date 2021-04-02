@@ -39,7 +39,7 @@ Future<List<DeliveryRequest>> getDeliveries(UjuziUser user) async {
   CollectionReference reference = firestore.collection('users').doc(user.id).collection('deliveryRequest');
 
   List<DeliveryRequest> requests = [];
-  QuerySnapshot snapshot = await reference.get();
+  QuerySnapshot snapshot = await reference.orderBy("status").get();
 
   snapshot.docs.forEach((element) {
     DeliveryRequest delivery = deliveryRequestFromMap(element.data());
