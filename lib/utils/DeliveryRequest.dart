@@ -1,5 +1,6 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
@@ -8,22 +9,32 @@ import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
 DeliveryRequest deliveryRequestFromMap(Map<String, dynamic>value){
-  return new DeliveryRequest(
+
+
+  UjuziUser requestingUser = new UjuziUser();
+  requestingUser.updateUserName(value["requestingUser"]["username"]);
+  requestingUser.updateNumber(value["requestingUser"]["number"]);
+  requestingUser.updateId(value["requestingUser"]["id"]);
+  requestingUser..updateEmail(value["requestingUser"]["email"]);
+
+  DateTime startDate = DateTime.now();
+  DateTime completionDate = DateTime.now();
+  DeliveryRequest request = new DeliveryRequest(
     deliveryID: value["deliveryID"],
-    requestingUser: UjuziUser().fromMap( value["requestingUser"]),
+    requestingUser: requestingUser,
     dropOffLocation: new DeliveryLocation(
         name: value["dropOffLocation"]["locationName"],
         lat: LatLng(value["dropOffLocation"]["latitude"], value["dropOffLocation"]["longitude"])),
 
-    pickupLocation: new DeliveryLocation(
-        name: value["pickupLocation"]["locationName"],
-        lat: LatLng(value["pickupLocation"]["latitude"], value["pickupLocation"]["longitude"])),
-
     requestDate: DateTime.parse(value["requestDate"]),
     dropOffPersonName: value["dropOffPersonName"],
     dropOffPersonNumber: value["dropOffPersonNumber"],
-    completionDate: DateTime.parse(value["completionDate"]),
-    startDate: DateTime.parse(value["startDate"]),
+    pickupLocation: new DeliveryLocation(
+        name: value["pickupLocation"]["locationName"],
+        lat: LatLng(value["pickupLocation"]["latitude"], value["pickupLocation"]["longitude"])),
+    completionDate: completionDate,
+
+    startDate:   startDate,
     pickupPersonName: value["pickupPersonName"],
     pickupPersonNumber: value["pickupPersonNumber"],
     status: DeliveryStatus.values[value["status"]],
@@ -31,6 +42,7 @@ DeliveryRequest deliveryRequestFromMap(Map<String, dynamic>value){
     paymentMethod: PaymentMethod.values[value["paymentMethod"]],
 
   );
+  return request;
 }
 
 
@@ -52,6 +64,7 @@ class DeliveryRequest{
   DeliveryLocation __pickupLocation;
   String __notes;
   PaymentMethod _paymentMethod;
+  DocumentReference __reference;
 
 String get deliveryID => this.__deliveryID;
 UjuziUser get requestingUser => this.__requestingUser;
@@ -69,7 +82,7 @@ DateTime get completionDate => this.__completionDate;
 // DeliveryLocation get pickupLocation => this.__pickupPerson.location;
 String get notes => this.__notes;
 PaymentMethod get paymentMethod => this._paymentMethod;
-
+DocumentReference get reference => this.__reference;
 
 
 
@@ -126,6 +139,8 @@ PaymentMethod get paymentMethod => this._paymentMethod;
   void setStartDate(DateTime date){
     this.__startDate = date;
   }
+
+  void setReference(DocumentReference reference) => this.__reference = reference;
 
   void setPaymentMethod(PaymentMethod method){
     this._paymentMethod = method;

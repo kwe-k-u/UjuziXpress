@@ -22,17 +22,20 @@ class UjuziUser{
 
   UjuziUser({UserCredential credential,String number,String name}){
 
+    if (credential != null) {
     __createUser(credential.user);
-    if (credential.additionalUserInfo.isNewUser){
-      if (name != null) updateUserName(name);
-      if (number != null) updateNumber(number);
+      if (credential.additionalUserInfo.isNewUser) {
+        if (name != null) updateUserName(name);
+        if (number != null) updateNumber(number);
 
-      postUserDetails(this).then((value) {
-        setReference(value);});
-    }else {
-      getUserDetails(id).then((value) {
-        setReference(value.reference);
-      });
+        postUserDetails(this).then((value) {
+          setReference(value);
+        });
+      } else {
+        getUserDetails(id).then((value) {
+          setReference(value.reference);
+        });
+      }
     }
   }
 
@@ -50,13 +53,23 @@ class UjuziUser{
     this._reference = ref;
   }
 
+  void updateUserName(String name){
+    this.__username = name;
+  }
+
+  void updateEmail(String mail){
+    this.__email = mail;
+  }
+
+  void updateId(String id){
+    this.__id = id;
+  }
+
   void updateNumber(String newNumber) {
     this.__mobileNumber = newNumber;
   }
 
-  void updateUserName(String name) {
-    this.__username = name;
-  }
+
 
 
  void __createUser(User user){

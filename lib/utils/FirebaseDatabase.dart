@@ -33,3 +33,22 @@ Future<DocumentSnapshot> getUserDetails(String id){
   DocumentReference reference = firestore.collection('users').doc(id).collection("profile").doc();
   return reference.get();
 }
+
+
+Future<List<DeliveryRequest>> getDeliveries(UjuziUser user) async {
+  CollectionReference reference = firestore.collection('users').doc(user.id).collection('deliveryRequest');
+
+  List<DeliveryRequest> requests = [];
+  QuerySnapshot snapshot = await reference.get();
+
+  snapshot.docs.forEach((element) {
+    DeliveryRequest delivery = deliveryRequestFromMap(element.data());
+    delivery.setReference(element.reference);
+
+    requests.add(delivery);
+  });
+  return requests;
+
+
+
+}

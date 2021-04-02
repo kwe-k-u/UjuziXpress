@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: Text("View History"),//
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>HistoryPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>HistoryPage(user: widget.user)));
               },// report problem
             ),
 
@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                           child: CustomRoundedButton(
                               onPressed: (){
                                 Navigator.push(context,
-                                MaterialPageRoute(builder: (context)=> HistoryPage()));
+                                MaterialPageRoute(builder: (context)=> HistoryPage(user: widget.user,)));
                               },
 
                               buttonColor: Colors.white,

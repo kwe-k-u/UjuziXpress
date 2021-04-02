@@ -13,13 +13,12 @@ class DeliveryHistory{
 
 
   //list of deliveries from firebase
-  DeliveryHistory(Map<String, dynamic> map){
+  DeliveryHistory(List<DeliveryRequest> list){
     __pendingDeliveries = [];
     __canceledDeliveries = [];
     __completedDeliveries = [];
 
-    map.forEach((key, value) {
-      DeliveryRequest request = deliveryRequestFromMap(value);
+    list.forEach((request) {
 
 
       switch(request.status){
