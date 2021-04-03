@@ -6,12 +6,16 @@
 
 
 
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ujuzi_xpress/UI/screens/PickLocationPage.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
+import 'package:ujuzi_xpress/utils/Directions.dart';
 
 
 
@@ -53,8 +57,12 @@ Future<String> getAddressFromLatLng(LatLng latLng) async {
 
 
 
-Future<LatLng> getLatLngFromAddress(String place){
+Future<LatLng> getLatLngFromAddress(String place) async{
+  Address location = (await Geocoder.local.findAddressesFromQuery(place)).first;
 
+  LatLng latLng = LatLng(location.coordinates.latitude, location.coordinates.longitude);
+
+  return latLng;
 }
 
 
@@ -65,4 +73,27 @@ Future<DeliveryLocation> pickLocation(BuildContext context) async{
   ));
 
   return location;
+}
+
+
+
+Future<Directions> getDirections(LatLng pickup, LatLng dropOff) async{
+
+  Dio dio = new Dio();
+  final response = await dio.get(
+      "https://maps.googleapis.com/maps/api/directions/json?",
+      queryParameters: {
+        'origin' : "${pickup.latitude},${pickup.longitude}",
+        'destination' : "${dropOff.latitude},${dropOff.longitude}",
+        'key' : "AIzaSyDVwR6I_C_e3Pe9LCnWPn1c0kHmMFckP7w"
+      });
+
+  print('response ${response}');
+  if (response.statusCode == 200)
+    return Directions.fromMap(response.data);
+
+
+  print("fail");
+  return null ;
+
 }

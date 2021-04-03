@@ -165,7 +165,7 @@ class _SignupPageState extends State<SignupPage> {
                     child: CustomIconButton(
                       color: Colors.purple,
                       onPressed: ()async{
-                        //todo check password length
+                        //todo check password length and show snack if its not long enough
 
                         signUpWithEmail(emailController.text, passwordController.text).then((value) {
 

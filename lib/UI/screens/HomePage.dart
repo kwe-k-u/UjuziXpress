@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/screens/HistoryPage.dart';
 import 'package:ujuzi_xpress/UI/screens/LoginPage.dart';
+import 'package:ujuzi_xpress/UI/screens/ProfilePage.dart';
 import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
@@ -61,6 +62,11 @@ class _HomePageState extends State<HomePage> {
 
             ListTile(
               title: Text("Profile"),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context)=>ProfilePage(user: widget.user))
+                );
+              },// repo
             ),
 
             ListTile(
