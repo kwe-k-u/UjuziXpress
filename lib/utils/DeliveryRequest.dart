@@ -14,7 +14,7 @@ DeliveryRequest deliveryRequestFromMap(Map<String, dynamic>value){
   UjuziUser requestingUser = new UjuziUser();
   requestingUser.updateUserName(value["requestingUser"]["username"]);
   requestingUser.updateNumber(value["requestingUser"]["number"]);
-  requestingUser.updateId(value["requestingUser"]["id"]);
+  // requestingUser.updateId(value["requestingUser"]["id"]); //todo revisit
   requestingUser..updateEmail(value["requestingUser"]["email"]);
 
   DateTime startDate = DateTime.now();
@@ -274,7 +274,7 @@ DocumentReference get reference => this.__reference;
   Map<String, dynamic> asMap(){
     return {
       "deliveryID" : deliveryID ?? __generateID(),
-      "requestingUser" : requestingUser.asMap(),
+      // "requestingUser" : requestingUser.asMap(),
       'requestDate' : requestDate.toString(),
       'startDate' : startDate.toString(),
       'dropOffLocation' : dropOffLocation.asMap(),

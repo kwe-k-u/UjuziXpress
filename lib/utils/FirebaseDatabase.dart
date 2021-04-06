@@ -8,22 +8,23 @@ import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 
-
+///Adds a delivery request to the user's account
 Future<void> requestDelivery(DeliveryRequest request){
   CollectionReference reference = firestore.collection("users").doc(request.requestingUser.id).collection("deliveryRequest");
   return reference.add(request.asMap());
 
 }
 
+///Updatess the user's default delivery location
 DocumentReference postUserDetails(UjuziUser user){
   CollectionReference reference = firestore.collection("users").doc(user.id).collection("profile");
   // return reference.add(user.asMap());
   DocumentReference doc = reference.doc("info");
-  doc.set(user.asMap());
+  doc.set(user.location.asMap());
   return doc;
 }
 
-
+///Updates the user's credit card info
 DocumentReference postUserCreditCard(UjuziUser user, Map<String, dynamic> card){
   CollectionReference reference = firestore.collection("users").doc(user.id).collection("profile");
   DocumentReference doc = reference.doc("creditCard");
@@ -74,3 +75,5 @@ Future<List<DeliveryRequest>> getDeliveries(UjuziUser user) async {
 
 
 }
+
+

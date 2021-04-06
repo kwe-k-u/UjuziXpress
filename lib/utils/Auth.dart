@@ -4,35 +4,51 @@ import 'package:google_sign_in/google_sign_in.dart';
 // UjuziUser signedUser;///global variable for signed user
 FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-
-Future<UserCredential> signInWithGoogle() async {
-  // Trigger the authentication flow
+Future<User> signInWithGoogle() async {
   final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-
-  // Obtain the auth details from the request
   final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
   // Create a new credential
-  final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+  final GoogleAuthCredential googleCredential = GoogleAuthProvider.credential(
     accessToken: googleAuth.accessToken,
     idToken: googleAuth.idToken,
   );
 
   // Once signed in, return the UserCredential
-  return await firebaseAuth.signInWithCredential(credential);
+  UserCredential credential =  await firebaseAuth.signInWithCredential(googleCredential);
+  User user = credential.user;
+
+  assert(!user.isAnonymous);
+  assert (await user.getIdToken() != null);
+
+  final User currentUser = firebaseAuth.currentUser;
+  assert(currentUser.uid == user.uid);
+
+  return user;
 }
 
 
 
 
-Future<UserCredential> signUpWithEmail(String email, String password) async{
+Future<User> signUpWithEmail(String email, String password) async{
   try {
     UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password
     );
-    return userCredential;
+    // return userCredential;
 
+    // Once signed in, return the UserCredential
+    UserCredential credential =  await firebaseAuth.signInWithCredential(userCredential.credential);
+    User user = credential.user;
+
+    assert(!user.isAnonymous);
+    assert (await user.getIdToken() != null);
+
+    final User currentUser = firebaseAuth.currentUser;
+    assert(currentUser.uid == user.uid);
+
+    return user;
 
 
   } on FirebaseAuthException catch (e) {
@@ -45,5 +61,14 @@ Future<UserCredential> signUpWithEmail(String email, String password) async{
     print(e);
   }
   return null;
+}
+
+
+
+
+Future<void> signOut() async{
+  await firebaseAuth.signOut();
+
+
 }
 

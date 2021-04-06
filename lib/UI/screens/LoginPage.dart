@@ -38,9 +38,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
-    firebaseAuth.signOut().then((value) => super.setState(() {
-
-    }));
   }
 
   @override
@@ -90,7 +87,10 @@ class _LoginPageState extends State<LoginPage> {
                       path: "assets/google_logo.png",
                       onPressed: (){
                         signInWithGoogle().then((value){
-                          UjuziUser user = new UjuziUser(credential: value);
+                          // value.updateProfile(displayName: "dlksd");
+                          // print(value.displayName);//todo update profile info?
+
+                          UjuziUser user = new UjuziUser(user: value);
 
                           if(user.number == null || user.email == null){
                             Navigator.pushReplacement(context, MaterialPageRoute(

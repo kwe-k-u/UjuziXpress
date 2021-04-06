@@ -90,14 +90,14 @@ class _SignupPageState extends State<SignupPage> {
                       onPressed: (){
                         signInWithGoogle().then((value) {
 
-                          if (value.additionalUserInfo.isNewUser)
-                            Navigator.pushReplacement(context, MaterialPageRoute(
-                                builder: (context)=> ProfilePage(user: new UjuziUser(credential: value),)
-                            ));
+                          // if (value.additionalUserInfo.isNewUser)
+                          //   Navigator.pushReplacement(context, MaterialPageRoute(
+                          //       builder: (context)=> ProfilePage(user: new UjuziUser(credential: value),)
+                          //   ));
 
 
                           Navigator.pushReplacement(context, MaterialPageRoute(
-                              builder: (context)=> HomePage(user: new UjuziUser(credential: value),)
+                              builder: (context)=> HomePage(user: new UjuziUser(user: value),)
                           ));
                         });
 
@@ -178,7 +178,7 @@ class _SignupPageState extends State<SignupPage> {
 
                           Navigator.pushReplacement(context,
                               MaterialPageRoute(
-                                  builder: (context) => HomePage(user: new UjuziUser(credential: value, name: nameController.text, number: numberController.text),)
+                                  builder: (context) => HomePage(user: new UjuziUser(user: value, name: nameController.text, number: numberController.text),)
                               ));
 
 

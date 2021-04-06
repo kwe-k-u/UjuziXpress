@@ -44,21 +44,21 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget display(Size size, bool profileBool, AsyncSnapshot snapshot) {
     if (profileBool) {
       //display profile information
-      if(snapshot.hasData)
-      if (snapshot.data[0] != null) { // prefill data if exists
-        setState(() {
-          username.text = snapshot.data[0]['username'] ?? "";
-          number.text = snapshot.data[0]["number"] ?? "";
-
-          if (snapshot.data[0]["location"] != null)
-            deliveryLocation = new DeliveryLocation(
-                name: snapshot.data[0]["location"]['locationName'],
-                lat: LatLng(snapshot.data[0]["location"]['latitude'],
-                    snapshot.data[0]["location"]['longitude']));
-
-          location.text = deliveryLocation.locationName ?? "";
-        });
-      }
+      // if(snapshot.hasData)
+      // if (snapshot.data[0] != null) { // prefill data if exists
+      //   setState(() {
+      //     username.text = snapshot.data[0]['username'] ?? "";
+      //     number.text = snapshot.data[0]["number"] ?? "";
+      //
+      //     if (snapshot.data[0]["location"] != null)
+      //       deliveryLocation = new DeliveryLocation(
+      //           name: snapshot.data[0]["location"]['locationName'],
+      //           lat: LatLng(snapshot.data[0]["location"]['latitude'],
+      //               snapshot.data[0]["location"]['longitude']));
+      //
+      //     location.text = deliveryLocation.locationName ?? "";
+      //   });
+      // }
 
       return SingleChildScrollView(
         child: Container(
@@ -74,10 +74,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   right: 8.0,
                   bottom: 8.0,
                 ),
+
+
                 child: CircleAvatar(
                   minRadius: size.width * 0.05,
                   maxRadius: size.width * 0.15,
-                  child: Icon(Icons.account_circle_rounded),
+                  child: Image.network(widget.user.profileImageUrl),//todo clip image and ontap to change
                 ),
               ),
               CustomTextField(
@@ -169,6 +171,9 @@ class _ProfilePageState extends State<ProfilePage> {
               child: CustomRoundedButton(
                 text: "Update card details".toUpperCase(),
                 textColor: Colors.white,
+                onPressed: (){
+                  //todo update card info
+                },
               ),
             )
           ],
@@ -206,10 +211,7 @@ class _ProfilePageState extends State<ProfilePage> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: Future.wait([
-          getUserDetails(widget.user.id),
-          getUserCreditCard(widget.user.id)
-        ]),
+        future: getUserCreditCard(widget.user.id),
         builder: (context, snapshot){
           return Column(
             children: [

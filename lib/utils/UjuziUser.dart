@@ -9,58 +9,44 @@ import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 
 
 class UjuziUser{
-  String __username;
-  String __id;
-  String __mobileNumber;
-  String __email;
-  DeliveryLocation _location;
+  User _firebaseUser;
+  DeliveryLocation _location = new DeliveryLocation();
   DocumentReference _reference;
 
-  String get username => this.__username;
-  String get id => this.__id;
-  String get number => this.__mobileNumber;
-  String get email => this.__email;
+  String get username => this._firebaseUser.displayName;
+  String get id => this._firebaseUser.uid;
+  String get number => this._firebaseUser.phoneNumber;
+  String get profileImageUrl => this._firebaseUser.photoURL;
+  String get email => this._firebaseUser.email;
   DeliveryLocation get location => this._location;
   DocumentReference get reference => this._reference;
 
 
-  UjuziUser({UserCredential credential,String number,String name}){
+  UjuziUser({User user,String number,String name}){
 
-    if (credential != null) {
-    __createUser(credential.user);
-      if (credential.additionalUserInfo.isNewUser) {
-        if (name != null) updateUserName(name);
-        if (number != null) updateNumber(number);
-
-        setReference(postUserDetails(this));
-      } else {
-        getUserDetails(id).then((value) {
-          setReference(value.reference);
-        });
-      }
-    }
+    this._firebaseUser = user;
   }
 
 
-  UjuziUser fromMap(Map<String, dynamic> map){
-    this.__username = map["username"];
-    this.__email = map["email"];
-    this.__id = map["id"];
-    this.__mobileNumber = map['number'];
-    this._location = DeliveryLocation(
-        name: map["location"]["locationName"],
-      lat: LatLng(map["location"]['latitude'],map["location"]['longitude'])
-    );
+  UjuziUser fromMap(DeliveryLocation location){
+    // this.__username = map["username"];
+    // this.__email = map["email"];
+    // this.__id = map["id"];
+    // this.__mobileNumber = map['number'];
+    // this._location = DeliveryLocation(
+    //     name: map["location"]["locationName"],
+    //   lat: LatLng(map["location"]['latitude'],map["location"]['longitude'])
+    // );
 
-    return this;
+    return this;//todo
   }
 
-  void setReference(DocumentReference ref){
-    this._reference = ref;
-  }
+  // void setReference(DocumentReference ref){
+  //   this._reference = ref;
+  // }
 
   void updateUserName(String name){
-    this.__username = name;
+    this._firebaseUser.updateProfile(displayName: name); //todo display url
   }
 
   void updateDefaultLocation(DeliveryLocation location){
@@ -68,42 +54,40 @@ class UjuziUser{
   }
 
   void updateEmail(String mail){
-    this.__email = mail;
+    this._firebaseUser.updateEmail(mail);
   }
 
-  void updateId(String id){
-    this.__id = id;
+  void updateProfileImage(String url){//todo merge all updates into one function
+    //todo update profile image
+    this._firebaseUser.updateProfile(photoURL:  url);
   }
+
+  // void updateId(String id){
+  //   this.__id = id;
+  // }
 
   void updateNumber(String newNumber) {
-    this.__mobileNumber = newNumber;
+    // this._firebaseUser.updatePhoneNumber(newNumber); //todo
   }
 
 
 
 
- void __createUser(User user){
-   this.__id = user.uid;
-   this.__email = user.email;
-   this.__username = user.displayName;
-   this.__mobileNumber = user.phoneNumber;
-
- }
 
 
 
-  Map<String, dynamic> asMap(){
-    return {
-      "number" : number,
-      "username" : username,
-      "email" : email,
-      "id" : id,
-      "location" : location.asMap()
-    };
-
-
-
-  }
+  // Map<String, dynamic> asMap(){
+  //   return {
+  //     "number" : number,
+  //     "username" : username,
+  //     "email" : email,
+  //     "id" : id,
+  //     "location" : location.asMap()
+  //   };
+  //
+  //
+  //
+  // }
 
 
 
