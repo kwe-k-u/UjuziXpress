@@ -15,9 +15,22 @@ Future<void> requestDelivery(DeliveryRequest request){
 
 }
 
-Future<DocumentReference> postUserDetails(UjuziUser user){
+DocumentReference postUserDetails(UjuziUser user){
   CollectionReference reference = firestore.collection("users").doc(user.id).collection("profile");
-  return reference.add(user.asMap());
+  // return reference.add(user.asMap());
+  DocumentReference doc = reference.doc("info");
+  doc.set(user.asMap());
+  return doc;
+}
+
+
+DocumentReference postUserCreditCard(UjuziUser user, Map<String, dynamic> card){
+  CollectionReference reference = firestore.collection("users").doc(user.id).collection("profile");
+  DocumentReference doc = reference.doc("creditCard");
+  doc.set(card);
+
+
+  return doc;
 }
 
 
@@ -30,9 +43,18 @@ Future<DocumentReference> postUserDetails(UjuziUser user){
 //GETTERS
 
 Future<DocumentSnapshot> getUserDetails(String id){
-  DocumentReference reference = firestore.collection('users').doc(id).collection("profile").doc();
+  DocumentReference reference = firestore.collection('users').doc(id).collection("profile").doc("info");
   return reference.get();
 }
+
+
+
+Future<DocumentSnapshot> getUserCreditCard(String id){
+  DocumentReference reference = firestore.collection('users').doc(id).collection("profile").doc("creditCard");
+  return reference.get();
+}
+
+
 
 
 Future<List<DeliveryRequest>> getDeliveries(UjuziUser user) async {

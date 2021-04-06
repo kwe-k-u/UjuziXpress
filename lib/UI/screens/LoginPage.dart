@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ujuzi_xpress/UI/screens/HomePage.dart';
+import 'package:ujuzi_xpress/UI/screens/ProfilePage.dart';
 import 'package:ujuzi_xpress/UI/screens/SignupPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/BackgroundWidget.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomIconButton.dart';
@@ -29,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     emailController.clear();
     passwordController.clear();
+    firebaseAuth.signOut();
   }
 
   @override
@@ -36,6 +38,9 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
+    firebaseAuth.signOut().then((value) => super.setState(() {
+
+    }));
   }
 
   @override
@@ -84,13 +89,18 @@ class _LoginPageState extends State<LoginPage> {
                     CustomImageButton(
                       path: "assets/google_logo.png",
                       onPressed: (){
-                        signInWithGoogle().then((value) {
+                        signInWithGoogle().then((value){
+                          UjuziUser user = new UjuziUser(credential: value);
 
+                          if(user.number == null || user.email == null){
+                            Navigator.pushReplacement(context, MaterialPageRoute(
+                                builder: (context)=> ProfilePage(user: user,)
+                            ));
+                          }
 
-                          //todo check if we have user's phone number in the database
 
                           Navigator.pushReplacement(context, MaterialPageRoute(
-                              builder: (context)=> HomePage(user: new UjuziUser(credential: value),)
+                              builder: (context)=> HomePage(user: user,)
                           ));
                         });
 

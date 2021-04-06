@@ -20,8 +20,10 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder(
         future: Firebase.initializeApp(),
         builder: (context,future){
-          if (future.connectionState == ConnectionState.done && !future.hasError)
+          if (future.connectionState == ConnectionState.done && !future.hasError) {
+
             return SplashPage();
+          }
 
           return Center(child: CircularProgressIndicator(),);
         },

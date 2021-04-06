@@ -2,6 +2,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 
 
@@ -11,12 +13,14 @@ class UjuziUser{
   String __id;
   String __mobileNumber;
   String __email;
+  DeliveryLocation _location;
   DocumentReference _reference;
 
   String get username => this.__username;
   String get id => this.__id;
   String get number => this.__mobileNumber;
   String get email => this.__email;
+  DeliveryLocation get location => this._location;
   DocumentReference get reference => this._reference;
 
 
@@ -28,9 +32,7 @@ class UjuziUser{
         if (name != null) updateUserName(name);
         if (number != null) updateNumber(number);
 
-        postUserDetails(this).then((value) {
-          setReference(value);
-        });
+        setReference(postUserDetails(this));
       } else {
         getUserDetails(id).then((value) {
           setReference(value.reference);
@@ -45,6 +47,10 @@ class UjuziUser{
     this.__email = map["email"];
     this.__id = map["id"];
     this.__mobileNumber = map['number'];
+    this._location = DeliveryLocation(
+        name: map["location"]["locationName"],
+      lat: LatLng(map["location"]['latitude'],map["location"]['longitude'])
+    );
 
     return this;
   }
@@ -55,6 +61,10 @@ class UjuziUser{
 
   void updateUserName(String name){
     this.__username = name;
+  }
+
+  void updateDefaultLocation(DeliveryLocation location){
+    this._location = location;
   }
 
   void updateEmail(String mail){
@@ -87,7 +97,8 @@ class UjuziUser{
       "number" : number,
       "username" : username,
       "email" : email,
-      "id" : id
+      "id" : id,
+      "location" : location.asMap()
     };
 
 

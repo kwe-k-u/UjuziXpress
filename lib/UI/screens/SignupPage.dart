@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/screens/HomePage.dart';
 import 'package:ujuzi_xpress/UI/screens/LoginPage.dart';
+import 'package:ujuzi_xpress/UI/screens/ProfilePage.dart';
 import 'package:ujuzi_xpress/UI/widgets/BackgroundWidget.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomIconButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomImageButton.dart';
@@ -31,6 +32,10 @@ class _SignupPageState extends State<SignupPage> {
     numberController.clear();
 
   }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +90,10 @@ class _SignupPageState extends State<SignupPage> {
                       onPressed: (){
                         signInWithGoogle().then((value) {
 
-
-
+                          if (value.additionalUserInfo.isNewUser)
+                            Navigator.pushReplacement(context, MaterialPageRoute(
+                                builder: (context)=> ProfilePage(user: new UjuziUser(credential: value),)
+                            ));
 
 
                           Navigator.pushReplacement(context, MaterialPageRoute(
@@ -168,7 +175,6 @@ class _SignupPageState extends State<SignupPage> {
                         //todo check password length and show snack if its not long enough
 
                         signUpWithEmail(emailController.text, passwordController.text).then((value) {
-
 
                           Navigator.pushReplacement(context,
                               MaterialPageRoute(
