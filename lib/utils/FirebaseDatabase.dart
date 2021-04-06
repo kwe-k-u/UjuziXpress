@@ -25,9 +25,26 @@ DocumentReference postUserDetails(UjuziUser user){
 }
 
 ///Updates the user's credit card info
-DocumentReference postUserCreditCard(UjuziUser user, Map<String, dynamic> card){
+DocumentReference postUserCreditCard({
+  UjuziUser user,
+  String cardNumber,
+  String ccv,
+  DateTime expiryDate,
+  String holderName}) {
+
+
+
   CollectionReference reference = firestore.collection("users").doc(user.id).collection("profile");
   DocumentReference doc = reference.doc("creditCard");
+
+
+  Map<String, dynamic> card = {
+    'ccv' : ccv,
+    'expiryDate' : expiryDate,
+    'holderName' : holderName,
+    'cardNumber' : cardNumber
+  };
+
   doc.set(card);
 
 

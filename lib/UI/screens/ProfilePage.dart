@@ -21,8 +21,15 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController username = new TextEditingController();
   TextEditingController number = new TextEditingController();
   TextEditingController location = new TextEditingController();
+  TextEditingController ccv = new TextEditingController();
+  TextEditingController cardHolderName = new TextEditingController();
+  TextEditingController cardNumber = new TextEditingController();
+
+
+
   DeliveryLocation deliveryLocation = new DeliveryLocation();
-  String imageUrl; //todo implement display image
+  String imageUrl;
+  DateTime expiryDate = new DateTime.now();
 
   ButtonStyle selectedStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
@@ -43,22 +50,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget display(Size size, bool profileBool, AsyncSnapshot snapshot) {
     if (profileBool) {
-      //display profile information
-      // if(snapshot.hasData)
-      // if (snapshot.data[0] != null) { // prefill data if exists
-      //   setState(() {
-      //     username.text = snapshot.data[0]['username'] ?? "";
-      //     number.text = snapshot.data[0]["number"] ?? "";
-      //
-      //     if (snapshot.data[0]["location"] != null)
-      //       deliveryLocation = new DeliveryLocation(
-      //           name: snapshot.data[0]["location"]['locationName'],
-      //           lat: LatLng(snapshot.data[0]["location"]['latitude'],
-      //               snapshot.data[0]["location"]['longitude']));
-      //
-      //     location.text = deliveryLocation.locationName ?? "";
-      //   });
-      // }
 
       return SingleChildScrollView(
         child: Container(
@@ -134,6 +125,11 @@ class _ProfilePageState extends State<ProfilePage> {
       );
     }
 
+
+
+
+
+
     //display credit card information
     return SingleChildScrollView(
       child: Container(
@@ -146,33 +142,51 @@ class _ProfilePageState extends State<ProfilePage> {
               label: "Cardholder Name",
               labelColor: Colors.grey,
               color: Colors.black,
+              controller: cardHolderName,
               widthFactor: 0.85,
             ),
+
             CustomTextField(
               label: "Expiry Date", //todo make a date picker?
               labelColor: Colors.grey,
               color: Colors.black,
               widthFactor: 0.85,
             ),
+
             CustomTextField(
               label: "Card Number",
               labelColor: Colors.grey,
               color: Colors.black,
+              controller: cardNumber,
               widthFactor: 0.85,
             ),
+
             CustomTextField(
               label: "CCV",
               labelColor: Colors.grey,
               color: Colors.black,
+              controller: ccv,
               widthFactor: 0.85,
             ),
+
+
+
+
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: CustomRoundedButton(
                 text: "Update card details".toUpperCase(),
                 textColor: Colors.white,
                 onPressed: (){
-                  //todo update card info
+
+
+                  postUserCreditCard(
+                    user: widget.user,
+                    ccv: ccv.text,
+                    expiryDate: expiryDate,
+                    cardNumber: cardNumber.text,
+                    holderName: cardHolderName.text
+                  );
                 },
               ),
             )
@@ -181,6 +195,11 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+
+
+
+
 
 
 
