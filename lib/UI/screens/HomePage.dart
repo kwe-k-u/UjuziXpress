@@ -29,10 +29,20 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              child: Icon(Icons.account_circle_rounded),
+          GestureDetector(
+            onTap: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=> ProfilePage(user: widget.user,)))
+              ;
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipOval(
+                child: Image.network(
+                    widget.user.profileImageUrl,
+
+                ),
+              ),
             ),
           ),
         ]
@@ -43,16 +53,13 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
 
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.purpleAccent
-              ),
-              child: ClipRect(
-
+            Padding(
+              padding: const EdgeInsets.only(left:8.0, right: 8.0, top:12.0),
+              child: ClipOval(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
                 child: Image.network(
-                    "https://blog.hubspot.com/hubfs/image8-2.jpg", //todo replace with account image
-                height: 100.0,
-                width: 100),
+                    widget.user.profileImageUrl,
+                ),
               ),
             ),
 

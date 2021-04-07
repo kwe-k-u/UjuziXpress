@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
@@ -24,6 +26,8 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController ccv = new TextEditingController();
   TextEditingController cardHolderName = new TextEditingController();
   TextEditingController cardNumber = new TextEditingController();
+  final List<String> months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
 
 
 
@@ -48,9 +52,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
 
+
   Widget display(Size size, bool profileBool, AsyncSnapshot snapshot) {
     if (profileBool) {
-
       return SingleChildScrollView(
         child: Container(
           width: size.width,
@@ -67,12 +71,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
 
 
-                child: CircleAvatar(
-                  minRadius: size.width * 0.05,
-                  maxRadius: size.width * 0.15,
-                  child: Image.network(widget.user.profileImageUrl),//todo clip image and ontap to change
+                child: ClipOval(
+                  child: Image.network(widget.user
+                      .profileImageUrl), //ontap to change
                 ),
               ),
+
+
               CustomTextField(
                 label: "Username",
                 labelColor: Colors.grey,
@@ -100,22 +105,25 @@ class _ProfilePageState extends State<ProfilePage> {
                       setState(() {
                         location.text = value.locationName;
                         deliveryLocation = value;
-
+                        deliveryLocation = new DeliveryLocation(name: value.locationName, lat: value.location);
                       });
                     });
                   },
                 ),
               ),
+
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: CustomRoundedButton(
                   text: "Update profile".toUpperCase(),
                   textColor: Colors.white,
-                  onPressed: (){
-                    widget.user.updateUserName(username.text);
-                    widget.user.updateNumber(number.text);
+                  onPressed: () {
+
+                    if (widget.user.username != username.text) widget.user.updateUserName(username.text);
+                    if (widget.user.number != number.text) widget.user.updateNumber(number.text);
                     widget.user.updateDefaultLocation(deliveryLocation);
-                    postUserDetails(widget.user);
+                    postUserDetails(user: widget.user, location :deliveryLocation);
+                    Navigator.pop(context, widget.user);
                   },
                 ),
               )
@@ -128,7 +136,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
 
-
+    if (snapshot.data.exists) {
+      ccv.text = snapshot.data["ccv"];
+      cardNumber.text = snapshot.data['cardNumber'];
+      cardHolderName.text = snapshot.data["holderName"];
+      expiryDate = DateTime.parse(snapshot.data["expiryDate"]);
+    }
 
     //display credit card information
     return SingleChildScrollView(
@@ -146,12 +159,78 @@ class _ProfilePageState extends State<ProfilePage> {
               widthFactor: 0.85,
             ),
 
-            CustomTextField(
-              label: "Expiry Date", //todo make a date picker?
-              labelColor: Colors.grey,
-              color: Colors.black,
-              widthFactor: 0.85,
+
+            GestureDetector(
+              onTap: (){
+                DatePicker.showDatePicker(
+                    context,
+                    showTitleActions: true,
+                    minTime: DateTime((DateTime.now().year - 20), 1, 1),
+                    maxTime: DateTime((DateTime.now().year + 20), 12, 1),
+                    onConfirm: (date) {
+                      if (date != null)
+                        setState(() {
+                          expiryDate = date;
+                        });
+                    },
+                    currentTime: expiryDate,
+                    locale: LocaleType.en
+                );
+              },
+              child:Padding(
+                  padding: const EdgeInsets.symmetric(vertical:8.0, horizontal: 24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text("Day"),
+                            Text(this.expiryDate.day.toString(), style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context).textTheme.subtitle1.fontSize
+                            ),),
+                          ],
+                        ),
+                        width: size.width * 0.2,
+                        color: Colors.grey.withOpacity(0.6),
+                      ),
+
+                      Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text("Month"),
+                            Text(months.elementAt(expiryDate.month-1), style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context).textTheme.subtitle1.fontSize
+                            ),),
+                          ],
+                        ),
+                        width: size.width * 0.3,
+                        color: Colors.grey.withOpacity(0.6),
+                      ),
+
+                      Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text("Year"),
+                            Text(expiryDate.year.toString(), style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context).textTheme.subtitle1.fontSize
+                            ),),
+                          ],
+                        ),
+                        width: size.width * 0.2,
+                        color: Colors.grey.withOpacity(0.6),
+                      ),
+                    ],
+                  )
+              )
             ),
+
 
             CustomTextField(
               label: "Card Number",
@@ -187,6 +266,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     cardNumber: cardNumber.text,
                     holderName: cardHolderName.text
                   );
+
+                  Navigator.pop(context);
                 },
               ),
             )
@@ -211,10 +292,12 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     setState(() {
 
+
+       imageUrl = widget.user.profileImageUrl;
        username.text = widget.user.username;
        number.text = widget.user.number;
-       location.text = widget.user.location.locationName;
        deliveryLocation = widget.user.location;
+       location.text = widget.user.location.locationName;
     });
   }
 

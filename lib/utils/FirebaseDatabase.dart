@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
@@ -15,12 +16,11 @@ Future<void> requestDelivery(DeliveryRequest request){
 
 }
 
-///Updatess the user's default delivery location
-DocumentReference postUserDetails(UjuziUser user){
+///Updates the user's default delivery location
+DocumentReference postUserDetails({UjuziUser user, DeliveryLocation location}){
   CollectionReference reference = firestore.collection("users").doc(user.id).collection("profile");
-  // return reference.add(user.asMap());
   DocumentReference doc = reference.doc("info");
-  doc.set(user.location.asMap());
+  doc.set(location.asMap());
   return doc;
 }
 
@@ -40,7 +40,7 @@ DocumentReference postUserCreditCard({
 
   Map<String, dynamic> card = {
     'ccv' : ccv,
-    'expiryDate' : expiryDate,
+    'expiryDate' : expiryDate.toString(),
     'holderName' : holderName,
     'cardNumber' : cardNumber
   };

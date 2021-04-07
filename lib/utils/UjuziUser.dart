@@ -25,25 +25,9 @@ class UjuziUser{
   UjuziUser({User user,String number,String name}){
 
     this._firebaseUser = user;
+    getUserDetails(user.uid).then((value) => this._location = new DeliveryLocation(name: value["locationName"], lat: LatLng(value["latitude"], value["longitude"])));
+
   }
-
-
-  UjuziUser fromMap(DeliveryLocation location){
-    // this.__username = map["username"];
-    // this.__email = map["email"];
-    // this.__id = map["id"];
-    // this.__mobileNumber = map['number'];
-    // this._location = DeliveryLocation(
-    //     name: map["location"]["locationName"],
-    //   lat: LatLng(map["location"]['latitude'],map["location"]['longitude'])
-    // );
-
-    return this;//todo
-  }
-
-  // void setReference(DocumentReference ref){
-  //   this._reference = ref;
-  // }
 
   void updateUserName(String name){
     this._firebaseUser.updateProfile(displayName: name); //todo display url
