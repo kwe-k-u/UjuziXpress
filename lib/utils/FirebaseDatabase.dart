@@ -10,9 +10,16 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 
 ///Adds a delivery request to the user's account
+/// If the request is new, a new firebase reference is given, else existing reference is updated
 Future<void> requestDelivery(DeliveryRequest request){
-  CollectionReference reference = firestore.collection("users").doc(request.requestingUser.id).collection("deliveryRequest");
-  return reference.add(request.asMap());
+  if (request.reference != null){
+    return request.reference.update(request.asMap());
+
+  } else {
+    CollectionReference reference = firestore.collection("users").doc(
+        request.requestingUser.id).collection("deliveryRequest");
+    return reference.add(request.asMap());
+  }
 
 }
 
@@ -82,6 +89,7 @@ Future<List<DeliveryRequest>> getDeliveries(UjuziUser user) async {
   QuerySnapshot snapshot = await reference.orderBy("status").get();
 
   snapshot.docs.forEach((element) {
+    print(element.data());
     DeliveryRequest delivery = deliveryRequestFromMap(element.data());
     delivery.setReference(element.reference);
 

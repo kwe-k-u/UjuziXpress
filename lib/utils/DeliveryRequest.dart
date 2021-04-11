@@ -11,17 +11,17 @@ import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 DeliveryRequest deliveryRequestFromMap(Map<String, dynamic>value){
 
 
-  UjuziUser requestingUser = new UjuziUser();
-  requestingUser.updateUserName(value["requestingUser"]["username"]);
-  requestingUser.updateNumber(value["requestingUser"]["number"]);
-  // requestingUser.updateId(value["requestingUser"]["id"]); //todo revisit
-  requestingUser..updateEmail(value["requestingUser"]["email"]);
+  // UjuziUser requestingUser = new UjuziUser();
+  // requestingUser.updateUserName(value["requestingUser"]["username"]);
+  // requestingUser.updateNumber(value["requestingUser"]["number"]);
+  // // requestingUser.updateId(value["requestingUser"]["id"]); //todo revisit
+  // requestingUser..updateEmail(value["requestingUser"]["email"]);
 
   DateTime startDate = DateTime.now();
   DateTime completionDate = DateTime.now();
   DeliveryRequest request = new DeliveryRequest(
     deliveryID: value["deliveryID"],
-    requestingUser: requestingUser,
+    requestingUser: null,
     note: value["note"],
     dropOffLocation: new DeliveryLocation(
         name: value["dropOffLocation"]["locationName"],

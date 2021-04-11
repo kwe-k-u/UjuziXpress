@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/screens/DeliveryReceiptWithMapPage.dart';
 import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
+import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 
 
 class DeliveryListTile extends StatelessWidget {
 final DeliveryRequest deliveryRequest;
+final UjuziUser user;
 
-DeliveryListTile({@required this.deliveryRequest});
+DeliveryListTile({@required this.deliveryRequest, this.user});
 
 
 
@@ -40,12 +42,12 @@ String displayDate(){
         //only pending requests can be changed
         if (deliveryRequest.status == DeliveryStatus.pending){
           Navigator.push(context,
-              MaterialPageRoute(builder: (context)=> RequestDeliveryPage(request: deliveryRequest,))
+              MaterialPageRoute(builder: (context)=> RequestDeliveryPage(request: deliveryRequest, requestingUser: user,))
           );
         } else {
           Navigator.push(context, MaterialPageRoute(
               builder: (context) =>
-                  DeliveryReceiptWithMapPage(deliveryRequest: deliveryRequest,))
+                  DeliveryReceiptWithMapPage(deliveryRequest: deliveryRequest))
           );
 
         }

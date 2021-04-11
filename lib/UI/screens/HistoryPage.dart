@@ -127,6 +127,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         itemCount: requests.length,
                         itemBuilder: (context,index){
                           return DeliveryListTile(
+                            user: widget.user,
                             deliveryRequest: requests.elementAt(index),
                           );
                         })

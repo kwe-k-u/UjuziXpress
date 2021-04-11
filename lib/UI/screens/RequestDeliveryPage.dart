@@ -42,7 +42,6 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
 
 
-//todo locations should return json of long lat as string
   @override
   void initState() {
     super.initState();
@@ -61,6 +60,17 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
          completionDate = widget.request.completionDate;
          status = widget.request.status;
          packageType = widget.request.packageType;
+         dropOffPersonName.text = widget.request.dropOffPersonName;
+         dropOffPersonNumber.text = widget.request.dropOffPersonNumber;
+         dropOffLocationController.text = widget.request.dropOffLocation.locationName;
+         dropOffLocation = widget.request.dropOffLocation;
+         pickupPersonNumber.text = widget.request.pickupPersonNumber;
+         pickupPersonName.text = widget.request.pickupPersonName;
+         pickupLocation = widget.request.pickupLocation;
+         pickupLocationController.text = widget.request.pickupLocation.locationName;
+         notes.text = widget.request.notes;
+
+
        });
      }
   }
@@ -352,9 +362,11 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                     note: notes.text
                   );
 
-                  // print(request.asMap().toString());
+                  if (widget.request != null)
+                    request.setReference(widget.request.reference);
 
-                  requestDelivery(request).then((value) => Navigator.pop(context));
+                    requestDelivery(request).then((value) =>
+                        Navigator.pop(context));
                 },
               )
 
