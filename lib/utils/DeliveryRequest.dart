@@ -19,6 +19,9 @@ DeliveryRequest deliveryRequestFromMap(Map<String, dynamic>value){
 
   DateTime startDate = DateTime.now();
   DateTime completionDate = DateTime.now();
+  int statusIndex;
+  (value["status"].runtimeType == int) ? statusIndex = value["status"] : statusIndex = int.parse(value["status"]);
+
   DeliveryRequest request = new DeliveryRequest(
     deliveryID: value["deliveryID"],
     requestingUser: null,
@@ -38,7 +41,7 @@ DeliveryRequest deliveryRequestFromMap(Map<String, dynamic>value){
     startDate:   startDate,
     pickupPersonName: value["pickupPersonName"],
     pickupPersonNumber: value["pickupPersonNumber"],
-    status: DeliveryStatus.values[value["status"]],
+    status: DeliveryStatus.values[statusIndex],
     packageType: PackageType.values[value["packageType"]],
     paymentMethod: PaymentMethod.values[value["paymentMethod"]],
 
@@ -274,7 +277,6 @@ DocumentReference get reference => this.__reference;
   Map<String, dynamic> asMap(){
     return {
       "deliveryID" : deliveryID ?? __generateID(),
-      // "requestingUser" : requestingUser.asMap(),
       'requestDate' : requestDate.toString(),
       'startDate' : startDate.toString(),
       'dropOffLocation' : dropOffLocation.asMap(),

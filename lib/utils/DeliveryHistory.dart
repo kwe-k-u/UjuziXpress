@@ -40,12 +40,4 @@ class DeliveryHistory{
   }
 
 
-  void __sortPending(){}//method to sort the pending list by ongoing and pendinging and then by date
-
-
-
-
-
-
-
 }

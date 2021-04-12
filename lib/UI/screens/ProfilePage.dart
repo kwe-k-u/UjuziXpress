@@ -307,67 +307,72 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Profile"),
-        centerTitle: true,
-      ),
-      body: FutureBuilder(
-        future: getUserCreditCard(widget.user.id),
-        builder: (context, snapshot){
-          return Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 8.0),
-                height: MediaQuery.of(context).size.height * 0.05,
-                child: ToggleButtons(
-                  borderWidth: 1.5,
-                  isSelected: selectedArray,
-                  color: Colors.black,
-                  borderColor: Colors.black,
-                  borderRadius: BorderRadius.all(Radius.circular(24.0)),
-                  fillColor: Colors.deepPurple,
-                  onPressed: (index) {
-                    selectedArray = [false, false];
-                    setState(() {
-                      selectedArray[index] = true;
-                    });
-                  },
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.45,
-                      child: Text(
-                        "Profile",
-                        textAlign: TextAlign.center,
-                        style: selectedArray.elementAt(0)
-                            ? selectedText
-                            : TextStyle(fontWeight: FontWeight.bold),
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Profile"),
+          centerTitle: true,
+        ),
+        body: FutureBuilder(
+          future: getUserCreditCard(widget.user.id),
+          builder: (context, snapshot){
+            return Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 8.0),
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  child: ToggleButtons(
+                    borderWidth: 1.5,
+                    isSelected: selectedArray,
+                    color: Colors.black,
+                    borderColor: Colors.black,
+                    borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                    fillColor: Colors.deepPurple,
+                    onPressed: (index) {
+                      selectedArray = [false, false];
+                      setState(() {
+                        selectedArray[index] = true;
+                      });
+                    },
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        child: Text(
+                          "Profile",
+                          textAlign: TextAlign.center,
+                          style: selectedArray.elementAt(0)
+                              ? selectedText
+                              : TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.45,
-                      child: Text(
-                        "Credit card",
-                        textAlign: TextAlign.center,
-                        style: selectedArray.elementAt(1)
-                            ? selectedText
-                            : TextStyle(fontWeight: FontWeight.bold),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        child: Text(
+                          "Credit card",
+                          textAlign: TextAlign.center,
+                          style: selectedArray.elementAt(1)
+                              ? selectedText
+                              : TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
 
-              Expanded(
-                flex: 1,
-              child: display(size, selectedArray.elementAt(0), snapshot))
-
-
-            ],
-          );
+                Expanded(
+                  flex: 1,
+                child: display(size, selectedArray.elementAt(0), snapshot))
 
 
-        },
+              ],
+            );
+
+
+          },
+        ),
       ),
     );
   }

@@ -31,6 +31,7 @@ class _PickLocationPageState extends State<PickLocationPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.85,
               child: GoogleMap(
+
                 initialCameraPosition: position,
                 markers: markers.toSet(),
                 onMapCreated: (controler){

@@ -28,6 +28,8 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
   String displayDate(DateTime date){
     // DateTime date = deliveryRequest.requestDate;
+    if (date == null)
+      return "";
 
     return "${date.day}/${date.month}/${date.year}";
   }
@@ -94,7 +96,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                       TextSpan(
 
-                        text: displayDate(deliveryRequest.completionDate ?? DateTime.now()), //todo remove datetime.now
+                        text: displayDate(deliveryRequest.completionDate),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
 
