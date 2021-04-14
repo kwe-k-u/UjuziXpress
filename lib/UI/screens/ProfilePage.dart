@@ -8,6 +8,7 @@ import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 import 'package:ujuzi_xpress/utils/LocationHandler.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfilePage extends StatefulWidget {
   @required
@@ -26,7 +27,6 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController ccv = new TextEditingController();
   TextEditingController cardHolderName = new TextEditingController();
   TextEditingController cardNumber = new TextEditingController();
-  final List<String> months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
 
 
@@ -54,6 +54,22 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
   Widget display(Size size, bool profileBool, AsyncSnapshot snapshot) {
+
+    final List<dynamic> months = [
+      AppLocalizations.of(context).jan,
+      AppLocalizations.of(context).feb,
+      AppLocalizations.of(context).mar,
+      AppLocalizations.of(context).apr,
+      AppLocalizations.of(context).may,
+      AppLocalizations.of(context).jun,
+      AppLocalizations.of(context).jul,
+      AppLocalizations.of(context).aug,
+      AppLocalizations.of(context).sept,
+      AppLocalizations.of(context).oct,
+      AppLocalizations.of(context).nov,
+      AppLocalizations.of(context).dec
+    ];
+
     if (profileBool) {
       return SingleChildScrollView(
         child: Container(
@@ -79,21 +95,21 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
               CustomTextField(
-                label: "Username",
+                label:   AppLocalizations.of(context).username,
                 labelColor: Colors.grey,
                 color: Colors.black,
                 widthFactor: 0.85,
                 controller: username,
               ),
               CustomTextField(
-                label: "Number",
+                label:   AppLocalizations.of(context).phoneNumber,
                 labelColor: Colors.grey,
                 color: Colors.black,
                 widthFactor: 0.85,
                 controller: number,
               ),
               CustomTextField(
-                label: "Default Pickup person location",
+                label:   AppLocalizations.of(context).default_pickup_person_location,
                 color: Colors.black,
                 labelColor: Colors.grey,
                 widthFactor: 0.85,
@@ -115,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: CustomRoundedButton(
-                  text: "Update profile".toUpperCase(),
+                  text:   AppLocalizations.of(context).update_profile.toUpperCase(),
                   textColor: Colors.white,
                   onPressed: () {
 
@@ -152,7 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CustomTextField(
-              label: "Cardholder Name",
+              label:   AppLocalizations.of(context).cardholder_name,
               labelColor: Colors.grey,
               color: Colors.black,
               controller: cardHolderName,
@@ -174,7 +190,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         });
                     },
                     currentTime: expiryDate,
-                    locale: LocaleType.en
+                    locale: LocaleType.en //todo get to work with local running on   AppLocalizations.delegate
                 );
               },
               child:Padding(
@@ -186,7 +202,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            Text("Day"),
+                            Text(  AppLocalizations.of(context).day),
                             Text(this.expiryDate.day.toString(), style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: Theme.of(context).textTheme.subtitle1.fontSize
@@ -201,7 +217,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            Text("Month"),
+                            Text(AppLocalizations.of(context).month),
                             Text(months.elementAt(expiryDate.month-1), style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: Theme.of(context).textTheme.subtitle1.fontSize
@@ -216,7 +232,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            Text("Year"),
+                            Text(AppLocalizations.of(context).year),
                             Text(expiryDate.year.toString(), style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: Theme.of(context).textTheme.subtitle1.fontSize
@@ -233,7 +249,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
             CustomTextField(
-              label: "Card Number",
+              label: AppLocalizations.of(context).card_number,
               labelColor: Colors.grey,
               color: Colors.black,
               controller: cardNumber,
@@ -241,7 +257,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
 
             CustomTextField(
-              label: "CCV",
+              label: AppLocalizations.of(context).ccv,
               labelColor: Colors.grey,
               color: Colors.black,
               controller: ccv,
@@ -254,7 +270,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: CustomRoundedButton(
-                text: "Update card details".toUpperCase(),
+                text: AppLocalizations.of(context).update_card_details.toUpperCase(),
                 textColor: Colors.white,
                 onPressed: (){
 
@@ -313,7 +329,7 @@ class _ProfilePageState extends State<ProfilePage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Profile"),
+          title: Text(AppLocalizations.of(context).profile),
           centerTitle: true,
         ),
         body: FutureBuilder(
@@ -341,7 +357,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Container(
                         width: MediaQuery.of(context).size.width * 0.45,
                         child: Text(
-                          "Profile",
+                          AppLocalizations.of(context).profile,
                           textAlign: TextAlign.center,
                           style: selectedArray.elementAt(0)
                               ? selectedText
@@ -351,7 +367,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Container(
                         width: MediaQuery.of(context).size.width * 0.45,
                         child: Text(
-                          "Credit card",
+                          AppLocalizations.of(context).credit_card,
                           textAlign: TextAlign.center,
                           style: selectedArray.elementAt(1)
                               ? selectedText

@@ -1,6 +1,98 @@
 {
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
+  "signin": "sign in",
+  "signinwith" : "sign up with",
+  "username": "Username",
+  "email": "Email",
+  "password": "Password",
+  "phoneNumber": "Phone number",
+  "@signin": {
     "description": "The conventional newborn programmer greeting"
-  }
+  },
+
+
+  "login": "log in",
+  "connect_with" : "Connect with",
+  "sign_up" : "Sign up",
+  "dont_have_an_account_yet" : "Don't have an account yet?",
+
+  "pickup_person_details": "Pick-up person details",
+  "pickup_person_name" : "Pick-up person name",
+  "pickup_person_number": "Pick-up person number",
+  "pickup_person_location": "Pick-up person location",
+  "where_to": "Where to?",
+  "pickup_details" : "Pick-up details",
+  "dropoff_person_name": "Drop-off person name",
+  "dropoff_person_number": "Drop-off person number",
+  "notes": "Notes",
+  "package_type": "Package Type",
+  "letter": "Letter",
+  "parcel": "Parcel",
+  "large": "Large",
+  "payment_method": "Payment method",
+  "payment_on_delivery": "Payment on delivery",
+  "payment_on_pickup": "Payment on pick up",
+  "payment_via_credit_card": "Payment via Credit Card",
+  "request_delivery": "request delivery",
+
+
+  "jan": "Jan",
+  "feb": "Feb",
+  "mar": "Mar",
+  "apr": "Apr",
+  "may": "May",
+  "jun": "Jun",
+  "jul": "Jul",
+  "aug": "Aug",
+  "sept": "Sept",
+  "oct": "Oct",
+  "nov": "Nov",
+  "dec": "Dec",
+
+  "default_pickup_person_location": "Default pick up person location",
+  "update_profile": "update profile",
+  "cardholder_name": "Card holder Name",
+  "day": "day",
+  "credit_card": "Credit card",
+  "profile": "Profile",
+
+  "select": "Select",
+  "complete": "complete",
+  "in_progress": "in progress",
+  "pending": "pending",
+  "cancelled": "cancelled",
+  "canceled": "cancelled",
+  "error": "error",
+
+  "order_no": "order No",
+  "order": "order ",
+  "order_date": "order date",
+  "status": "Status",
+  "date_completed": "Date completed",
+  "from": "from",
+  "to": "to",
+  "dropoff_person_details": "Drop off person details",
+  "number": "number",
+  "location": "location",
+
+  "pickup_location": "Pick up location",
+  "dropoff_location": "Drop off location",
+  "view_package_information": "View Package Information",
+  "no_requests": "No requests",
+  "my_orders": "My Orders",
+
+  "welcome": "Welcome",
+  "view_history": "View History",
+  "raise_a_claim": "Raise a claim",
+  "terms_and_conditions": "Terms and conditions",
+  "sign_out": "Sign out",
+  "view_order": "View order",
+  "create_order": "create order",
+
+  "in_transit": "In transit",
+  "month": "Month",
+  "year": "Year",
+  "card_number": "Card Number",
+  "ccv": "CCV",
+  "update_card_details": "Update Card Details"
+
 }

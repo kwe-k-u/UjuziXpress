@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
@@ -11,18 +12,18 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
 
 
-  Widget displayStatus(){
+  Widget displayStatus(BuildContext context){
     switch(deliveryRequest.status){
       case DeliveryStatus.complete:
-        return Text("COMPLETE",style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),);
+        return Text(AppLocalizations.of(context).complete,style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),);
       case DeliveryStatus.ongoing:
-        return Text("IN PROGRESS",style: TextStyle(color: Colors.indigo, fontWeight: FontWeight.bold),);
+        return Text(AppLocalizations.of(context).in_progress.toUpperCase(),style: TextStyle(color: Colors.indigo, fontWeight: FontWeight.bold),);
       case DeliveryStatus.pending:
-        return Text("PENDING",style: TextStyle(color: Colors.yellow, fontWeight: FontWeight.bold),);
+        return Text(AppLocalizations.of(context).pending.toUpperCase(),style: TextStyle(color: Colors.yellow, fontWeight: FontWeight.bold),);
       case DeliveryStatus.cancelled:
-        return Text("CANCELLED",style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),);
+        return Text(AppLocalizations.of(context).cancelled.toUpperCase(),style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),);
       default:
-        return Text("Error");
+        return Text(AppLocalizations.of(context).error);
     }
   }
 
@@ -41,7 +42,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        title: Text("Order".toUpperCase(),
+        title: Text(AppLocalizations.of(context).order.toUpperCase(),
           style: TextStyle(
               color: Colors.black
           ),
@@ -69,15 +70,15 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ListTile(
-                title: Text("Order No: ${deliveryRequest.deliveryID}"),
+                title: Text("${AppLocalizations.of(context).order_no} ${deliveryRequest.deliveryID}"),
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top:4.0),
-                  child: Text("order date: ${displayDate(deliveryRequest.requestDate)}"),
+                  child: Text("${AppLocalizations.of(context).order_date} ${displayDate(deliveryRequest.requestDate)}"),
                 ),
                 trailing: Column(
                   children: [
-                    Text("Status"),
-                    displayStatus(),
+                    Text(AppLocalizations.of(context).status),
+                    displayStatus(context),
                   ],
                 ),
               ),
@@ -87,7 +88,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                     children: [
                       TextSpan(
-                        text: "Date completed: \t",
+                        text: "${AppLocalizations.of(context).date_completed} \t",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
@@ -111,7 +112,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                     children: [
                       TextSpan(
-                        text: "Package Type: \t",
+                        text: "${AppLocalizations.of(context).package_type}:\t",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
@@ -120,6 +121,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                       TextSpan(
 
+                        //todo language translation?
                         text: deliveryRequest.status.toString().split(".")[1], //todo remove datetime.now
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -149,7 +151,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                         children: [
                           TextSpan(
-                            text: "From: \t",
+                            text: "${AppLocalizations.of(context).from}\t",
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               color: Colors.black,
@@ -158,7 +160,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                           TextSpan(
 
-                            text: "Pickup Person Details",
+                            text: AppLocalizations.of(context).pickup_person_details,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
 
@@ -168,7 +170,6 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
                         ]
                     ),
                   ),
-                  // Text("From: Billy's house"),
                 ],
               ),
 
@@ -177,7 +178,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                     children: [
                       TextSpan(
-                        text: "Pickup Person Name: \t",
+                        text: "${AppLocalizations.of(context).pickup_person_name}\t",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
@@ -262,7 +263,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                           children: [
                             TextSpan(
-                              text: "To: \t",
+                              text: "${AppLocalizations.of(context).to}\t",
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 color: Colors.black,
@@ -271,7 +272,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                             TextSpan(
 
-                              text: "Drop off Person Details",
+                              text: AppLocalizations.of(context).dropoff_person_details,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
 
@@ -293,7 +294,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                     children: [
                       TextSpan(
-                        text: "Pickup Person Name: \t",
+                        text: "${AppLocalizations.of(context).pickup_person_name}:\t",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
@@ -318,7 +319,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                     children: [
                       TextSpan(
-                        text: "Number: \t",
+                        text: "${AppLocalizations.of(context).number}:\t",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
@@ -343,7 +344,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                     children: [
                       TextSpan(
-                        text: "Location: \t",
+                        text: "${AppLocalizations.of(context).location}:\t",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,

@@ -6,6 +6,7 @@ import 'package:ujuzi_xpress/UI/widgets/DeliveryStatusTile.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 import 'package:ujuzi_xpress/utils/Directions.dart';
 import 'package:ujuzi_xpress/utils/LocationHandler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class DeliveryReceiptWithMapPage extends StatefulWidget {
@@ -40,7 +41,7 @@ GoogleMapController _googleMapController;
         );
 
     markers.add(new Marker(
-        markerId: MarkerId('pickup location'),
+        markerId: MarkerId(AppLocalizations.of(context).pickup_location),
         position: widget.deliveryRequest.pickupLocation.location,
         icon: BitmapDescriptor.defaultMarkerWithHue(120),
       infoWindow: InfoWindow(title: "pickup")
@@ -48,7 +49,7 @@ GoogleMapController _googleMapController;
 
 
     markers.add(new Marker(
-        markerId: MarkerId('dropOff location'),
+        markerId: MarkerId(AppLocalizations.of(context).dropoff_location),
         position: widget.deliveryRequest.dropOffLocation.location
     ));
 
@@ -188,7 +189,7 @@ GoogleMapController _googleMapController;
                         ),
 
                         CustomRoundedButton(
-                          text: "View Package Information",
+                          text: AppLocalizations.of(context).view_package_information,
                           textColor: Colors.white,
                           elevation: 0,
                           widthFactor: 0.25,

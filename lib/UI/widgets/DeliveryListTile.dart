@@ -3,6 +3,7 @@ import 'package:ujuzi_xpress/UI/screens/DeliveryReceiptWithMapPage.dart';
 import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class DeliveryListTile extends StatelessWidget {
@@ -13,18 +14,18 @@ DeliveryListTile({@required this.deliveryRequest, this.user});
 
 
 
-Widget displayStatus(){
+Widget displayStatus(BuildContext context){
   switch(deliveryRequest.status){
     case DeliveryStatus.complete:
-      return Text("COMPLETE",style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),);
+      return Text(AppLocalizations.of(context).complete.toUpperCase(),style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),);
     case DeliveryStatus.ongoing:
-      return Text("IN PROGRESS",style: TextStyle(color: Colors.indigo, fontWeight: FontWeight.bold),);
+      return Text(AppLocalizations.of(context).in_progress.toUpperCase(),style: TextStyle(color: Colors.indigo, fontWeight: FontWeight.bold),);
     case DeliveryStatus.pending:
-      return Text("PENDING",style: TextStyle(color: Colors.yellow, fontWeight: FontWeight.bold),);
+      return Text(AppLocalizations.of(context).pending.toUpperCase(),style: TextStyle(color: Colors.yellow, fontWeight: FontWeight.bold),);
     case DeliveryStatus.cancelled:
-      return Text("CANCELLED",style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),);
+      return Text(AppLocalizations.of(context).cancelled.toUpperCase(),style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),);
     default:
-      return Text("Error");
+      return Text(AppLocalizations.of(context).error);
   }
 }
 
@@ -64,15 +65,15 @@ String displayDate(){
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ListTile(
-              title: Text("Order No: ${deliveryRequest.deliveryID}"),
+              title: Text("${AppLocalizations.of(context).order_no}: ${deliveryRequest.deliveryID}"),
               subtitle: Padding(
                 padding: const EdgeInsets.only(top:4.0),
-                child: Text("order date: ${displayDate()}"),
+                child: Text("${AppLocalizations.of(context).order_date}: ${displayDate()}"),
               ),
               trailing: Column(
                 children: [
-                  Text("Status"),
-                  displayStatus(),
+                  Text(AppLocalizations.of(context).status),
+                  displayStatus(context),
                 ],
               ),
             ),
@@ -96,7 +97,7 @@ String displayDate(){
 
                       children: [
                         TextSpan(
-                            text: "From: \t",
+                            text: "${AppLocalizations.of(context).from}:\t",
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
                               color: Colors.black,
@@ -133,7 +134,7 @@ String displayDate(){
 
                         children: [
                           TextSpan(
-                            text: "To: \t",
+                            text: "${AppLocalizations.of(context).to}:\t",
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               color: Colors.black,

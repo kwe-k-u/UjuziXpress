@@ -64,7 +64,7 @@ class _SignupPageState extends State<SignupPage> {
 
                   Row(
                     children: [
-                      Text(AppLocalizations.of(context).helloWorld,
+                      Text(AppLocalizations.of(context).signin.toUpperCase(),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ class _SignupPageState extends State<SignupPage> {
 
                   Spacer(flex: 1,),
                   Center(
-                      child: Text("SIGN UP WITH",
+                      child: Text(AppLocalizations.of(context).signinwith.toUpperCase(),
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -127,28 +127,28 @@ class _SignupPageState extends State<SignupPage> {
 
                   //Name
                   CustomTextField(
-                    label: "Name",
+                    label: AppLocalizations.of(context).username,
                     inputType: TextInputType.name,
                     controller: nameController,
                   ),
 
                   //Email
                   CustomTextField(
-                    label: "Email",
+                    label: AppLocalizations.of(context).email,
                     inputType: TextInputType.emailAddress,
                     controller: emailController,
                   ),
 
                   //Password
                   CustomTextField(
-                    label: "Password",
+                    label:  AppLocalizations.of(context).password,
                     obscureText: true,
                     controller: passwordController,
                   ),
 
                   //number
                   CustomTextField(
-                    label: "Phone number",
+                    label:  AppLocalizations.of(context).signin,
                     inputType: TextInputType.phone,
                     controller: numberController,
                   ),
@@ -159,7 +159,7 @@ class _SignupPageState extends State<SignupPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CustomTextButton(
-                      actionText: "Login",
+                      actionText:  AppLocalizations.of(context).localeName,
                       onPressed: (){
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context)=> LoginPage())

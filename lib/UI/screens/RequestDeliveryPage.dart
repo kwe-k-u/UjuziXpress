@@ -7,6 +7,7 @@ import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 import 'package:ujuzi_xpress/utils/LocationHandler.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class RequestDeliveryPage extends StatefulWidget {
@@ -121,7 +122,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
                     header: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("Pickup Person details"),
+                      child: Text(AppLocalizations.of(context).pickup_person_details),
                     ), //todo prefill with the ujuzi user's details
                     collapsed: Container(
                       padding: EdgeInsets.all(8),
@@ -139,7 +140,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
 
                           CustomTextField(
-                            label: "Pickup person name",
+                            label: AppLocalizations.of(context).pickup_person_name,
                             value: requestingUser.username,
                             color: Colors.black,
                             onChanged: (value){
@@ -155,7 +156,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
 
                           CustomTextField(
-                            label: "Pickup person Number",
+                            label: AppLocalizations.of(context).pickup_person_number,
                             color: Colors.black,
                             inputType: TextInputType.number,
                             labelColor: Colors.grey,
@@ -173,7 +174,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
 
                           CustomTextField(
-                            label: "Pickup person location",
+                            label: AppLocalizations.of(context).pickup_person_location,
                             color: Colors.black,
                             labelColor: Colors.grey,
                             widthFactor: 0.85,
@@ -199,7 +200,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
 
                 CustomTextField(
-                  label: "Where to?",
+                  label: AppLocalizations.of(context).where_to,
                   color: Colors.black,
                   labelColor: Colors.grey,
                   widthFactor: 0.85,
@@ -234,7 +235,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 40.0, left: 32.0),
                     child: Text(
-                      "Package Details",
+                      AppLocalizations.of(context).pickup_details,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0
@@ -245,7 +246,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
                 CustomTextField(
                   controller: dropOffPersonName,
-                  label: "DropOff person name",
+                  label: AppLocalizations.of(context).dropoff_person_name,
                   color: Colors.black,
                   onChanged: (value){
                   },
@@ -255,7 +256,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
 
                 CustomTextField(
-                  label: "DropOff person Number",
+                  label: AppLocalizations.of(context).dropoff_person_number,
                   color: Colors.black,
                   labelColor: Colors.grey,
                   inputType: TextInputType.number,
@@ -272,7 +273,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
 
                 CustomTextField(
-                  label: "Notes",
+                  label: AppLocalizations.of(context).notes,
                   color: Colors.black,
                   labelColor: Colors.grey,
                   widthFactor: 0.85,
@@ -291,7 +292,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 36.0),
-                      child: Text("Package Type: "),
+                      child: Text("${AppLocalizations.of(context).package_type}: "),
                     ),
 
                     Padding(
@@ -303,12 +304,12 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
                           });
                         },
-                        hint: Text("Package type"),
+                        hint: Text(AppLocalizations.of(context).package_type),
                         value: packageType,
                         items: [
-                          DropdownMenuItem(value: PackageType.letter, child: Text("Letter")),
-                          DropdownMenuItem(value: PackageType.parcel, child: Text("Parcel")),
-                          DropdownMenuItem(value: PackageType.large, child: Text("Large")),
+                          DropdownMenuItem(value: PackageType.letter, child: Text(AppLocalizations.of(context).letter)),
+                          DropdownMenuItem(value: PackageType.parcel, child: Text(AppLocalizations.of(context).parcel)),
+                          DropdownMenuItem(value: PackageType.large, child: Text(AppLocalizations.of(context).large)),
                         ],
                       ),
                     ),
@@ -321,7 +322,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Payment Method: "),
+                      Text("${AppLocalizations.of(context).payment_method}: "),
 
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),
@@ -331,12 +332,12 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                               paymentMethod = value;
                             });
                           },
-                          hint: Text("Payment method"),
+                          hint: Text(AppLocalizations.of(context).payment_method),
                           value: paymentMethod,
                           items: [
-                            DropdownMenuItem(value: PaymentMethod.paymentOnDelivery, child: Text("Payment on delivery")),
-                            DropdownMenuItem(value: PaymentMethod.paymentOnPickup, child: Text("Payment on pickup")),
-                            DropdownMenuItem(value: PaymentMethod.creditCard, child: Text("Payment via Credit Card")),
+                            DropdownMenuItem(value: PaymentMethod.paymentOnDelivery, child: Text(AppLocalizations.of(context).payment_on_delivery)),
+                            DropdownMenuItem(value: PaymentMethod.paymentOnPickup, child: Text(AppLocalizations.of(context).payment_on_pickup)),
+                            DropdownMenuItem(value: PaymentMethod.creditCard, child: Text(AppLocalizations.of(context).payment_via_credit_card)),
                           ],
                         ),
                       ),
@@ -348,7 +349,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
 
                 CustomRoundedButton(
-                  text: "request delivery".toUpperCase(),
+                  text: AppLocalizations.of(context).request_delivery.toUpperCase(),
                   onPressed: (){
                     DeliveryRequest request = DeliveryRequest(
                       requestingUser: requestingUser,

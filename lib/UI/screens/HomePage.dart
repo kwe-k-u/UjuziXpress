@@ -8,6 +8,7 @@ import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -63,11 +64,11 @@ class _HomePageState extends State<HomePage> {
             ),
 
 
-            Text("Welcome ${widget.user.username}"),
+            Text("${AppLocalizations.of(context).welcome} ${widget.user.username}"),
 
 
             ListTile(
-              title: Text("Profile"),
+              title: Text(AppLocalizations.of(context).profile),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context)=>ProfilePage(user: widget.user))
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage> {
             ),
 
             ListTile(
-              title: Text("View History"),//
+              title: Text(AppLocalizations.of(context).view_history),//
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context)=>HistoryPage(user: widget.user))
@@ -85,16 +86,16 @@ class _HomePageState extends State<HomePage> {
             ),
 
             ListTile(
-              title: Text("Raise a claim"),//report problem
+              title: Text(AppLocalizations.of(context).raise_a_claim),//report problem
             ),
 
             ListTile(
-              title: Text("Terms and Conditions"),
+              title: Text(AppLocalizations.of(context).terms_and_conditions),
             ),
 
             OutlinedButton(
 
-              child: Text("Sign out"),
+              child: Text(AppLocalizations.of(context).sign_out),
                 onPressed: (){
                 FirebaseAuth.instance.signOut().then((value) {
 
@@ -139,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                             heightPadding: MediaQuery.of(context).size.height * 0.02,
                             textColor: Colors.black,
                             widthFactor: 0.3,
-                            text: "create order".toUpperCase()
+                            text: AppLocalizations.of(context).create_order.toUpperCase()
                         ),
 
                         Container(
@@ -155,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                               elevation: 0,
                               heightPadding: MediaQuery.of(context).size.height * 0.02,
                               textColor: Colors.black,
-                              text: "view order".toUpperCase()
+                              text: AppLocalizations.of(context).view_order.toUpperCase()
                           ),
                         ),
 

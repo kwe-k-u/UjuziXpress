@@ -11,6 +11,7 @@ import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/utils/Auth.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -62,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   Row(
                     children: [
-                      Text("LOGIN IN",
+                      Text(AppLocalizations.of(context).login.toUpperCase(),
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -75,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                   Spacer(flex: 1,),
 
                   Center(
-                      child: Text("Connect with",
+                      child: Text(AppLocalizations.of(context).connect_with,
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -129,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   //Email
                   CustomTextField(
-                    label: "Email",
+                    label: AppLocalizations.of(context).email,
                     controller: emailController,
                   ),
 
@@ -137,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: CustomTextField(
-                      label: "Password",
+                      label: AppLocalizations.of(context).password,
                       controller: passwordController,
                       obscureText: true,
                     ),
@@ -148,8 +149,8 @@ class _LoginPageState extends State<LoginPage> {
                   Spacer(flex: 2,),
                   Center(
                     child: CustomTextButton(
-                      foreText: "Don't have an account yet?",
-                      actionText:" Sign up",
+                      foreText: AppLocalizations.of(context).dont_have_an_account_yet,
+                      actionText:AppLocalizations.of(context).sign_up,
                       onPressed: (){
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context)=> SignupPage())
