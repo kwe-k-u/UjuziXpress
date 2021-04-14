@@ -22,7 +22,7 @@ class UjuziUser{
   DocumentReference get reference => this._reference;
 
 
-  UjuziUser({User user,String number,String name}){
+  UjuziUser({User user,String number,String name}){//todo what does name parameter accomplish?
 
     this._firebaseUser = user;
     getUserDetails(user.uid).then((value) => this._location = new DeliveryLocation(name: value["locationName"], lat: LatLng(value["latitude"], value["longitude"])));

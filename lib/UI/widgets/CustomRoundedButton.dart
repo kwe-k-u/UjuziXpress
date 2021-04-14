@@ -44,3 +44,10 @@ class CustomRoundedButton extends StatelessWidget {
         );
   }
 }
+
+
+
+
+
+
+enum ButtonState { loading, normal }
