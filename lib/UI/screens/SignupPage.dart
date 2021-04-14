@@ -9,7 +9,7 @@ import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/utils/Auth.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -64,7 +64,7 @@ class _SignupPageState extends State<SignupPage> {
 
                   Row(
                     children: [
-                      Text("SIGN UP",
+                      Text(AppLocalizations.of(context).helloWorld,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

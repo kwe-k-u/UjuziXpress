@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'UI/screens/Splash.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +18,16 @@ class MyApp extends StatelessWidget {
       title: 'Ujuzi Express',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
-      ),
+      ),localizationsDelegates: [
+      AppLocalizations.delegate,
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ],
+      supportedLocales: [
+        const Locale('en', ''), // English
+        const Locale('fr', '')
+      ],
       home: FutureBuilder(
         future: Firebase.initializeApp(),
         builder: (context,future){
