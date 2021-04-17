@@ -12,7 +12,7 @@ import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/utils/Auth.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -24,8 +24,6 @@ class _LoginPageState extends State<LoginPage> {
   AppResources _resources = AppResources();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
-
-
 
   @override
   void initState() {
@@ -47,100 +45,105 @@ class _LoginPageState extends State<LoginPage> {
     Size size = MediaQuery.of(context).size;
 
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         body: SingleChildScrollView(
           child: BackgroundWidget(
             child: Container(
-              padding: EdgeInsets.only(left: 16.0, top: size.height * 0.08, right: 8.0, bottom: size.height * 0.08),
+              padding: EdgeInsets.only(
+                  left: 16.0,
+                  top: size.height * 0.08,
+                  right: 8.0,
+                  bottom: size.height * 0.08),
               width: size.width,
               height: size.height,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Row(
                     children: [
-                      Text("LOGIN IN",
+                      Text(
+                        AppLocalizations.of(context).login.toUpperCase(),
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 24.0
-                        ),
+                            fontSize: 24.0),
                       )
                     ],
                   ),
 
-                  Spacer(flex: 1,),
+                  Spacer(
+                    flex: 1,
+                  ),
 
                   Center(
-                      child: Text("Connect with",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0
-                        ),
-                      )
-                  ),
+                      child: Text(
+                    AppLocalizations.of(context).connect_with,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0),
+                  )),
 
                   ButtonBar(
                     alignment: MainAxisAlignment.spaceAround,
                     children: [
                       CustomImageButton(
                         path: "assets/google_logo.png",
-                        onPressed: (){
-
-
-                          signInWithGoogle().then((value){
-
+                        onPressed: () {
+                          signInWithGoogle().then((value) {
                             UjuziUser user = new UjuziUser(user: value);
 
-                            if(user.email == null){//todo implement phone number check
-                            // if(user.number == null || user.email == null){
-                              _resources.showSnackBar(content:"Signed in as ${user.username}",context: context, actionLabel: "Complete profile details");
-                              Navigator.pushReplacement(context, MaterialPageRoute(
-                                  builder: (context)=> ProfilePage(user: user,)
-                              ));
-                            }
-                            else {
-                              _resources.showSnackBar(content:"Signed in as ${user.username}",context: context, actionLabel: "");
-                            Navigator.pushReplacement(
-                                  context, MaterialPageRoute(
-                                  builder: (context) => HomePage(user: user,)
-                              ));
+                            if (user.email == null) {
+                              //todo implement phone number check
+                              // if(user.number == null || user.email == null){
+                              _resources.showSnackBar(
+                                  content: "Signed in as ${user.username}",
+                                  context: context,
+                                  actionLabel: "Complete profile details");
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProfilePage(
+                                            user: user,
+                                          )));
+                            } else {
+                              _resources.showSnackBar(
+                                  content: "Signed in as ${user.username}",
+                                  context: context,
+                                  actionLabel: "");
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage(
+                                            user: user,
+                                          )));
                             }
                           });
-
-
-
                         },
                       ),
-
                       CustomImageButton(
                         path: "assets/facebook_logo.png",
-                        onPressed: (){
-
-                          _resources.showSnackBar(
-                            actionLabel: "",
-                            context: context,
-                            content: "Awaiting Facebook approval for implementation"
-                          );
-                        },
-                      ),
-
-                      CustomImageButton(
-                        path: "assets/twitter_logo.png",
-                        widthFactor: 0.14,
-                        onPressed: (){
-
+                        onPressed: () {
                           _resources.showSnackBar(
                               actionLabel: "",
                               context: context,
-                              content: "Awaiting Twitter approval for implementation"
-                          );
+                              content:
+                                  "Awaiting Facebook approval for implementation");
+                        },
+                      ),
+                      CustomImageButton(
+                        path: "assets/twitter_logo.png",
+                        widthFactor: 0.14,
+                        onPressed: () {
+                          _resources.showSnackBar(
+                              actionLabel: "",
+                              context: context,
+                              content:
+                                  "Awaiting Twitter approval for implementation");
                         },
                       ),
                     ],
@@ -148,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   //Email
                   CustomTextField(
-                    label: "Email",
+                    label: AppLocalizations.of(context).email,
                     controller: emailController,
                   ),
 
@@ -156,39 +159,41 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: CustomTextField(
-                      label: "Password",
+                      label: AppLocalizations.of(context).password,
                       controller: passwordController,
                       obscureText: true,
                     ),
                   ),
 
-
-
-                  Spacer(flex: 2,),
+                  Spacer(
+                    flex: 2,
+                  ),
                   Center(
                     child: CustomTextButton(
-                      foreText: "Don't have an account yet?",
-                      actionText:" Sign up",
-                      onPressed: (){
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context)=> SignupPage())
-                        );
+                      foreText:
+                          AppLocalizations.of(context).dont_have_an_account_yet,
+                      actionText: AppLocalizations.of(context).sign_up,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignupPage()));
                       },
                     ),
                   ),
 
-
                   Padding(
-                    padding: const EdgeInsets.only(right:8.0, top: 12.0),
+                    padding: const EdgeInsets.only(right: 8.0, top: 12.0),
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: CustomIconButton(
                         color: Colors.purple,
-                        onPressed: (){
+                        onPressed: () {
                           //todo authenticate
-                          Navigator.pushReplacement(context, MaterialPageRoute(
-                              builder: (context)=> HomePage()
-                          ));
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()));
                         },
                       ),
                     ),

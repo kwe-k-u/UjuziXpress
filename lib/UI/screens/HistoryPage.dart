@@ -5,6 +5,7 @@ import 'package:ujuzi_xpress/utils/DeliveryHistory.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 
@@ -64,7 +65,7 @@ class _HistoryPageState extends State<HistoryPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Orders'),
+        title: Text(AppLocalizations.of(context).my_orders),
         centerTitle: true,
       ),
 
@@ -98,7 +99,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       children: [
                         Container(
                           width: MediaQuery.of(context).size.width * 0.3,
-                          child: Text("Pending",
+                          child: Text(AppLocalizations.of(context).pending,
 
                             textAlign: TextAlign.center,
                             style: selectedArray.elementAt(0) ? selectedText : TextStyle(fontWeight: FontWeight.bold),),
@@ -107,14 +108,14 @@ class _HistoryPageState extends State<HistoryPage> {
 
                         Container(
                           width: MediaQuery.of(context).size.width * 0.3,
-                          child:  Text("completed",
+                          child:  Text(AppLocalizations.of(context).complete,
                             textAlign: TextAlign.center,
                             style: selectedArray.elementAt(1) ? selectedText : TextStyle(fontWeight: FontWeight.bold),),
                         ),
 
                         Container(
                           width: MediaQuery.of(context).size.width * 0.3,
-                          child: Text("Canceled",
+                          child: Text(AppLocalizations.of(context).cancelled,
                             textAlign: TextAlign.center,
                             style: selectedArray.elementAt(2) ? selectedText : TextStyle(fontWeight: FontWeight.bold),),
                         ),
@@ -131,7 +132,7 @@ class _HistoryPageState extends State<HistoryPage> {
                             deliveryRequest: requests.elementAt(index),
                           );
                         })
-                    : Center(child: Text("No requests"),),
+                    : Center(child: Text(AppLocalizations.of(context).no_requests),),
                   )
                 ],
               );

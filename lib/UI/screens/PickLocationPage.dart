@@ -5,6 +5,7 @@ import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/LocationHandler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class PickLocationPage extends StatefulWidget {
@@ -63,7 +64,7 @@ class _PickLocationPageState extends State<PickLocationPage> {
             Text(location.locationName),
 
             CustomRoundedButton(
-              text: "Select",
+              text: AppLocalizations.of(context).select,
               onPressed: (){
                 Navigator.pop(context, location);
               },

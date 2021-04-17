@@ -6,7 +6,6 @@
 
 
 
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -88,12 +87,10 @@ Future<Directions> getDirections(LatLng pickup, LatLng dropOff) async{
         'key' : "AIzaSyDVwR6I_C_e3Pe9LCnWPn1c0kHmMFckP7w"
       });
 
-  print('response ${response}');
   if (response.statusCode == 200)
     return Directions.fromMap(response.data);
 
 
-  print("fail");
   return null ;
 
 }
