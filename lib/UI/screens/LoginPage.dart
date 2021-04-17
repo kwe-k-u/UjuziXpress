@@ -11,6 +11,7 @@ import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/utils/Auth.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/resources.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -19,7 +20,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  // final GoogleSignIn _googleSignIn = GoogleSignIn();
+  AppResources _resources = AppResources();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
@@ -90,21 +92,28 @@ class _LoginPageState extends State<LoginPage> {
                       CustomImageButton(
                         path: "assets/google_logo.png",
                         onPressed: (){
+
+
                           signInWithGoogle().then((value){
 
                             UjuziUser user = new UjuziUser(user: value);
 
-                            if(user.number == null || user.email == null){
+                            if(user.email == null){//todo implement phone number check
+                            // if(user.number == null || user.email == null){
+                              _resources.showSnackBar(content:"Signed in as ${user.username}",context: context, actionLabel: "Complete profile details");
                               Navigator.pushReplacement(context, MaterialPageRoute(
                                   builder: (context)=> ProfilePage(user: user,)
                               ));
                             }
-
-
-                            Navigator.pushReplacement(context, MaterialPageRoute(
-                                builder: (context)=> HomePage(user: user,)
-                            ));
+                            else {
+                              _resources.showSnackBar(content:"Signed in as ${user.username}",context: context, actionLabel: "");
+                            Navigator.pushReplacement(
+                                  context, MaterialPageRoute(
+                                  builder: (context) => HomePage(user: user,)
+                              ));
+                            }
                           });
+
 
 
                         },
@@ -114,6 +123,11 @@ class _LoginPageState extends State<LoginPage> {
                         path: "assets/facebook_logo.png",
                         onPressed: (){
 
+                          _resources.showSnackBar(
+                            actionLabel: "",
+                            context: context,
+                            content: "Awaiting Facebook approval for implementation"
+                          );
                         },
                       ),
 
@@ -122,6 +136,11 @@ class _LoginPageState extends State<LoginPage> {
                         widthFactor: 0.14,
                         onPressed: (){
 
+                          _resources.showSnackBar(
+                              actionLabel: "",
+                              context: context,
+                              content: "Awaiting Twitter approval for implementation"
+                          );
                         },
                       ),
                     ],

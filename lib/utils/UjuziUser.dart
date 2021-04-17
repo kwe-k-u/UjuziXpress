@@ -41,7 +41,8 @@ class UjuziUser{
     this._firebaseUser.updateEmail(mail);
   }
 
-  void updateProfileImage(String url){//todo merge all updates into one function
+  void updateProfileImage(String url){
+    //todo merge all updates into one function
     //todo update profile image
     this._firebaseUser.updateProfile(photoURL:  url);
   }
@@ -51,7 +52,9 @@ class UjuziUser{
   // }
 
   void updateNumber(String newNumber) {
-    // this._firebaseUser.updatePhoneNumber(newNumber); //todo
+    //todo complete implementation
+    // postUserDetails(this.)
+    // this._firebaseUser.linkWithPhoneNumber(newNumber, RecaptchaVerifier());
   }
 
 

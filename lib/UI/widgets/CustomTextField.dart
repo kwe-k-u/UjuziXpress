@@ -13,11 +13,13 @@ class CustomTextField extends StatefulWidget {
   final double widthFactor;
   final bool expanded;
   final String value;
+  final Function(String) validator;
   final Function(String value) onChanged;
 
   CustomTextField({
     this.label,
     this.value,
+    this.validator,
     this.icon,
     this.controller,
     this.obscureText = false,
@@ -93,7 +95,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       Container(
         padding: EdgeInsets.only(left: 8.0),
         width: size.width * widget.widthFactor,
-        child: TextField(
+        child: TextFormField(
+          validator: widget.validator,
           // focusNode: focusNode,
           obscureText: widget.obscureText,
           controller: widget.controller,
