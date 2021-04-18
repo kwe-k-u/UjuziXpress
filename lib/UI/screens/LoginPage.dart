@@ -9,8 +9,10 @@ import 'package:ujuzi_xpress/UI/widgets/CustomIconButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomImageButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
-import 'package:ujuzi_xpress/utils/Auth.dart';
+// import 'package:ujuzi_xpress/utils/Auth.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/bloc/authentication/login/login_bloc.dart';
+import 'package:ujuzi_xpress/utils/bloc/authentication/login/login_event.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -25,13 +27,15 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+  LoginBloc _loginBloc = LoginBloc();
 
   @override
   void initState() {
     super.initState();
+    _loginBloc.createInstance();
     emailController.clear();
     passwordController.clear();
-    firebaseAuth.signOut();
+    // firebaseAuth.signOut();
   }
 
   @override
@@ -97,37 +101,48 @@ class _LoginPageState extends State<LoginPage> {
                         CustomImageButton(
                           path: "assets/google_logo.png",
                           onPressed: () {
-                            signInWithGoogle().then((value) {
-                              UjuziUser user = new UjuziUser(user: value);
+                            _loginBloc.loginEventSink.add(GoogleLoginEvent(context));
+    //                         _loginBloc.loginEventSink.add(
+    //                         LoginEvent(this.username, this.password, this.context, this.route);)
+    //
+    // _loginBloc.loginEventSink.add(LoginEvent(
+    // _usernameController.text,
+    // _passwordController.text,
+    // context));
 
-                              if (user.email == null) {
-                                //todo implement phone number check
-                                // if(user.number == null || user.email == null){
-                                _resources.showSnackBar(
-                                    content: "Signed in as ${user.username}",
-                                    context: context,
-                                    actionLabel: "Complete profile details");
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ProfilePage(
-                                              user: user,
-                                            )));
-                              } else {
-                                _resources.showSnackBar(
-                                    content: "Signed in as ${user.username}",
-                                    context: context,
-                                    actionLabel: "");
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomePage(
-                                              user: user,
-                                            )));
-                              }
-                            });
+                            // signInWithGoogle().then((value) {
+                            //   UjuziUser user = new UjuziUser(user: value);
+                            //
+                            //   if (user.email == null) {
+                            //     //todo implement phone number check
+                            //     // if(user.number == null || user.email == null){
+                            //     _resources.showSnackBar(
+                            //         content: "Signed in as ${user.username}",
+                            //         context: context,
+                            //         actionLabel: "Complete profile details");
+                            //     Navigator.pushReplacement(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) => ProfilePage(
+                            //                   user: user,
+                            //                 )));
+                            //   } else {
+                            //     _resources.showSnackBar(
+                            //         content: "Signed in as ${user.username}",
+                            //         context: context,
+                            //         actionLabel: "");
+                            //     Navigator.pushReplacement(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) => HomePage(
+                            //                   user: user,
+                            //                 )));
+                            //   }
+                            // });
                           },
                         ),
+
+
                         CustomImageButton(
                           path: "assets/facebook_logo.png",
                           onPressed: () {
@@ -138,6 +153,8 @@ class _LoginPageState extends State<LoginPage> {
                                     "Awaiting Facebook approval for implementation");
                           },
                         ),
+
+
                         CustomImageButton(
                           path: "assets/twitter_logo.png",
                           widthFactor: 0.14,
@@ -203,14 +220,16 @@ class _LoginPageState extends State<LoginPage> {
                         alignment: Alignment.bottomRight,
                         child: CustomIconButton(
                           color: Colors.purple,
+                          loadStream: _loginBloc.loginButtonStateStream,
                           onPressed: () {
-                            //todo authenticate
-                            if (formKey.currentState.validate()){
 
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage()));
+                            if (formKey.currentState.validate()){
+                              _loginBloc.loginEventSink.add(EmailLoginEvent(context,emailController.text, passwordController.text));
+
+                            //   Navigator.pushReplacement(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (context) => HomePage()));
                             }
                           },
                         ),

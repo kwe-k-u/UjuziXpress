@@ -26,10 +26,6 @@ Future<User> signInWithGoogle() async {
   return user;
 }
 
-Future<User> loginWithEmail(String username, String password) async {
-  User user;//todo URGENT: implement
-  return  user;
-}
 
 
 
