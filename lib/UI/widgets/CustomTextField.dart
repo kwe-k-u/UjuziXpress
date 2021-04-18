@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ujuzi_xpress/utils/resources.dart';
 
 
 class CustomTextField extends StatefulWidget {
+
   @required final String label;
   final TextEditingController controller;
   final bool obscureText;
@@ -29,7 +31,8 @@ class CustomTextField extends StatefulWidget {
     this.inputType,
     this.widthFactor =0.7,
     this.expanded = false,
-    this.onChanged
+    this.onChanged,
+
 
 });
 
@@ -70,15 +73,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
               controller: widget.controller,
               minLines: 4,
               maxLines: 9,
-
               initialValue: widget.value,
               keyboardType: widget.inputType,
 
               decoration: InputDecoration(
+
                 focusedBorder:  OutlineInputBorder(
                     borderSide: BorderSide(color: widget.selectedColor, width: 1.5),
                 ),
-
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: widget.color, width: 1.5)
                 ),

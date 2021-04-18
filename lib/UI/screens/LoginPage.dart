@@ -22,6 +22,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   // final GoogleSignIn _googleSignIn = GoogleSignIn();
   AppResources _resources = AppResources();
+  final formKey = GlobalKey<FormState>();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
@@ -59,146 +60,164 @@ class _LoginPageState extends State<LoginPage> {
                   bottom: size.height * 0.08),
               width: size.width,
               height: size.height,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context).login.toUpperCase(),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24.0),
-                      )
-                    ],
-                  ),
-
-                  Spacer(
-                    flex: 1,
-                  ),
-
-                  Center(
-                      child: Text(
-                    AppLocalizations.of(context).connect_with,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0),
-                  )),
-
-                  ButtonBar(
-                    alignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CustomImageButton(
-                        path: "assets/google_logo.png",
-                        onPressed: () {
-                          signInWithGoogle().then((value) {
-                            UjuziUser user = new UjuziUser(user: value);
-
-                            if (user.email == null) {
-                              //todo implement phone number check
-                              // if(user.number == null || user.email == null){
-                              _resources.showSnackBar(
-                                  content: "Signed in as ${user.username}",
-                                  context: context,
-                                  actionLabel: "Complete profile details");
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ProfilePage(
-                                            user: user,
-                                          )));
-                            } else {
-                              _resources.showSnackBar(
-                                  content: "Signed in as ${user.username}",
-                                  context: context,
-                                  actionLabel: "");
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage(
-                                            user: user,
-                                          )));
-                            }
-                          });
-                        },
-                      ),
-                      CustomImageButton(
-                        path: "assets/facebook_logo.png",
-                        onPressed: () {
-                          _resources.showSnackBar(
-                              actionLabel: "",
-                              context: context,
-                              content:
-                                  "Awaiting Facebook approval for implementation");
-                        },
-                      ),
-                      CustomImageButton(
-                        path: "assets/twitter_logo.png",
-                        widthFactor: 0.14,
-                        onPressed: () {
-                          _resources.showSnackBar(
-                              actionLabel: "",
-                              context: context,
-                              content:
-                                  "Awaiting Twitter approval for implementation");
-                        },
-                      ),
-                    ],
-                  ),
-
-                  //Email
-                  CustomTextField(
-                    label: AppLocalizations.of(context).email,
-                    controller: emailController,
-                  ),
-
-                  //Password
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: CustomTextField(
-                      label: AppLocalizations.of(context).password,
-                      controller: passwordController,
-                      obscureText: true,
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context).login.toUpperCase(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24.0),
+                        )
+                      ],
                     ),
-                  ),
 
-                  Spacer(
-                    flex: 2,
-                  ),
-                  Center(
-                    child: CustomTextButton(
-                      foreText:
-                          AppLocalizations.of(context).dont_have_an_account_yet,
-                      actionText: AppLocalizations.of(context).sign_up,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignupPage()));
+                    Spacer(
+                      flex: 1,
+                    ),
+
+                    Center(
+                        child: Text(
+                      AppLocalizations.of(context).connect_with,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0),
+                    )),
+
+                    ButtonBar(
+                      alignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CustomImageButton(
+                          path: "assets/google_logo.png",
+                          onPressed: () {
+                            signInWithGoogle().then((value) {
+                              UjuziUser user = new UjuziUser(user: value);
+
+                              if (user.email == null) {
+                                //todo implement phone number check
+                                // if(user.number == null || user.email == null){
+                                _resources.showSnackBar(
+                                    content: "Signed in as ${user.username}",
+                                    context: context,
+                                    actionLabel: "Complete profile details");
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ProfilePage(
+                                              user: user,
+                                            )));
+                              } else {
+                                _resources.showSnackBar(
+                                    content: "Signed in as ${user.username}",
+                                    context: context,
+                                    actionLabel: "");
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomePage(
+                                              user: user,
+                                            )));
+                              }
+                            });
+                          },
+                        ),
+                        CustomImageButton(
+                          path: "assets/facebook_logo.png",
+                          onPressed: () {
+                            _resources.showSnackBar(
+                                actionLabel: "",
+                                context: context,
+                                content:
+                                    "Awaiting Facebook approval for implementation");
+                          },
+                        ),
+                        CustomImageButton(
+                          path: "assets/twitter_logo.png",
+                          widthFactor: 0.14,
+                          onPressed: () {
+                            _resources.showSnackBar(
+                                actionLabel: "",
+                                context: context,
+                                content:
+                                    "Awaiting Twitter approval for implementation");
+                          },
+                        ),
+                      ],
+                    ),
+
+                    //Email
+                    CustomTextField(
+                      label: AppLocalizations.of(context).email,
+                      controller: emailController,
+                      validator: (value){
+                        if (value == null || value.isEmpty)
+                          return 'This field cannot be empty';
                       },
                     ),
-                  ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0, top: 12.0),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: CustomIconButton(
-                        color: Colors.purple,
-                        onPressed: () {
-                          //todo authenticate
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage()));
+                    //Password
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: CustomTextField(
+                        label: AppLocalizations.of(context).password,
+                        controller: passwordController,
+                        obscureText: true,
+                        validator: (value){
+                          if (value == null || value.isEmpty)
+                            return 'This field cannot be empty';
                         },
                       ),
                     ),
-                  )
-                ],
+
+                    Spacer(
+                      flex: 2,
+                    ),
+
+
+                    Center(
+                      child: CustomTextButton(
+                        foreText:
+                            AppLocalizations.of(context).dont_have_an_account_yet,
+                        actionText: AppLocalizations.of(context).sign_up,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignupPage()));
+                        },
+                      ),
+                    ),
+
+
+
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0, top: 12.0),
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: CustomIconButton(
+                          color: Colors.purple,
+                          onPressed: () {
+                            //todo authenticate
+                            if (formKey.currentState.validate()){
+
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage()));
+                            }
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

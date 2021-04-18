@@ -66,7 +66,7 @@ class _SignupPageState extends State<SignupPage> {
                     Row(
                       children: [
                         Text(
-                          AppLocalizations.of(context).signin.toUpperCase(),
+                          AppLocalizations.of(context).sign_up.toUpperCase(),
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -137,7 +137,11 @@ class _SignupPageState extends State<SignupPage> {
                       inputType: TextInputType.name,
                       controller: nameController,
                       validator: (value) {
-                        print('value');
+                        if (value == null || value.isEmpty)
+                          //todo add to localisations
+                          return "This is a required field";
+                        else if (value.trim().length <=2)
+                          return "Name has to be longer than 2 characters";
                       },
                     ),
 
@@ -146,6 +150,14 @@ class _SignupPageState extends State<SignupPage> {
                       label: AppLocalizations.of(context).email,
                       inputType: TextInputType.emailAddress,
                       controller: emailController,
+                      validator: (value){
+                        if (value == null || value.isEmpty)
+                          return "This is a required field";
+                        else if (!value.contains("@") && !value.contains(".com"))
+                          return "enter a valid email address";
+                        else if (value.length <= 8)
+                          return 'Enter a valid email address';
+                      },
                     ),
 
                     //Password
@@ -153,13 +165,26 @@ class _SignupPageState extends State<SignupPage> {
                       label: AppLocalizations.of(context).password,
                       obscureText: true,
                       controller: passwordController,
+                      validator: (value){
+                        if (value == null || value.isEmpty)
+                          return "This is a required field";
+
+                        else if (value.trim().length <= 8)
+                          return 'Password must have more than 8 characters';
+                      },
                     ),
 
                     //number
                     CustomTextField(
-                      label: AppLocalizations.of(context).signin,
+                      label: AppLocalizations.of(context).phoneNumber,
                       inputType: TextInputType.phone,
                       controller: numberController,
+                      validator: (value){
+                        if (value == null || value.isEmpty)
+                          return "This is a required field";
+                        else if (value.length <= 9)
+                          return 'Enter a valid phone number address';
+                      },
                     ),
 
                     Spacer(
@@ -169,7 +194,7 @@ class _SignupPageState extends State<SignupPage> {
                     Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomTextButton(
-                          actionText: AppLocalizations.of(context).localeName,
+                          actionText: AppLocalizations.of(context).sign_up,
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -186,21 +211,30 @@ class _SignupPageState extends State<SignupPage> {
                         child: CustomIconButton(
                           color: Colors.purple,
                           onPressed: () async {
-                            //todo check password length and show snack if its not long enough
 
-                            signUpWithEmail(emailController.text,
-                                    passwordController.text)
-                                .then((value) {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage(
-                                            user: new UjuziUser(
-                                                user: value,
-                                                name: nameController.text,
-                                                number: numberController.text),
-                                          )));
-                            });
+                            if(formKey.currentState.validate()) {
+
+                              signUpWithEmail(emailController.text,
+                                  passwordController.text)
+                                  .then((value) {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            HomePage(
+                                              user: new UjuziUser(
+                                                  user: value,
+                                                  name: nameController.text,
+                                                  number: numberController
+                                                      .text),
+                                            )));
+                              });
+
+
+                            }else{
+                              resources.showSnackBar(context: context, content: "Registration requirements not met");
+                            }
+
                           },
                         ),
                       ),
