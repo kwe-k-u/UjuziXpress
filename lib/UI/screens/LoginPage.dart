@@ -1,16 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:ujuzi_xpress/UI/screens/HomePage.dart';
-import 'package:ujuzi_xpress/UI/screens/ProfilePage.dart';
 import 'package:ujuzi_xpress/UI/screens/SignupPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/BackgroundWidget.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomIconButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomImageButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
-// import 'package:ujuzi_xpress/utils/Auth.dart';
-import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/login/login_bloc.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/login/login_event.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
@@ -22,7 +16,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // final GoogleSignIn _googleSignIn = GoogleSignIn();
+
   AppResources _resources = AppResources();
   final formKey = GlobalKey<FormState>();
   TextEditingController emailController = new TextEditingController();
@@ -35,7 +29,6 @@ class _LoginPageState extends State<LoginPage> {
     _loginBloc.createInstance();
     emailController.clear();
     passwordController.clear();
-    // firebaseAuth.signOut();
   }
 
   @override
@@ -102,43 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                           path: "assets/google_logo.png",
                           onPressed: () {
                             _loginBloc.loginEventSink.add(GoogleLoginEvent(context));
-    //                         _loginBloc.loginEventSink.add(
-    //                         LoginEvent(this.username, this.password, this.context, this.route);)
-    //
-    // _loginBloc.loginEventSink.add(LoginEvent(
-    // _usernameController.text,
-    // _passwordController.text,
-    // context));
 
-                            // signInWithGoogle().then((value) {
-                            //   UjuziUser user = new UjuziUser(user: value);
-                            //
-                            //   if (user.email == null) {
-                            //     //todo implement phone number check
-                            //     // if(user.number == null || user.email == null){
-                            //     _resources.showSnackBar(
-                            //         content: "Signed in as ${user.username}",
-                            //         context: context,
-                            //         actionLabel: "Complete profile details");
-                            //     Navigator.pushReplacement(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) => ProfilePage(
-                            //                   user: user,
-                            //                 )));
-                            //   } else {
-                            //     _resources.showSnackBar(
-                            //         content: "Signed in as ${user.username}",
-                            //         context: context,
-                            //         actionLabel: "");
-                            //     Navigator.pushReplacement(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) => HomePage(
-                            //                   user: user,
-                            //                 )));
-                            //   }
-                            // });
                           },
                         ),
 

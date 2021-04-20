@@ -94,7 +94,6 @@ class LoginBloc {
     _loadingButtonStreamController.sink.add(ButtonState.normal);
 
     if (_loginState is LoginAuthenticated) {
-      //TODO: pass _loginState.user to next page
 
       Navigator.pushReplacement(_context, MaterialPageRoute(
           builder: (context)=> HomePage(user: _loginState.user,)
@@ -143,3 +142,4 @@ class LoginBloc {
     return null;
   }
 }
+

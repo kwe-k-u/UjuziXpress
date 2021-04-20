@@ -8,6 +8,8 @@ import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/utils/Auth.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/bloc/authentication/signup/sign_up_bloc.dart';
+import 'package:ujuzi_xpress/utils/bloc/authentication/signup/sign_up_event.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -23,6 +25,7 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController numberController = new TextEditingController();
   AppResources resources = AppResources();
   final formKey = GlobalKey<FormState>();
+  SignUpBloc _signUpBloc = new SignUpBloc();
 
   @override
   void initState() {
@@ -31,6 +34,18 @@ class _SignupPageState extends State<SignupPage> {
     passwordController.clear();
     nameController.clear();
     numberController.clear();
+    _signUpBloc.createInstance();
+  }
+  
+  @override
+  void dispose(){
+    super.dispose();
+
+    emailController.dispose();
+    passwordController.dispose();
+    nameController.dispose();
+    numberController.dispose();
+    _signUpBloc.dispose();
   }
 
   @override
@@ -93,19 +108,10 @@ class _SignupPageState extends State<SignupPage> {
                         CustomImageButton(
                           path: "assets/google_logo.png",
                           onPressed: () {
-                            signInWithGoogle().then((value) {
-                              // if (value.additionalUserInfo.isNewUser)
-                              //   Navigator.pushReplacement(context, MaterialPageRoute(
-                              //       builder: (context)=> ProfilePage(user: new UjuziUser(credential: value),)
-                              //   ));
 
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage(
-                                            user: new UjuziUser(user: value),
-                                          )));
-                            });
+                            _signUpBloc.signUpEventSink.add(GoogleSignUpEvent(context));
+                            
+
                           },
                         ),
                         CustomImageButton(
@@ -140,7 +146,7 @@ class _SignupPageState extends State<SignupPage> {
                         if (value == null || value.isEmpty)
                           //todo add to localisations
                           return "This is a required field";
-                        else if (value.trim().length <=2)
+                        else if (value.trim().length <= 2)
                           return "Name has to be longer than 2 characters";
                       },
                     ),
@@ -194,7 +200,7 @@ class _SignupPageState extends State<SignupPage> {
                     Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomTextButton(
-                          actionText: AppLocalizations.of(context).sign_up,
+                          actionText: AppLocalizations.of(context).login,
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -210,26 +216,14 @@ class _SignupPageState extends State<SignupPage> {
                         alignment: Alignment.centerRight,
                         child: CustomIconButton(
                           color: Colors.purple,
+                          loadStream: _signUpBloc.signUpButtonStateStream,
                           onPressed: () async {
 
                             if(formKey.currentState.validate()) {
 
-                              signUpWithEmail(emailController.text,
-                                  passwordController.text)
-                                  .then((value) {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            HomePage(
-                                              user: new UjuziUser(
-                                                  user: value,
-                                                  name: nameController.text,
-                                                  number: numberController
-                                                      .text),
-                                            )));
-                              });
-
+                              _signUpBloc.signUpEventSink.add(
+                                  EmailSignUpEvent(context,emailController.text, passwordController.text, nameController.text, numberController.text)
+                              );
 
                             }else{
                               resources.showSnackBar(context: context, content: "Registration requirements not met");

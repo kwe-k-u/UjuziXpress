@@ -1,12 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-// UjuziUser signedUser;///global variable for signed user
-FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
 Future<User> signInWithGoogle() async {
-  final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  await googleSignIn.signOut();
+  final GoogleSignInAccount googleUser = await googleSignIn.signIn();
   final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+
   // Create a new credential
   final GoogleAuthCredential googleCredential = GoogleAuthProvider.credential(
     accessToken: googleAuth.accessToken,
@@ -29,7 +34,9 @@ Future<User> signInWithGoogle() async {
 
 
 
-Future<User> signUpWithEmail(String email, String password) async{
+Future<User> signUpWithEmail(String email, String password, String username, String phoneNumber) async{
+
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   try {
     UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
@@ -45,6 +52,11 @@ Future<User> signUpWithEmail(String email, String password) async{
     assert (await user.getIdToken() != null);
 
     final User currentUser = firebaseAuth.currentUser;
+    //update display name
+    currentUser.updateProfile(displayName: username);
+    //update phone number
+    // currentUser.updatePhoneNumber(phoneCredential); //todo implement
+
     assert(currentUser.uid == user.uid);
 
     return user;
@@ -66,6 +78,7 @@ Future<User> signUpWithEmail(String email, String password) async{
 
 
 Future<void> signOut() async{
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   await firebaseAuth.signOut();
 
 
