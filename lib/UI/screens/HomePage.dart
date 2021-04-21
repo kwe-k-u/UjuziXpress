@@ -7,6 +7,7 @@ import 'package:ujuzi_xpress/UI/screens/ProfilePage.dart';
 import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
+import 'package:ujuzi_xpress/UI/widgets/profile_image.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
@@ -24,6 +25,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   AppResources _resources = new AppResources();
 
+
   @override
   Widget build(BuildContext context) {
     assert(widget.user != null); //ensure that the user is signed in
@@ -34,16 +36,18 @@ class _HomePageState extends State<HomePage> {
           GestureDetector(
             onTap: (){
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context)=> ProfilePage(user: widget.user,)))
-              ;
+                  MaterialPageRoute(builder: (context)=> ProfilePage(user: widget.user,))
+              );
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ClipOval(
-                child: widget.user.profileImageUrl != null ?
-                Image.network(
-                    widget.user.profileImageUrl,
-                ) : CircleAvatar(),
+              child: ProfileImage(
+                url: widget.user.profileImageUrl,
+                onPressed: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=> ProfilePage(user: widget.user,))
+                  );
+                },
               ),
             ),
           ),
@@ -57,11 +61,13 @@ class _HomePageState extends State<HomePage> {
 
             Padding(
               padding: const EdgeInsets.only(left:8.0, right: 8.0, top:24.0,bottom: 4.0),
-              child: ClipOval(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: widget.user.profileImageUrl != null ? Image.network(
-                  widget.user.profileImageUrl,
-                ) : CircleAvatar(),
+              child: ProfileImage(
+                url: widget.user.profileImageUrl,
+                onPressed: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=> ProfilePage(user: widget.user,))
+                  );
+                },
               ),
             ),
 
