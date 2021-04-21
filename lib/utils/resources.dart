@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 ///File containing the various nonwidget resources that will be used on
 ///multiple pages
@@ -24,11 +25,22 @@ class AppResources {
         });
   }
 
+  Future<void> launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
 
 
-
-  showSnackBar({String actionLabel,String content, BuildContext context}) {
+  showSnackBar({String actionLabel = "",String content = "", BuildContext context}) {
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.orangeAccent,

@@ -36,6 +36,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
+    _loginBloc.dispose();
   }
 
   @override
@@ -94,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                         CustomImageButton(
                           path: "assets/google_logo.png",
                           onPressed: () {
+
                             _loginBloc.loginEventSink.add(GoogleLoginEvent(context));
 
                           },
@@ -183,10 +185,6 @@ class _LoginPageState extends State<LoginPage> {
                             if (formKey.currentState.validate()){
                               _loginBloc.loginEventSink.add(EmailLoginEvent(context,emailController.text, passwordController.text));
 
-                            //   Navigator.pushReplacement(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) => HomePage()));
                             }
                           },
                         ),

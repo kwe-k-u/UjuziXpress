@@ -77,10 +77,39 @@ Future<User> signUpWithEmail(String email, String password, String username, Str
 
 
 
+Future<User> logInWithEmail(String email, String password) async{
+
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+        email: email,
+        password: password);
+
+    // Once signed in, return the UserCredential
+    UserCredential credential =  await firebaseAuth.signInWithCredential(userCredential.credential);
+    User user = credential.user;
+
+    assert(!user.isAnonymous);
+    assert (await user.getIdToken() != null);
+
+    final User currentUser = firebaseAuth.currentUser;
+    assert(currentUser.uid == user.uid);
+
+    return user;
+
+
+  }  catch (e) {
+    print(e);
+  }
+  return null;
+}
+
+
+
 Future<void> signOut() async{
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   await firebaseAuth.signOut();
-
 
 }
 

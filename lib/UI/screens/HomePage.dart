@@ -9,6 +9,7 @@ import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ujuzi_xpress/utils/resources.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -21,6 +22,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  AppResources _resources = new AppResources();
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +40,10 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ClipOval(
-                child: Image.network(
+                child: widget.user.profileImageUrl != null ?
+                Image.network(
                     widget.user.profileImageUrl,
-
-                ),
+                ) : CircleAvatar(),
               ),
             ),
           ),
@@ -54,17 +56,35 @@ class _HomePageState extends State<HomePage> {
           children: [
 
             Padding(
-              padding: const EdgeInsets.only(left:8.0, right: 8.0, top:12.0),
+              padding: const EdgeInsets.only(left:8.0, right: 8.0, top:24.0,bottom: 4.0),
               child: ClipOval(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: Image.network(
-                    widget.user.profileImageUrl,
-                ),
+                child: widget.user.profileImageUrl != null ? Image.network(
+                  widget.user.profileImageUrl,
+                ) : CircleAvatar(),
               ),
             ),
 
 
-            Text("${AppLocalizations.of(context).welcome} ${widget.user.username}"),
+            RichText(
+                text: TextSpan(
+                    text: AppLocalizations.of(context).welcome,
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: "\t${widget.user.username}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                        color: Colors.black,
+                      ),
+                      )
+                      ]
+                )
+            ),
 
 
             ListTile(
@@ -86,10 +106,12 @@ class _HomePageState extends State<HomePage> {
             ),
 
             ListTile(
+              onTap: (){_resources.launchUrl("https://www.ujuzibrain.com/");},
               title: Text(AppLocalizations.of(context).raise_a_claim),//report problem
             ),
 
             ListTile(
+              onTap: (){_resources.launchUrl("https://www.ujuzibrain.com/");},
               title: Text(AppLocalizations.of(context).terms_and_conditions),
             ),
 

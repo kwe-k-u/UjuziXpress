@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
 import 'package:ujuzi_xpress/UI/screens/HomePage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
@@ -95,9 +96,10 @@ class LoginBloc {
 
     if (_loginState is LoginAuthenticated) {
 
-      Navigator.pushReplacement(_context, MaterialPageRoute(
-          builder: (context)=> HomePage(user: _loginState.user,)
-      ));
+         Navigator.pushReplacement(_context, MaterialPageRoute(
+            builder: (_context)=> HomePage(user: _loginState.user,)
+        ));
+
     } else if (_loginState is LoginError) {
       _appResources.showAlertDialog(_loginState.message, _context);
     }
