@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
+import 'package:ujuzi_xpress/UI/widgets/custom_date_picker.dart';
+import 'package:ujuzi_xpress/UI/widgets/profile_image.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 import 'package:ujuzi_xpress/utils/LocationHandler.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ujuzi_xpress/utils/resources.dart';
 
 class ProfilePage extends StatefulWidget {
   @required
@@ -34,6 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
   DeliveryLocation deliveryLocation = new DeliveryLocation();
   String imageUrl;
   DateTime expiryDate = new DateTime.now();
+  AppResources resources = new AppResources();
 
   ButtonStyle selectedStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
@@ -55,20 +59,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget display(Size size, bool profileBool, AsyncSnapshot snapshot) {
 
-    final List<dynamic> months = [
-      AppLocalizations.of(context).jan,
-      AppLocalizations.of(context).feb,
-      AppLocalizations.of(context).mar,
-      AppLocalizations.of(context).apr,
-      AppLocalizations.of(context).may,
-      AppLocalizations.of(context).jun,
-      AppLocalizations.of(context).jul,
-      AppLocalizations.of(context).aug,
-      AppLocalizations.of(context).sept,
-      AppLocalizations.of(context).oct,
-      AppLocalizations.of(context).nov,
-      AppLocalizations.of(context).dec
-    ];
 
     if (profileBool) {
       return SingleChildScrollView(
@@ -87,9 +77,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
 
 
-                child: ClipOval(
-                  child: Image.network(widget.user
-                      .profileImageUrl), //ontap to change
+                child: ProfileImage(
+                  url: widget.user.profileImageUrl,
+                  onPressed: ()async{
+                    final image = await resources.pickImage();
+                    await uploadImage(image: image, user: widget.user);
+                  },
                 ),
               ),
 
@@ -175,6 +168,12 @@ class _ProfilePageState extends State<ProfilePage> {
               widthFactor: 0.85,
             ),
 
+            Container(
+              width: size.width,
+              padding: EdgeInsets.only(left: 30.0),
+              margin: EdgeInsets.only(top:30, bottom:4.0),
+                child: Text("Expiry date", style: TextStyle(color: Colors.grey),)
+            ),
 
             GestureDetector(
               onTap: (){
@@ -194,56 +193,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 );
               },
               child:Padding(
-                  padding: const EdgeInsets.symmetric(vertical:8.0, horizontal: 24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text(  AppLocalizations.of(context).day),
-                            Text(this.expiryDate.day.toString(), style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: Theme.of(context).textTheme.subtitle1.fontSize
-                            ),),
-                          ],
-                        ),
-                        width: size.width * 0.2,
-                        color: Colors.grey.withOpacity(0.6),
-                      ),
-
-                      Container(
-                        padding: EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text(AppLocalizations.of(context).month),
-                            Text(months.elementAt(expiryDate.month-1), style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: Theme.of(context).textTheme.subtitle1.fontSize
-                            ),),
-                          ],
-                        ),
-                        width: size.width * 0.3,
-                        color: Colors.grey.withOpacity(0.6),
-                      ),
-
-                      Container(
-                        padding: EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text(AppLocalizations.of(context).year),
-                            Text(expiryDate.year.toString(), style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: Theme.of(context).textTheme.subtitle1.fontSize
-                            ),),
-                          ],
-                        ),
-                        width: size.width * 0.2,
-                        color: Colors.grey.withOpacity(0.6),
-                      ),
-                    ],
-                  )
+                  padding: const EdgeInsets.only(top:4.0, bottom: 8.0, left: 24, right: 24),
+                  child: CustomDatePicker(date: expiryDate,)
               )
             ),
 

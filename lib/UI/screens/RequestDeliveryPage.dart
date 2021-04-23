@@ -141,14 +141,9 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
                           CustomTextField(
                             label: AppLocalizations.of(context).pickup_person_name,
-                            value: requestingUser.username,
                             color: Colors.black,
+                            controller: pickupPersonName,
                             onChanged: (value){
-                              setState(() {
-                                // requestingUser.updateUserName(value);
-                                pickupPersonName.text = value;
-
-                              });
                             },
                             widthFactor: 0.85,
                             labelColor: Colors.grey,
@@ -161,13 +156,8 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                             inputType: TextInputType.number,
                             labelColor: Colors.grey,
                             widthFactor: 0.85,
-                            value: requestingUser.number,
+                            controller: pickupPersonNumber,
                             onChanged: (value){
-                              setState(() {
-                                requestingUser.updateNumber(value);
-                                // pickupPersonNumber = value;
-
-                              });
                             },
                           ),
 

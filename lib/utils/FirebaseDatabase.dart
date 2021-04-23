@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
@@ -99,5 +101,16 @@ Future<List<DeliveryRequest>> getDeliveries(UjuziUser user) async {
 
 
 }
+
+
+
+
+Future<void> uploadImage({UjuziUser user, File image}) async{
+  FirebaseStorage storage = FirebaseStorage.instance;
+  await storage.ref("${user.id}/profileImage").putFile(image);
+  user.updateProfileImage(await storage.ref("${user.id}/profileImage").getDownloadURL());
+
+}
+
 
 

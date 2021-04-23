@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 ///File containing the various nonwidget resources that will be used on
@@ -54,5 +57,16 @@ class AppResources {
   }
 
 
+  Future<File> pickImage() async{
+
+    final picker = ImagePicker();
+
+      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        return File(pickedFile.path);
+        }
+      return null;
+
+  }
 
 }

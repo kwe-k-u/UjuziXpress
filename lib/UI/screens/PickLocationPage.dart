@@ -32,12 +32,18 @@ class _PickLocationPageState extends State<PickLocationPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.85,
               child: GoogleMap(
-
+                myLocationEnabled: true,
                 initialCameraPosition: position,
                 markers: markers.toSet(),
                 onMapCreated: (controler){
+
                   setState(() {
                     _controller = controler;
+                    determinePosition().then((value) {
+                      _controller.animateCamera(
+                          CameraUpdate.newLatLngZoom(value.location,14.0));
+
+                    });
                   });
                 },
 

@@ -33,6 +33,7 @@ class UjuziUser{
     this._firebaseUser.updateProfile(displayName: name); //todo display url
   }
 
+
   void updateDefaultLocation(DeliveryLocation location){
     this._location = location;
   }

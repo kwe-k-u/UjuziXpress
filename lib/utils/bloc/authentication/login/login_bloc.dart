@@ -6,7 +6,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
 import 'package:ujuzi_xpress/UI/screens/HomePage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
-import 'package:ujuzi_xpress/utils/Auth.dart';
+import 'file:///F:/Projects/Flutter/ujuzi_xpress/lib/utils/bloc/authentication/Auth.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/login/login_event.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/login/login_state.dart';

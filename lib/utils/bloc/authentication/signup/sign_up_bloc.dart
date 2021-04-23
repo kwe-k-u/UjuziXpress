@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/screens/HomePage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
-import 'package:ujuzi_xpress/utils/Auth.dart';
+import 'file:///F:/Projects/Flutter/ujuzi_xpress/lib/utils/bloc/authentication/Auth.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/signup/sign_up_event.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/signup/sign_up_state.dart';

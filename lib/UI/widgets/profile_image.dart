@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileImage extends StatefulWidget {
@@ -20,9 +21,22 @@ class _ProfileImageState extends State<ProfileImage> {
     GestureDetector(
       child: ClipOval(
         child: widget.url != null ?
-        Image.network(
-          widget.url,
-        ) : CircleAvatar(),
+        ConstrainedBox(
+          child: Image.network(
+            widget.url,
+            errorBuilder: (context,snapshot, stacktrace){
+              return CircleAvatar(
+                minRadius: 20,
+                maxRadius: 40,
+                child: Icon(Icons.error, size: 40.0,),
+              );
+            },
+          ),
+          constraints: BoxConstraints(minHeight:100, maxHeight: 150, minWidth: 60, maxWidth: 90),
+        ) : CircleAvatar(
+          minRadius: 20,
+          maxRadius: 40,
+          child: Icon(Icons.person, size: 40.0,),),
       ),
 
 
