@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "199977325815",
+    "project_id": "ujuzi-express",
+    "storage_bucket": "ujuzi-express.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199977325815:android:754db3e9028cab476beff2",
+        "android_client_info": {
+          "package_name": "com.duala.ujuzi_xpress"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199977325815-4tcajjd58l0tbkn9k4kf542dpi8jndkk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.duala.ujuzi_xpress",
+            "certificate_hash": "bdbdcd965fe92e100dd468b1bb30e5e81e8655b8"
+          }
+        },
+        {
+          "client_id": "199977325815-fcu5j65s3okce68oejs6uck6dr1kiqlm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW7LAqy7_5PsdQYoiDdwY4ggeEWlloVL4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199977325815-fcu5j65s3okce68oejs6uck6dr1kiqlm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
