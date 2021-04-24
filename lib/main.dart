@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ujuzi_xpress/UI/screens/Splash.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'UI/screens/Splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
