@@ -28,7 +28,6 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
   }
 
   String displayDate(DateTime date){
-    // DateTime date = deliveryRequest.requestDate;
     if (date == null)
       return "";
 
@@ -122,7 +121,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
                       TextSpan(
 
                         //todo language translation?
-                        text: deliveryRequest.status.toString().split(".")[1], //todo remove datetime.now
+                        text: deliveryRequest.status.toString().split(".")[1],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
 

@@ -4,20 +4,23 @@ import 'package:ujuzi_xpress/UI/screens/DeliveryReceiptTextOnlyPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/DeliveryStatusTile.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
+import 'package:ujuzi_xpress/utils/DeliveryRider.dart';
 import 'package:ujuzi_xpress/utils/Directions.dart';
+import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 import 'package:ujuzi_xpress/utils/LocationHandler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ujuzi_xpress/utils/resources.dart';
 
 
 class DeliveryReceiptWithMapPage extends StatefulWidget {
-  @required final DeliveryRequest deliveryRequest;
-
-DeliveryReceiptWithMapPage({this.deliveryRequest});
 
 
 
   @override
   _DeliveryReceiptWithMapPageState createState() => _DeliveryReceiptWithMapPageState();
+  @required final DeliveryRequest deliveryRequest;
+
+  DeliveryReceiptWithMapPage({this.deliveryRequest});
 }
 
 class _DeliveryReceiptWithMapPageState extends State<DeliveryReceiptWithMapPage> {
@@ -25,6 +28,8 @@ CameraPosition initialPosition;
 List<Marker> markers = [];
 Directions directions;
 GoogleMapController _googleMapController;
+AppResources resources = new AppResources();
+Rider assignedRider;
 
 
 
@@ -40,23 +45,20 @@ GoogleMapController _googleMapController;
         target: widget.deliveryRequest.pickupLocation.location,
         );
 
-    markers.add(new Marker(
-        markerId: MarkerId(AppLocalizations.of(context).pickup_location),
-        position: widget.deliveryRequest.pickupLocation.location,
-        icon: BitmapDescriptor.defaultMarkerWithHue(120),
-      infoWindow: InfoWindow(title: "pickup")
-    ));
-
-
-    markers.add(new Marker(
-        markerId: MarkerId(AppLocalizations.of(context).dropoff_location),
-        position: widget.deliveryRequest.dropOffLocation.location
-    ));
 
     getDirections(widget.deliveryRequest.pickupLocation.location, widget.deliveryRequest.dropOffLocation.location)
     .then((value) {
       setState(() {
         directions = value;
+      });
+    });
+
+
+
+
+    getAssignedRider(widget.deliveryRequest.deliveryID).then((value) {
+      setState(() {
+        assignedRider = value;
       });
     });
     //todo add marker for rider position
@@ -69,28 +71,32 @@ GoogleMapController _googleMapController;
 
 
 
+
+
   @override
   Widget build(BuildContext context) {
+    if (markers.isEmpty){
+
+      markers.add(new Marker(
+          markerId: MarkerId(AppLocalizations.of(context).pickup_location),
+          position: widget.deliveryRequest.pickupLocation.location,
+          icon: BitmapDescriptor.defaultMarkerWithHue(120),
+          infoWindow: InfoWindow(title: "pickup")
+      ));
+
+
+      markers.add(new Marker(
+          markerId: MarkerId(AppLocalizations.of(context).dropoff_location),
+          position: widget.deliveryRequest.dropOffLocation.location
+      ));
+    }
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
 
 
       body: Stack(
         children: [
-          // GoogleMap(
-          //   cameraTargetBounds: directions != null ? CameraTargetBounds(directions.bounds): null,
-          //   polylines: {
-          //     new Polyline(
-          //       polylineId: PolylineId('directions'),
-          //       points: directions != null ? directions.polylinePoints.map((e) => LatLng(e.latitude, e.longitude)).toList() : null
-          //     )
-          //   },
-          //   myLocationEnabled: true,
-          //   zoomControlsEnabled: false,
-          //   // trafficEnabled: true,
-          //   initialCameraPosition: initialPosition,
-          //   markers: markers.toSet(),
-          // ),
           GoogleMap(
             myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
@@ -158,7 +164,7 @@ GoogleMapController _googleMapController;
 
                         Container(
                           decoration: BoxDecoration(
-                              color: Colors.deepPurple,//todo darker
+                              color: resources.primaryColour,
                               borderRadius: BorderRadius.vertical(top: Radius.circular(16.0))
                           ),
                           height: size.height * 0.1,
@@ -181,8 +187,8 @@ GoogleMapController _googleMapController;
 
                         ListTile(
                           leading: Icon(Icons.account_circle_rounded),
-                          title: Text("Delivery Rider"),
-                          subtitle: Text("+21336547898"),
+                          title: Text(assignedRider.name),
+                          subtitle: Text(assignedRider.phoneNumber),
                           trailing: OutlinedButton.icon(
                               onPressed: (){},
                               icon: Icon(Icons.call), label: Text("")),

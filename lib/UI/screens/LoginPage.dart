@@ -5,6 +5,7 @@ import 'package:ujuzi_xpress/UI/widgets/CustomIconButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomImageButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
+import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/login/login_bloc.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/login/login_event.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
@@ -104,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
 
                         CustomImageButton(
                           path: "assets/facebook_logo.png",
-                          onPressed: () {
+                          onPressed: () async {
                             _resources.showSnackBar(
                                 actionLabel: "",
                                 context: context,

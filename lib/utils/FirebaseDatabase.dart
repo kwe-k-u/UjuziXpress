@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
+import 'package:ujuzi_xpress/utils/DeliveryRider.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:http/http.dart' as http;
 
 
 
@@ -112,5 +115,26 @@ Future<void> uploadImage({UjuziUser user, File image}) async{
 
 }
 
+Future<Rider> getAssignedRider(String id) async{
+  Rider rider;
+
+
+  var request = http.Request('GET', Uri.parse('https://us-central1-ujuzi-express.cloudfunctions.net/get_Assigned_Rider?deliveryId=56aYbxpnJH5e5gbM1EdI'));
+
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    final request = await response.stream.bytesToString();
+    final data = json.decode(request);
+    String name = data['name']['stringValue'];
+    String number = data['phoneNumber']['stringValue'];
+    rider = new Rider(name, number);
+
+  }
+
+
+  return rider;
+}
 
 

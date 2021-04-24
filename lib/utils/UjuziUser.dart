@@ -13,16 +13,16 @@ class UjuziUser{
   DeliveryLocation _location = new DeliveryLocation();
   DocumentReference _reference;
 
-  String get username => this._firebaseUser.displayName;
+  String get username => this._firebaseUser.displayName ?? "User";
   String get id => this._firebaseUser.uid;
-  String get number => this._firebaseUser.phoneNumber;
+  String get number => this._firebaseUser.phoneNumber ?? "";
   String get profileImageUrl => this._firebaseUser.photoURL;
-  String get email => this._firebaseUser.email;
+  String get email => this._firebaseUser.email ?? "";
   DeliveryLocation get location => this._location;
   DocumentReference get reference => this._reference;
 
 
-  UjuziUser({User user,String number,String name}){//todo what does name parameter accomplish?
+  UjuziUser({User user,String number}){
 
     this._firebaseUser = user;
     getUserDetails(user.uid).then((value) => this._location = new DeliveryLocation(name: value["locationName"], lat: LatLng(value["latitude"], value["longitude"])));
@@ -30,7 +30,7 @@ class UjuziUser{
   }
 
   void updateUserName(String name){
-    this._firebaseUser.updateProfile(displayName: name); //todo display url
+    this._firebaseUser.updateProfile(displayName: name);
   }
 
 
@@ -44,7 +44,6 @@ class UjuziUser{
 
   void updateProfileImage(String url){
     //todo merge all updates into one function
-    //todo update profile image
     this._firebaseUser.updateProfile(photoURL:  url);
   }
 
