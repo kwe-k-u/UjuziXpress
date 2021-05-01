@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+import 'package:ujuzi_xpress/UI/widgets/CustomLoadingIndicator.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
+import 'package:argon_buttons_flutter/argon_buttons_flutter.dart' as arg;
 
 
 class CustomTextField extends StatefulWidget {
@@ -17,6 +20,7 @@ class CustomTextField extends StatefulWidget {
   final String value;
   final Function(String) validator;
   final Function(String value) onChanged;
+  final Function onIconTap;
 
   CustomTextField({
     this.label,
@@ -32,6 +36,7 @@ class CustomTextField extends StatefulWidget {
     this.widthFactor =0.7,
     this.expanded = false,
     this.onChanged,
+    this.onIconTap,
 
 
 });
@@ -43,7 +48,7 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  // FocusNode focusNode = new FocusNode();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -111,10 +116,29 @@ class _CustomTextFieldState extends State<CustomTextField> {
             enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: widget.color)
             ),
-            suffixIcon: widget.icon,
-            // suffixIcon: focusNode.hasFocus ? widget.icon : null,
             labelText: widget.label ,
             labelStyle: TextStyle(color: widget.labelColor),
+            suffixIcon: arg.ArgonButton(
+              height: MediaQuery.of(context).size.width * 0.05,
+              roundLoadingShape: true,
+              width: MediaQuery.of(context).size.width * 0.05,
+              borderRadius: 5.0,
+              color: Colors.transparent,
+              elevation: 0,
+              child: widget.icon,
+              onTap: (startLoading, stopLoading, btnState) {
+                startLoading();
+
+                widget.onIconTap();
+
+
+                stopLoading();
+              },
+              loader: Container(
+                padding: EdgeInsets.all(10),
+                child:  CustomLoadingIndicator(),
+              ),
+            )
           ),
         ),
       ),

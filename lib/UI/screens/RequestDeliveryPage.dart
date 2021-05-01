@@ -1,5 +1,7 @@
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
@@ -123,13 +125,15 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                     header: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(AppLocalizations.of(context).pickup_person_details),
-                    ), //todo prefill with the ujuzi user's details
+                    ),
                     collapsed: Container(
                       padding: EdgeInsets.all(8),
                       width: size.width,
                         child: Text("${requestingUser.username}, ${requestingUser.number}, ${pickupLocation.locationName}"),
                       color: Colors.white54,
                     ),
+
+
                     expanded: Container(
                       width: size.width,
                       margin: EdgeInsets.all(4.0),
@@ -169,17 +173,15 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                             labelColor: Colors.grey,
                             widthFactor: 0.85,
                             controller: pickupLocationController,
-                            icon: IconButton(
-                                icon:Icon(Icons.my_location),
-                              onPressed: (){
-                                  determinePosition().then((value) {
-                                    setState(() {
-                                      pickupLocation = value;
-                                      pickupLocationController.text = value.locationName;
-                                    });
-                                  });
+                            onIconTap: (){
+                              determinePosition().then((value) {
+                                setState(() {
+                                  pickupLocation = value;
+                                  pickupLocationController.text = value.locationName;
+                                });
+                              });
                               },
-                            ),
+                            icon: Icon(Icons.my_location),
                           ),
                         ],
                       ),
@@ -196,24 +198,19 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   widthFactor: 0.85,
                   controller: dropOffLocationController,
                   value: dropOffLocation.locationName,
-                  icon: IconButton(
-                    icon:Icon(Icons.my_location),
-                    onPressed: (){
+                  icon: Icon(Icons.my_location),
+                  onIconTap: (){
 
-                      pickLocation(context).then((value) {
+                    pickLocation(context).then((value) {
+                      if (value != null) {
+                        setState(() {
+                          dropOffLocation = value;
+                          dropOffLocationController.text = value.locationName;
 
-                        if (value != null) {
-                          setState(() {
-                            dropOffLocation = value;
-                            dropOffLocationController.text = value.locationName;
-
-                          });
-                        }
-                      });
-
-
-                    },
-                  ),
+                        });
+                      }
+                    });
+                  },
                 ),
 
 

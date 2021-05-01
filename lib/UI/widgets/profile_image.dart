@@ -23,6 +23,7 @@ class _ProfileImageState extends State<ProfileImage> {
         child: widget.url != null ?
         ConstrainedBox(
           child: Image.network(
+
             widget.url,
             errorBuilder: (context,snapshot, stacktrace){
               return CircleAvatar(

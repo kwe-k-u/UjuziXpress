@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ujuzi_xpress/UI/widgets/CustomLoadingIndicator.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 
 
@@ -48,10 +49,7 @@ class _CustomIconButtonState extends State<CustomIconButton> with SingleTickerPr
               data: ThemeData(accentColor: Colors.grey),
               child: Transform.scale(
                 scale: 0.5,
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.grey[600],
-                  strokeWidth: 2.5,
-                ),
+                child: CustomLoadingIndicator(),
               ),
             );
           }

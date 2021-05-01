@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ujuzi_xpress/UI/widgets/CustomLoadingIndicator.dart';
 import 'package:ujuzi_xpress/UI/widgets/DeliveryListTile.dart';
 import 'package:ujuzi_xpress/utils/DeliveryHistory.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
@@ -140,7 +141,7 @@ class _HistoryPageState extends State<HistoryPage> {
 
 
             return Center(
-              child: CircularProgressIndicator(),
+              child: CustomLoadingIndicator(),
             );
           },
         ),
