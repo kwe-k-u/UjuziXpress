@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:ujuzi_xpress/UI/widgets/custom_status_icon.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class DeliveryStatusTile extends StatelessWidget {
@@ -25,13 +24,10 @@ class DeliveryStatusTile extends StatelessWidget {
             children: [
 
 
-              /**todo
-               * get icon for pending, ongoing, complete, cancelled
-               */
+
               CustomIcon(
-                  icon: Icons.timer,
-                  text: AppLocalizations.of(context).pending,
-                color: Colors.black,
+                status: DeliveryStatus.pending,
+                enabled: true,
 
               ),
 
@@ -50,9 +46,8 @@ class DeliveryStatusTile extends StatelessWidget {
 
 
               CustomIcon(
-                icon: FlutterIcons.shipping_fast_faw5s,
-                text: AppLocalizations.of(context).in_transit,
-                color: Colors.black,
+                status: DeliveryStatus.ongoing,
+                enabled: true,
 
               ),
 
@@ -70,9 +65,8 @@ class DeliveryStatusTile extends StatelessWidget {
 
 
               CustomIcon(
-                  icon: Icons.check_circle_outline,
-                  text: AppLocalizations.of(context).complete,
-                color: Colors.black,
+                status: DeliveryStatus.complete,
+                enabled: true,
 
               ),
 
@@ -88,9 +82,8 @@ class DeliveryStatusTile extends StatelessWidget {
             children: [
 
               CustomIcon(
-                icon: Icons.timer,
-                text: AppLocalizations.of(context).pending,
-                color: Colors.black,
+                status: DeliveryStatus.pending,
+                enabled: true,
 
               ),
 
@@ -109,9 +102,8 @@ class DeliveryStatusTile extends StatelessWidget {
 
 
               CustomIcon(
-                icon: FlutterIcons.shipping_fast_faw5s,
-                text: AppLocalizations.of(context).in_transit,
-                color: Colors.black,
+                status: DeliveryStatus.ongoing,
+                enabled: true,
 
               ),
 
@@ -127,9 +119,7 @@ class DeliveryStatusTile extends StatelessWidget {
 
 
               CustomIcon(
-                icon: Icons.check_circle_outline,
-                text: AppLocalizations.of(context).complete,
-
+                status: DeliveryStatus.complete
               ),
 
 
@@ -144,9 +134,8 @@ class DeliveryStatusTile extends StatelessWidget {
             children: [
 
               CustomIcon(
-                icon: Icons.timer,
-                text: AppLocalizations.of(context).pending,
-                color: Colors.black,
+                enabled: true,
+                status: DeliveryStatus.pending,
 
               ),
 
@@ -163,9 +152,7 @@ class DeliveryStatusTile extends StatelessWidget {
 
 
               CustomIcon(
-                icon: FlutterIcons.shipping_fast_faw5s,
-                text: AppLocalizations.of(context).in_transit,
-
+                status: DeliveryStatus.ongoing
               ),
 
               Expanded(
@@ -180,9 +167,7 @@ class DeliveryStatusTile extends StatelessWidget {
 
 
               CustomIcon(
-                icon: Icons.check_circle_outline,
-                text: AppLocalizations.of(context).complete,
-
+                status: DeliveryStatus.complete
               ),
 
 
@@ -197,9 +182,8 @@ class DeliveryStatusTile extends StatelessWidget {
             children: [
 
               CustomIcon(
-                icon: Icons.timer,
-                text: AppLocalizations.of(context).pending,
-                color: Colors.black,
+                enabled: true,
+                status: DeliveryStatus.pending
 
               ),
 
@@ -218,9 +202,8 @@ class DeliveryStatusTile extends StatelessWidget {
 
 
               CustomIcon(
-                icon: FlutterIcons.shipping_fast_faw5s,
-                text: AppLocalizations.of(context).in_transit,
-                color: Colors.black,
+                enabled: true,
+                status: DeliveryStatus.ongoing
 
               ),
 
@@ -238,9 +221,8 @@ class DeliveryStatusTile extends StatelessWidget {
 
 
               CustomIcon(
-                icon: FlutterIcons.circle_slash_oct,
-                text: AppLocalizations.of(context).cancelled,
-                color: Colors.red,
+                enabled: true,
+                status: DeliveryStatus.cancelled,
 
               ),
 
@@ -256,9 +238,7 @@ class DeliveryStatusTile extends StatelessWidget {
 
 
               CustomIcon(
-                  icon: Icons.timer,
-                  text: AppLocalizations.of(context).pending
-
+                status: DeliveryStatus.pending,
               ),
 
 
@@ -274,8 +254,7 @@ class DeliveryStatusTile extends StatelessWidget {
 
 
               CustomIcon(
-                  icon: FlutterIcons.shipping_fast_faw5s,
-                  text: AppLocalizations.of(context).in_transit
+                status: DeliveryStatus.ongoing
 
               ),
 
@@ -291,9 +270,7 @@ class DeliveryStatusTile extends StatelessWidget {
 
 
               CustomIcon(
-                  icon: Icons.check_circle_outline,
-                  text: AppLocalizations.of(context).complete
-
+                status: DeliveryStatus.complete,
               ),
 
 
@@ -306,30 +283,6 @@ class DeliveryStatusTile extends StatelessWidget {
 
 
 
-class CustomIcon extends StatelessWidget {
-  @required final IconData icon;
-  @required final bool enabled;
-  @required final String text;
-  final Color color;
-
-  CustomIcon({
-    this.icon,
-    this.enabled,
-    this.text,
-    this.color = Colors.grey
-});
-
-  @override
-  Widget build(BuildContext context) {
-    return
-      Column(
-        children: [
-          Icon(icon, color: color,),
-          Text(text, style: TextStyle(color: color),)
-        ],
-      );
-  }
-}
 
 
 

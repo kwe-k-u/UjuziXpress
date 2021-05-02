@@ -93,6 +93,13 @@
   "year": "Year",
   "card_number": "Card Number",
   "ccv": "CCV",
-  "update_card_details": "Update Card Details"
+  "update_card_details": "Update Card Details",
+
+  "required_field" : "This is a required field",
+  "valid_email" : "Enter a valid email address",
+  "valid_phone_number": "Enter a valid phone number",
+  "requirements_not_met" : "Registration requirements not met",
+  "name_longer_than_two_characters" : "Name has to be longer than 2 characters",
+  "name_longer_than_eight_characters" : "Password must have more than 8 characters"
 
 }

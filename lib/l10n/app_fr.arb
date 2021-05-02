@@ -94,6 +94,14 @@
   "year": "an",
   "card_number": "Numéro de carte",
   "ccv": "CCV",
-  "update_card_details": "Mettre à jour les détails de la carte"
+  "update_card_details": "Mettre à jour les détails de la carte",
+
+
+  "required_field": "C'est un champ obligatoire",
+  "valid_email": "entrez une adresse e-mail valide",
+  "valid_phone_number": "Entrez un numéro de téléphone valide",
+  "requirements_not_met": "Conditions d'enregistrement non satisfaites",
+  "name_longer_than_two_characters": "Le nom doit comporter plus de 2 caractères",
+  "name_longer_than_eight_characters": "Le mot de passe doit contenir plus de 8 caractères"
 
 }

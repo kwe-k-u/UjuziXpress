@@ -142,10 +142,10 @@ class _SignupPageState extends State<SignupPage> {
                       controller: nameController,
                       validator: (value) {
                         if (value == null || value.isEmpty)
-                          //todo add to localisations
-                          return "This is a required field";
+
+                          return AppLocalizations.of(context).required_field;
                         else if (value.trim().length <= 2)
-                          return "Name has to be longer than 2 characters";
+                          return AppLocalizations.of(context).name_longer_than_two_characters;
                       },
                     ),
 
@@ -156,11 +156,9 @@ class _SignupPageState extends State<SignupPage> {
                       controller: emailController,
                       validator: (value){
                         if (value == null || value.isEmpty)
-                          return "This is a required field";
-                        else if (!value.contains("@") && !value.contains(".com"))
-                          return "enter a valid email address";
-                        else if (value.length <= 8)
-                          return 'Enter a valid email address';
+                          return AppLocalizations.of(context).required_field;
+                        else if ( (!value.contains("@") && !value.contains(".com")) ||(value.length <= 8))
+                          return AppLocalizations.of(context).valid_email;
                       },
                     ),
 
@@ -171,10 +169,10 @@ class _SignupPageState extends State<SignupPage> {
                       controller: passwordController,
                       validator: (value){
                         if (value == null || value.isEmpty)
-                          return "This is a required field";
+                          return AppLocalizations.of(context).required_field;
 
                         else if (value.trim().length <= 8)
-                          return 'Password must have more than 8 characters';
+                          return AppLocalizations.of(context).name_longer_than_eight_characters;
                       },
                     ),
 
@@ -185,9 +183,9 @@ class _SignupPageState extends State<SignupPage> {
                       controller: numberController,
                       validator: (value){
                         if (value == null || value.isEmpty)
-                          return "This is a required field";
+                          return AppLocalizations.of(context).required_field;
                         else if (value.length <= 9)
-                          return 'Enter a valid phone number address';
+                          return AppLocalizations.of(context).valid_phone_number;
                       },
                     ),
 
@@ -224,7 +222,7 @@ class _SignupPageState extends State<SignupPage> {
                               );
 
                             }else{
-                              resources.showSnackBar(context: context, content: "Registration requirements not met");
+                              resources.showSnackBar(context: context, content: AppLocalizations.of(context).requirements_not_met);
                             }
 
                           },

@@ -48,6 +48,7 @@ Rider assignedRider;
 
     initialPosition =  CameraPosition(
         target: widget.deliveryRequest.pickupLocation.location,
+        zoom: 14
         );
 
 

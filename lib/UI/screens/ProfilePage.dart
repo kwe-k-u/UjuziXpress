@@ -189,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         });
                     },
                     currentTime: expiryDate,
-                    locale: LocaleType.en //todo get to work with local running on   AppLocalizations.delegate
+                    locale: Localizations.localeOf(context)
                 );
               },
               child:Padding(

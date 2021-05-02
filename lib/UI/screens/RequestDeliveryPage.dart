@@ -267,9 +267,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   expanded: true,
                   controller: notes,
                   onChanged: (value){
-                    // setState(() {
-                    //   notes = value;
-                    // });
+
                   },
                 ),
 
