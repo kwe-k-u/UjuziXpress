@@ -126,10 +126,19 @@ Future<Rider> getAssignedRider(String id) async{
 
   if (response.statusCode == 200) {
     final request = await response.stream.bytesToString();
-    final data = json.decode(request);
-    String name = data['name']['stringValue'];
-    String number = data['phoneNumber']['stringValue'];
-    rider = new Rider(name, number);
+    final Map<String,dynamic> data = json.decode(request);
+
+    String name;
+    String profileImage;
+    String number;
+
+    if (data.containsKey("name"))
+      name = data['name']['stringValue'];
+    if (data.containsKey("phoneNumber"))
+      number = data['phoneNumber']['stringValue'];
+    if (data.containsKey("profileImage"))
+      profileImage = data['profileImage']['stringValue'];
+    rider = new Rider(name, number, profileImage);
 
   }
 

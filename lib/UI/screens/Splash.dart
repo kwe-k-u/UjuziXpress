@@ -9,7 +9,7 @@ class SplashPage extends StatefulWidget {
   _SplashPageState createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {

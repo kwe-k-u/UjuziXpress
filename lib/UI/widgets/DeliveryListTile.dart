@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:ujuzi_xpress/UI/screens/DeliveryReceiptWithMapPage.dart';
 import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
@@ -89,7 +90,11 @@ String displayDate(){
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: Icon(Icons.send,color: Colors.deepPurple,), //todo rotate icon
+                  child: Icon(
+                    Entypo.paper_plane,
+                    size: 20,
+                    color: Colors.deepPurple,
+                  ),
                 ),
                 RichText(
                   overflow: TextOverflow.ellipsis,
