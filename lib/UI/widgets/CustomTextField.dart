@@ -89,7 +89,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: widget.color, width: 1.5)
                 ),
-                suffixIcon:  widget.icon,
+                suffixIcon:  widget.onIconTap == null || widget.icon == null ? null: widget.icon,
 
                 alignLabelWithHint: true,
               ),
@@ -104,13 +104,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
         width: size.width * widget.widthFactor,
         child: TextFormField(
           validator: widget.validator,
-          // focusNode: focusNode,
           obscureText: widget.obscureText,
           controller: widget.controller,
           keyboardType: widget.inputType,
-          // onTap: (){
-          //   focusNode.requestFocus();
-          // },
           decoration: InputDecoration(
 
             enabledBorder: UnderlineInputBorder(
@@ -125,13 +121,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
               borderRadius: 5.0,
               color: Colors.transparent,
               elevation: 0,
-              child: widget.icon,
+              child: widget.onIconTap == null || widget.icon == null ? null :widget.icon ,
               onTap: (startLoading, stopLoading, btnState) {
+                if(widget.icon != null)
                 startLoading();
 
                 widget.onIconTap();
 
-
+                if(widget.icon != null)
                 stopLoading();
               },
               loader: Container(

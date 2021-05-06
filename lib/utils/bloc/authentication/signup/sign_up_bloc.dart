@@ -1,6 +1,7 @@
 
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/screens/HomePage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
@@ -56,17 +57,17 @@ class SignUpBloc {
           _signUpStateSink.add(SignUpError('One or more fields are empty'));
         } else {
 
-          signUpWithEmail(_signupEvent.email, _signupEvent.password, _signupEvent.username, _signupEvent.phoneNumber).then(
-              (value){
-                if(value == null){
-                  _signUpStateSink.add(SignUpError("Error with sign up"));
-                } else{
-                  UjuziUser user = new UjuziUser(user:value);
-                  _signUpStateSink.add(SignUpAuthenticated(user));
+          User value = await signUpWithEmail(_signupEvent.email, _signupEvent.password, _signupEvent.username, _signupEvent.phoneNumber);
 
-                }
-              }
-          );
+          if(value == null){
+            print("Error");
+            _signUpStateSink.add(SignUpError("Error with sign up"));
+          } else{
+            print(" No error email signup");
+            UjuziUser user = new UjuziUser(user:value);
+            _signUpStateSink.add(SignUpAuthenticated(user));
+
+          }
 
         }
 

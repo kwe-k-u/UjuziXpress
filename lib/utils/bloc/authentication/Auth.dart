@@ -38,14 +38,15 @@ Future<User> signUpWithEmail(String email, String password, String username, Str
 
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   try {
+
     UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
-        password: password
+        password: password,
     );
-    // return userCredential;
+    userCredential.user.sendEmailVerification();
 
     // Once signed in, return the UserCredential
-    UserCredential credential =  await firebaseAuth.signInWithCredential(userCredential.credential);
+    UserCredential credential =  await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     User user = credential.user;
 
     assert(!user.isAnonymous);
@@ -53,12 +54,12 @@ Future<User> signUpWithEmail(String email, String password, String username, Str
 
     final User currentUser = firebaseAuth.currentUser;
     //update display name
-    currentUser.updateProfile(displayName: username);
+    await currentUser.updateProfile(displayName: username);
     //update phone number
-    // currentUser.updatePhoneNumber(phoneCredential); //todo implement
+    await updateUserPhoneNumber(phoneNumber, currentUser); //todo implement
 
     assert(currentUser.uid == user.uid);
-
+    await user.reload();
     return user;
 
 
@@ -75,6 +76,25 @@ Future<User> signUpWithEmail(String email, String password, String username, Str
 }
 
 
+Future<void> updateUserPhoneNumber(String phoneNumber, User currentUser) async{
+
+  FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      timeout: const Duration(minutes: 2),
+      verificationCompleted: (credential) async {
+        await currentUser.updatePhoneNumber(credential);
+        // either this occurs or the user needs to manually enter the SMS code
+      },
+      verificationFailed: null,
+      codeSent: (verificationId, [forceResendingToken]) async {
+        String smsCode;
+        // get the SMS code from the user somehow (probably using a text field)
+        final AuthCredential credential =
+        PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
+        await FirebaseAuth.instance.currentUser.updatePhoneNumber(credential);
+      },
+      codeAutoRetrievalTimeout: null);
+}
 
 
 Future<User> logInWithEmail(String email, String password) async{

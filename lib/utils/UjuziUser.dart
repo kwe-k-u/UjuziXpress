@@ -25,8 +25,15 @@ class UjuziUser{
   UjuziUser({User user,String number}){
 
     this._firebaseUser = user;
-    getUserDetails(user.uid).then((value) => this._location = new DeliveryLocation(name: value["locationName"], lat: LatLng(value["latitude"], value["longitude"])));
-
+    getUserDetails(user.uid)
+        .then((value) {
+          if (value != null)
+        this._location = new DeliveryLocation(name: value["locationName"],
+            lat: LatLng(value["latitude"], value["longitude"]) );
+      else
+        this._location = null;
+    }
+    );
   }
 
   void updateUserName(String name){

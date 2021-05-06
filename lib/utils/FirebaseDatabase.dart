@@ -73,15 +73,29 @@ DocumentReference postUserCreditCard({
 //GETTERS
 
 Future<DocumentSnapshot> getUserDetails(String id){
-  DocumentReference reference = firestore.collection('users').doc(id).collection("profile").doc("info");
-  return reference.get();
+
+  try {
+    DocumentReference reference = firestore.collection('users')
+        .doc(id)
+        .collection("profile")
+        .doc("info");
+    return reference.get();
+
+  } catch (e){//if the document does not exist
+    return null;
+  }
 }
 
 
 
 Future<DocumentSnapshot> getUserCreditCard(String id){
+  try {
   DocumentReference reference = firestore.collection('users').doc(id).collection("profile").doc("creditCard");
   return reference.get();
+
+  } catch (e){//if the document does not exist
+    return null;
+  }
 }
 
 
