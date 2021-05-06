@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
+import 'package:ujuzi_xpress/UI/widgets/LocationTextField.dart';
 import 'package:ujuzi_xpress/UI/widgets/custom_date_picker.dart';
 import 'package:ujuzi_xpress/UI/widgets/profile_image.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
@@ -101,24 +102,21 @@ class _ProfilePageState extends State<ProfilePage> {
                 widthFactor: 0.85,
                 controller: number,
               ),
-              CustomTextField(
+              LocationTextField(
                 label:   AppLocalizations.of(context).default_pickup_person_location,
                 color: Colors.black,
                 labelColor: Colors.grey,
                 widthFactor: 0.85,
                 controller: location,
-                icon: IconButton(
-                  icon: Icon(Icons.my_location),
-                  onPressed: () {
-                    determinePosition().then((value) {
-                      setState(() {
-                        location.text = value.locationName;
-                        deliveryLocation = value;
-                        deliveryLocation = new DeliveryLocation(name: value.locationName, lat: value.location);
-                      });
+                onIconTap: () {
+                  determinePosition().then((value) {
+                    setState(() {
+                      location.text = value.locationName;
+                      deliveryLocation = value;
+                      deliveryLocation = new DeliveryLocation(name: value.locationName, lat: value.location);
                     });
-                  },
-                ),
+                  });
+                },
               ),
 
               Padding(

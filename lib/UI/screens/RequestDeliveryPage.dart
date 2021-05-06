@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
+import 'package:ujuzi_xpress/UI/widgets/LocationTextField.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
@@ -167,7 +168,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
 
 
-                          CustomTextField(
+                          LocationTextField(
                             label: AppLocalizations.of(context).pickup_person_location,
                             color: Colors.black,
                             labelColor: Colors.grey,
@@ -181,7 +182,6 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                                 });
                               });
                               },
-                            icon: Icon(Icons.my_location),
                           ),
                         ],
                       ),
@@ -191,14 +191,13 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 
 
 
-                CustomTextField(
+                LocationTextField(
                   label: AppLocalizations.of(context).where_to,
                   color: Colors.black,
                   labelColor: Colors.grey,
                   widthFactor: 0.85,
                   controller: dropOffLocationController,
                   value: dropOffLocation.locationName,
-                  icon: Icon(Icons.my_location),
                   onIconTap: (){
 
                     pickLocation(context).then((value) {

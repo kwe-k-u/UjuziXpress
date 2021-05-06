@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:ujuzi_xpress/UI/widgets/CustomLoadingIndicator.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
-import 'package:argon_buttons_flutter/argon_buttons_flutter.dart' as arg;
 
 
 class CustomTextField extends StatefulWidget {
@@ -13,20 +11,17 @@ class CustomTextField extends StatefulWidget {
   final Color color;
   final Color labelColor;
   final Color selectedColor;
-  final Widget icon;
   final TextInputType inputType;
   final double widthFactor;
   final bool expanded;
   final String value;
   final Function(String) validator;
   final Function(String value) onChanged;
-  final Function onIconTap;
 
   CustomTextField({
     this.label,
     this.value,
     this.validator,
-    this.icon,
     this.controller,
     this.obscureText = false,
     this.color = Colors.white,
@@ -36,7 +31,6 @@ class CustomTextField extends StatefulWidget {
     this.widthFactor =0.7,
     this.expanded = false,
     this.onChanged,
-    this.onIconTap,
 
 
 });
@@ -89,7 +83,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: widget.color, width: 1.5)
                 ),
-                suffixIcon:  widget.onIconTap == null || widget.icon == null ? null: widget.icon,
 
                 alignLabelWithHint: true,
               ),
@@ -114,28 +107,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             labelText: widget.label ,
             labelStyle: TextStyle(color: widget.labelColor),
-            suffixIcon: arg.ArgonButton(
-              height: MediaQuery.of(context).size.width * 0.05,
-              roundLoadingShape: true,
-              width: MediaQuery.of(context).size.width * 0.05,
-              borderRadius: 5.0,
-              color: Colors.transparent,
-              elevation: 0,
-              child: widget.onIconTap == null || widget.icon == null ? null :widget.icon ,
-              onTap: (startLoading, stopLoading, btnState) {
-                if(widget.icon != null)
-                startLoading();
-
-                widget.onIconTap();
-
-                if(widget.icon != null)
-                stopLoading();
-              },
-              loader: Container(
-                padding: EdgeInsets.all(10),
-                child:  CustomLoadingIndicator(),
-              ),
-            )
           ),
         ),
       ),
