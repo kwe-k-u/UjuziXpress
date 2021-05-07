@@ -1,6 +1,7 @@
 
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
@@ -155,15 +156,25 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                           ),
 
 
-                          CustomTextField(
-                            label: AppLocalizations.of(context).pickup_person_number,
-                            color: Colors.black,
-                            inputType: TextInputType.number,
-                            labelColor: Colors.grey,
-                            widthFactor: 0.85,
-                            controller: pickupPersonNumber,
-                            onChanged: (value){
-                            },
+
+                          InternationalPhoneNumberInput(
+                              countries: ["CD"],
+                              textFieldController: pickupPersonNumber,
+                              hintText: AppLocalizations.of(context).pickup_person_number,
+                              validator: (value){
+                                if (value == null || value.isEmpty)
+                                  return AppLocalizations.of(context).required_field;
+                                else if (value.length <= 9)
+                                  return AppLocalizations.of(context).valid_phone_number;
+                                return "";
+                              },
+                              selectorConfig: SelectorConfig(
+                                selectorType: PhoneInputSelectorType.DROPDOWN,
+                                useEmoji:  true,
+                                setSelectorButtonAsPrefixIcon: false,
+                              ),
+                              onInputChanged: (value){
+                              }
                           ),
 
 
@@ -241,16 +252,24 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 ),
 
 
-                CustomTextField(
-                  label: AppLocalizations.of(context).dropoff_person_number,
-                  color: Colors.black,
-                  labelColor: Colors.grey,
-                  inputType: TextInputType.number,
-                  controller: dropOffPersonNumber,
-                  widthFactor: 0.85,
-                  onChanged: (value){
-
-                  },
+                InternationalPhoneNumberInput(
+                    countries: ["CD"],
+                  textFieldController: dropOffPersonNumber,
+                  hintText: AppLocalizations.of(context).dropoff_person_number,
+                    validator: (value){
+                      if (value == null || value.isEmpty)
+                        return AppLocalizations.of(context).required_field;
+                      else if (value.length <= 9)
+                        return AppLocalizations.of(context).valid_phone_number;
+                      return "";
+                    },
+                    selectorConfig: SelectorConfig(
+                      selectorType: PhoneInputSelectorType.DROPDOWN,
+                      useEmoji:  true,
+                      setSelectorButtonAsPrefixIcon: false,
+                    ),
+                    onInputChanged: (value){
+                    }
                 ),
 
 

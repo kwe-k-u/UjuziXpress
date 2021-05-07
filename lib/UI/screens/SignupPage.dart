@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:ujuzi_xpress/UI/screens/HomePage.dart';
 import 'package:ujuzi_xpress/UI/screens/LoginPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/BackgroundWidget.dart';
@@ -177,17 +178,26 @@ class _SignupPageState extends State<SignupPage> {
                     ),
 
                     //number
-                    CustomTextField(
-                      label: AppLocalizations.of(context).phoneNumber,
-                      inputType: TextInputType.phone,
-                      controller: numberController,
-                      validator: (value){
-                        if (value == null || value.isEmpty)
-                          return AppLocalizations.of(context).required_field;
-                        else if (value.length <= 9)
-                          return AppLocalizations.of(context).valid_phone_number;
-                      },
-                    ),
+
+                    InternationalPhoneNumberInput(
+                        countries: ["CD"],
+                      textFieldController: numberController,
+                      hintText: AppLocalizations.of(context).phoneNumber,
+                        validator: (value){
+                          if (value == null || value.isEmpty)
+                            return AppLocalizations.of(context).required_field;
+                          else if (value.length <= 9)
+                            return AppLocalizations.of(context).valid_phone_number;
+                          return "";
+                          },
+                        selectorConfig: SelectorConfig(
+                          selectorType: PhoneInputSelectorType.DROPDOWN,
+                          useEmoji:  true,
+                          setSelectorButtonAsPrefixIcon: false,
+                        ),
+                        onInputChanged: (value){
+                      }
+                      ),
 
                     Spacer(
                       flex: 1,
