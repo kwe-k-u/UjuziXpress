@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomLoadingIndicator.dart';
-import 'package:ujuzi_xpress/utils/resources.dart';
+import 'package:ujuzi_xpress/utils/LocationHandler.dart';
+import 'package:ujuzi_xpress/utils/places_search.dart';
 import 'package:argon_buttons_flutter/argon_buttons_flutter.dart' as arg;
 
 
 class LocationTextField extends StatefulWidget {
 
-  @required final String label;
+  final String label;
   final TextEditingController controller;
   final bool obscureText;
   final Color color;
@@ -18,9 +18,10 @@ class LocationTextField extends StatefulWidget {
   final Function(String) validator;
   final Function(String value) onChanged;
   final Function onIconTap;
+  final FocusNode focusNode;
 
   LocationTextField({
-    this.label,
+    @required this.label,
     this.value,
     this.validator,
     this.controller,
@@ -30,6 +31,7 @@ class LocationTextField extends StatefulWidget {
     this.labelColor = Colors.white,
     this.widthFactor =0.7,
     this.onChanged,
+    @required this.focusNode,
     @required this.onIconTap,
 
 
@@ -42,7 +44,8 @@ class LocationTextField extends StatefulWidget {
 }
 
 class _LocationTextFieldState extends State<LocationTextField> {
-
+  List<PlaceSearch> places = [];
+  bool showDropDown = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -52,48 +55,92 @@ class _LocationTextFieldState extends State<LocationTextField> {
           primaryColor: widget.selectedColor
       ),
       child:  Container(
-        padding: EdgeInsets.only(left: 8.0),
+        padding: EdgeInsets.only(left: 8.0, right: 8.0),
         width: size.width * widget.widthFactor,
-        child: Row(
+        child: Column(
           children: [
-            Flexible(
-              flex: 8,
-              child: TextFormField(
-                validator: widget.validator,
-                obscureText: widget.obscureText,
-                controller: widget.controller,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
+            Row(
+              children: [
+                Flexible(
+                  flex: 8,
+                  child: Focus(
+                    onFocusChange: (bool){
+                      setState(() {
+                        showDropDown = bool;
+                      });
+                    },
+                    child: TextFormField(
 
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: widget.color)
+                      validator: widget.validator,
+                      obscureText: widget.obscureText,
+                      controller: widget.controller,
+                      keyboardType: TextInputType.text,
+                      focusNode: widget.focusNode,
+                      onChanged: (value) async{
+
+                        getPlaceSuggestions(value, Localizations.localeOf(context).languageCode).then((pl) {
+                          setState(() {
+                            places = pl;
+                          });
+                        });
+                      },
+                      onTap: (){
+                        // widget.focusNode.requestFocus();
+                      },
+                      decoration: InputDecoration(
+
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: widget.color)
+                          ),
+                          labelText: widget.label ,
+                          labelStyle: TextStyle(color: widget.labelColor),
+                      ),
                     ),
-                    labelText: widget.label ,
-                    labelStyle: TextStyle(color: widget.labelColor),
+                  ),
                 ),
-              ),
+
+                arg.ArgonButton(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+                  height: MediaQuery.of(context).size.width * 0.05,
+                  roundLoadingShape: true,
+                  width: MediaQuery.of(context).size.width * 0.05,
+                  borderRadius: 5.0,
+                  color: Colors.transparent,
+                  elevation: 0,
+                  child: Icon(Icons.my_location),
+
+                  onTap: (startLoading, stopLoading, btnState) {
+                    startLoading();
+
+                    widget.onIconTap();
+
+                    stopLoading();
+                  },
+                  loader: Container(
+                    padding: EdgeInsets.all(10),
+                    child:  CustomLoadingIndicator(),
+                  ),
+                )
+              ],
             ),
-            Flexible(child: arg.ArgonButton(
-              height: MediaQuery.of(context).size.width * 0.05,
-              roundLoadingShape: true,
-              width: MediaQuery.of(context).size.width * 0.05,
-              borderRadius: 5.0,
-              color: Colors.transparent,
-              elevation: 0,
-              child: Icon(Icons.my_location),
 
-              onTap: (startLoading, stopLoading, btnState) {
-                startLoading();
+            if (showDropDown)
+              Card(
+                elevation: 6.0,
+                child: SizedBox(
+                  height: size.height * 0.15,
 
-                widget.onIconTap();
-
-                stopLoading();
-              },
-              loader: Container(
-                padding: EdgeInsets.all(10),
-                child:  CustomLoadingIndicator(),
-              ),
-            ))
+                  child:  ListView.builder(
+                      itemCount: places.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          subtitle: Divider(color: Colors.white, thickness: 2.0,),
+                          title: Text(places[index].name),
+                          tileColor: Colors.grey.shade300,
+                        );
+                      }),
+                ),
+              )
           ],
         ),
       ),

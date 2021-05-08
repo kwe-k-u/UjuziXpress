@@ -103,6 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 controller: number,
               ),
               LocationTextField(
+                focusNode: new FocusNode(),
                 label:   AppLocalizations.of(context).default_pickup_person_location,
                 color: Colors.black,
                 labelColor: Colors.grey,

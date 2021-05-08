@@ -43,6 +43,8 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
   TextEditingController notes = new TextEditingController();
   TextEditingController pickupLocationController = new TextEditingController();
   TextEditingController dropOffLocationController = new TextEditingController();
+  FocusNode pickupLocationNode = new FocusNode();
+  FocusNode dropoffLocationNode = new FocusNode();
 
 
 
@@ -51,6 +53,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
   void initState() {
     super.initState();
     setState(() {
+      getPlaceSuggestions("accra","en").then((value) => print(value));
       requestingUser = widget.requestingUser ?? widget.request.requestingUser;
       pickupPersonName.text = requestingUser.username;
       pickupPersonNumber.text = requestingUser.number;
@@ -182,6 +185,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                           LocationTextField(
                             label: AppLocalizations.of(context).pickup_person_location,
                             color: Colors.black,
+                            focusNode: pickupLocationNode,
                             labelColor: Colors.grey,
                             widthFactor: 0.85,
                             controller: pickupLocationController,
@@ -205,6 +209,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 LocationTextField(
                   label: AppLocalizations.of(context).where_to,
                   color: Colors.black,
+                  focusNode: dropoffLocationNode,
                   labelColor: Colors.grey,
                   widthFactor: 0.85,
                   controller: dropOffLocationController,
@@ -252,24 +257,30 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 ),
 
 
-                InternationalPhoneNumberInput(
-                    countries: ["CD"],
-                  textFieldController: dropOffPersonNumber,
-                  hintText: AppLocalizations.of(context).dropoff_person_number,
-                    validator: (value){
-                      if (value == null || value.isEmpty)
-                        return AppLocalizations.of(context).required_field;
-                      else if (value.length <= 9)
-                        return AppLocalizations.of(context).valid_phone_number;
-                      return "";
-                    },
-                    selectorConfig: SelectorConfig(
-                      selectorType: PhoneInputSelectorType.DROPDOWN,
-                      useEmoji:  true,
-                      setSelectorButtonAsPrefixIcon: false,
-                    ),
-                    onInputChanged: (value){
-                    }
+                Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: 24.0,
+                      vertical: 8.0
+                  ),
+                  child: InternationalPhoneNumberInput(
+                      countries: ["CD"],
+                    textFieldController: dropOffPersonNumber,
+                    hintText: AppLocalizations.of(context).dropoff_person_number,
+                      validator: (value){
+                        if (value == null || value.isEmpty)
+                          return AppLocalizations.of(context).required_field;
+                        else if (value.length <= 9)
+                          return AppLocalizations.of(context).valid_phone_number;
+                        return "";
+                      },
+                      selectorConfig: SelectorConfig(
+                        selectorType: PhoneInputSelectorType.DROPDOWN,
+                        useEmoji:  true,
+                        setSelectorButtonAsPrefixIcon: false,
+                      ),
+                      onInputChanged: (value){
+                      }
+                  ),
                 ),
 
 

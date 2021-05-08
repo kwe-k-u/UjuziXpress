@@ -15,6 +15,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ujuzi_xpress/UI/screens/PickLocationPage.dart';
 import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/Directions.dart';
+import 'package:ujuzi_xpress/utils/places_search.dart';
 
 
 
@@ -47,7 +48,6 @@ Future<String> getAddressFromLatLng(LatLng latLng) async {
     Address place = (await Geocoder.local.findAddressesFromCoordinates(new Coordinates(latLng.latitude, latLng.longitude))).first;
 
     return  place.addressLine;
-    // return  "${place.adminArea}, ${place.addressLine} ${place.countryName}";
   } catch (e) {
     return "${e.toString()}";
   }
@@ -94,3 +94,25 @@ Future<Directions> getDirections(LatLng pickup, LatLng dropOff) async{
   return null ;
 
 }
+
+
+Future<List<PlaceSearch>> getPlaceSuggestions(String text, String lang ) async{
+
+  Dio dio = new Dio();
+  final response = await dio.get(
+      "https://maps.googleapis.com/maps/api/place/autocomplete/json?"
+      ,
+      queryParameters: {
+        "input" : text,
+        'types' : "(regions)",
+        "language" : lang,
+        'key' : "AIzaSyDVwR6I_C_e3Pe9LCnWPn1c0kHmMFckP7w"
+      });
+  var json = response.data["predictions"] as List;
+
+  return json.map((e) => PlaceSearch.fromJson(e)).toList();
+
+}
+
+
+
