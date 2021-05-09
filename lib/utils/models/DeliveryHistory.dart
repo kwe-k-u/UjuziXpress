@@ -1,5 +1,5 @@
 //data structure to contain the list of deliveries in a sorted lists
-import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
 
 class DeliveryHistory{
   List<DeliveryRequest> __pendingDeliveries;

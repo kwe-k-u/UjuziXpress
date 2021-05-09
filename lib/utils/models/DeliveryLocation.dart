@@ -1,8 +1,7 @@
 
 
-import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:ujuzi_xpress/utils/LocationHandler.dart';
+import 'package:ujuzi_xpress/utils/services/LocationHandler.dart';
 
 class DeliveryLocation{
   String __placeName;

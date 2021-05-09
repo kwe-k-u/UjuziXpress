@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/screens/HomePage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
-import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/Auth.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/signup/sign_up_event.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/signup/sign_up_state.dart';

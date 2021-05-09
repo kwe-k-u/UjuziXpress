@@ -3,8 +3,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
-import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryLocation.dart';
+import 'package:ujuzi_xpress/utils/services/FirebaseDatabase.dart';
 
 
 

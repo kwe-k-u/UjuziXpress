@@ -2,16 +2,14 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/UI/widgets/LocationTextField.dart';
-import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
-import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
-import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
-import 'package:ujuzi_xpress/utils/LocationHandler.dart';
-import 'package:ujuzi_xpress/utils/LocationTextEditingController.dart';
-import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
+import 'package:ujuzi_xpress/utils/services/FirebaseDatabase.dart';
+import 'package:ujuzi_xpress/utils/services/LocationHandler.dart';
+import 'package:ujuzi_xpress/utils/models/LocationTextEditingController.dart';
+import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/screens/SignupPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/BackgroundWidget.dart';
@@ -5,7 +6,6 @@ import 'package:ujuzi_xpress/UI/widgets/CustomIconButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomImageButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
-import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/login/login_bloc.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/login/login_event.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
@@ -119,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                           path: "assets/twitter_logo.png",
                           widthFactor: 0.14,
                           onPressed: () {
+                            // _loginBloc.loginEventSink.add(TwitterLoginEvent(context));
                             _resources.showSnackBar(
                                 actionLabel: "",
                                 context: context,

@@ -8,7 +8,7 @@ import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
 import 'package:ujuzi_xpress/UI/widgets/profile_image.dart';
-import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
 

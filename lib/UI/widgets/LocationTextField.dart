@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomLoadingIndicator.dart';
-import 'package:ujuzi_xpress/utils/LocationHandler.dart';
-import 'package:ujuzi_xpress/utils/places_search.dart';
+import 'package:ujuzi_xpress/utils/services/LocationHandler.dart';
+import 'package:ujuzi_xpress/utils/models/places_search.dart';
 import 'package:argon_buttons_flutter/argon_buttons_flutter.dart' as arg;
 
 

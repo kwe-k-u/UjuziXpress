@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
-import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
-import 'package:ujuzi_xpress/utils/DeliveryRider.dart';
-import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryLocation.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryRider.dart';
+import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -108,7 +108,7 @@ Future<List<DeliveryRequest>> getDeliveries(UjuziUser user) async {
   QuerySnapshot snapshot = await reference.orderBy("status", descending: true).get();
 
   snapshot.docs.forEach((element) {
-    DeliveryRequest delivery = deliveryRequestFromMap(element.data());
+    DeliveryRequest delivery = DeliveryRequest.fromMap(element.data());
     delivery.setReference(element.reference);
 
     requests.add(delivery);

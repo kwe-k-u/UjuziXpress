@@ -1,7 +1,7 @@
 
 export  'package:flutter/material.dart';
 import 'package:flutter/material.dart';
-import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryLocation.dart';
 
 
 

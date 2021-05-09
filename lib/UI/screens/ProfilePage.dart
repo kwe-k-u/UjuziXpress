@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -7,10 +6,10 @@ import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/UI/widgets/LocationTextField.dart';
 import 'package:ujuzi_xpress/UI/widgets/custom_date_picker.dart';
 import 'package:ujuzi_xpress/UI/widgets/profile_image.dart';
-import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
-import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
-import 'package:ujuzi_xpress/utils/LocationHandler.dart';
-import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryLocation.dart';
+import 'package:ujuzi_xpress/utils/services/FirebaseDatabase.dart';
+import 'package:ujuzi_xpress/utils/services/LocationHandler.dart';
+import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
 

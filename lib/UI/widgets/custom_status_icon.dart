@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 

@@ -3,51 +3,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
-import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryLocation.dart';
+import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
 
 
 
-DeliveryRequest deliveryRequestFromMap(Map<String, dynamic>value){
-
-
-  // UjuziUser requestingUser = new UjuziUser();
-  // requestingUser.updateUserName(value["requestingUser"]["username"]);
-  // requestingUser.updateNumber(value["requestingUser"]["number"]);
-  // // requestingUser.updateId(value["requestingUser"]["id"]); //todo revisit
-  // requestingUser..updateEmail(value["requestingUser"]["email"]);
-
-  DateTime startDate = DateTime.now();
-  DateTime completionDate = DateTime.now();
-  int statusIndex;
-  (value["status"].runtimeType == int) ? statusIndex = value["status"] : statusIndex = int.parse(value["status"]);
-
-  DeliveryRequest request = new DeliveryRequest(
-    deliveryID: value["deliveryID"],
-    requestingUser: null,
-    note: value["note"],
-    dropOffLocation: new DeliveryLocation(
-        name: value["dropOffLocation"]["locationName"],
-        lat: LatLng(value["dropOffLocation"]["latitude"], value["dropOffLocation"]["longitude"])),
-
-    requestDate: DateTime.parse(value["requestDate"]),
-    dropOffPersonName: value["dropOffPersonName"],
-    dropOffPersonNumber: value["dropOffPersonNumber"],
-    pickupLocation: new DeliveryLocation(
-        name: value["pickupLocation"]["locationName"],
-        lat: LatLng(value["pickupLocation"]["latitude"], value["pickupLocation"]["longitude"])),
-    completionDate: completionDate,
-
-    startDate:   startDate,
-    pickupPersonName: value["pickupPersonName"],
-    pickupPersonNumber: value["pickupPersonNumber"],
-    status: DeliveryStatus.values[statusIndex],
-    packageType: PackageType.values[value["packageType"]],
-    paymentMethod: PaymentMethod.values[value["paymentMethod"]],
-
-  );
-  return request;
-}
 
 
 
@@ -293,6 +253,48 @@ DocumentReference get reference => this.__reference;
     };
   }
 
+
+
+  factory DeliveryRequest.fromMap(Map<String, dynamic> value){
+
+    // UjuziUser requestingUser = new UjuziUser();
+    // requestingUser.updateUserName(value["requestingUser"]["username"]);
+    // requestingUser.updateNumber(value["requestingUser"]["number"]);
+    // // requestingUser.updateId(value["requestingUser"]["id"]); //todo revisit and change startDates
+    // requestingUser..updateEmail(value["requestingUser"]["email"]);
+
+
+    DateTime startDate = DateTime.now();
+    DateTime completionDate = DateTime.now();
+    int statusIndex;
+    (value["status"].runtimeType == int) ? statusIndex = value["status"] : statusIndex = int.parse(value["status"]);
+
+    DeliveryRequest request = new DeliveryRequest(
+      deliveryID: value["deliveryID"],
+      requestingUser: null,
+      note: value["note"],
+      dropOffLocation: new DeliveryLocation(
+          name: value["dropOffLocation"]["locationName"],
+          lat: LatLng(value["dropOffLocation"]["latitude"], value["dropOffLocation"]["longitude"])),
+
+      requestDate: DateTime.parse(value["requestDate"]),
+      dropOffPersonName: value["dropOffPersonName"],
+      dropOffPersonNumber: value["dropOffPersonNumber"],
+      pickupLocation: new DeliveryLocation(
+          name: value["pickupLocation"]["locationName"],
+          lat: LatLng(value["pickupLocation"]["latitude"], value["pickupLocation"]["longitude"])),
+      completionDate: completionDate,
+
+      startDate:   startDate,
+      pickupPersonName: value["pickupPersonName"],
+      pickupPersonNumber: value["pickupPersonNumber"],
+      status: DeliveryStatus.values[statusIndex],
+      packageType: PackageType.values[value["packageType"]],
+      paymentMethod: PaymentMethod.values[value["paymentMethod"]],
+
+    );
+    return request;
+  }
 
 }
 

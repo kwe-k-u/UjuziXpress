@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/screens/Splash.dart';
@@ -11,7 +10,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  AppResources resources = AppResources();
+  final AppResources resources = AppResources();
   @override
   Widget build(BuildContext context) {
 

@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
 
 
 abstract class LoginState {

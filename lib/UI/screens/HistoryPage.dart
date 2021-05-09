@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomLoadingIndicator.dart';
 import 'package:ujuzi_xpress/UI/widgets/DeliveryListTile.dart';
-import 'package:ujuzi_xpress/utils/DeliveryHistory.dart';
-import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
-import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
-import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryHistory.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
+import 'package:ujuzi_xpress/utils/services/FirebaseDatabase.dart';
+import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 

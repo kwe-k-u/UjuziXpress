@@ -13,9 +13,9 @@ import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ujuzi_xpress/UI/screens/PickLocationPage.dart';
-import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
-import 'package:ujuzi_xpress/utils/Directions.dart';
-import 'package:ujuzi_xpress/utils/places_search.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryLocation.dart';
+import 'package:ujuzi_xpress/utils/models/Directions.dart';
+import 'package:ujuzi_xpress/utils/models/places_search.dart';
 
 
 

@@ -1,6 +1,6 @@
 
 
-import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
 
 abstract class SignUpState {
   UjuziUser user;

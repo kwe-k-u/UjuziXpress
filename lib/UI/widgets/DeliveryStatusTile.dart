@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ujuzi_xpress/UI/widgets/custom_status_icon.dart';
-import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
 
 
 class DeliveryStatusTile extends StatelessWidget {

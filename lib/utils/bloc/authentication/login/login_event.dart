@@ -22,5 +22,17 @@ class GoogleLoginEvent extends LoginEvent{
 }
 
 
+class FacebookLoginEvent extends LoginEvent{
+
+  FacebookLoginEvent(BuildContext context) : super(context);
+}
+
+
+class TwitterLoginEvent extends LoginEvent{
+
+  TwitterLoginEvent(BuildContext context) : super(context);
+}
+
+
 
 

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
-import 'package:ujuzi_xpress/UI/widgets/MapUi.dart';
-import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
-import 'package:ujuzi_xpress/utils/LocationHandler.dart';
+import 'package:ujuzi_xpress/utils/models/DeliveryLocation.dart';
+import 'package:ujuzi_xpress/utils/services/LocationHandler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 

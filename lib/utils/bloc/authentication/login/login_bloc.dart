@@ -1,12 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:http/http.dart' as http;
 import 'package:ujuzi_xpress/UI/screens/HomePage.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
-import 'package:ujuzi_xpress/utils/UjuziUser.dart';
+import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/Auth.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/login/login_event.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/login/login_state.dart';
@@ -83,6 +80,19 @@ class LoginBloc {
             }
           });
           break;
+
+
+      case TwitterLoginEvent:
+        signInWithTwitter().then((value){
+          if (value != null) {
+            UjuziUser user = new UjuziUser(user: value);
+            _loginStateSink.add(LoginAuthenticated(user));
+
+          } else{
+            _loginStateSink.add(LoginError('Error authenticating with Twitter. Retry in a couple minutes'));
+          }
+        });
+        break;
 
 
           default:
