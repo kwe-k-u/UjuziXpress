@@ -77,12 +77,19 @@ class _LocationTextFieldState extends State<LocationTextField> {
                       keyboardType: TextInputType.text,
                       focusNode: widget.focusNode,
                       onChanged: (value) async{
-
-                        getPlaceSuggestions(value, Localizations.localeOf(context).languageCode).then((pl) {
-                          setState(() {
-                            places = pl;
+                        if (value.isNotEmpty) {
+                          getPlaceSuggestions(value, Localizations
+                              .localeOf(context)
+                              .languageCode).then((pl) {
+                            setState(() {
+                              places = pl;
+                            });
                           });
-                        });
+                        } else {
+                          setState(() {
+                            places = [];
+                          });
+                        }
                       },
                       onTap: (){
                         // widget.focusNode.requestFocus();
@@ -124,7 +131,7 @@ class _LocationTextFieldState extends State<LocationTextField> {
               ],
             ),
 
-            if (showDropDown)
+            if (showDropDown && places.isNotEmpty)
               Card(
                 elevation: 6.0,
                 child: SizedBox(
@@ -134,6 +141,12 @@ class _LocationTextFieldState extends State<LocationTextField> {
                       itemCount: places.length,
                       itemBuilder: (context, index) {
                         return ListTile(
+                          onTap: (){
+                            setState(() {
+                              widget.controller.text = places[index].name;
+                            });
+
+                          },
                           subtitle: Divider(color: Colors.white, thickness: 2.0,),
                           title: Text(places[index].name),
                           tileColor: Colors.grey.shade300,

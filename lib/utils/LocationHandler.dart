@@ -104,7 +104,7 @@ Future<List<PlaceSearch>> getPlaceSuggestions(String text, String lang ) async{
       ,
       queryParameters: {
         "input" : text,
-        'types' : "(regions)",
+        // 'types' : "(regions)",//keep just in case we change mind about accuracy later on
         "language" : lang,
         'key' : "AIzaSyDVwR6I_C_e3Pe9LCnWPn1c0kHmMFckP7w"
       });

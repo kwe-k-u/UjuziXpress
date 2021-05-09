@@ -10,6 +10,7 @@ import 'package:ujuzi_xpress/utils/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/DeliveryRequest.dart';
 import 'package:ujuzi_xpress/utils/FirebaseDatabase.dart';
 import 'package:ujuzi_xpress/utils/LocationHandler.dart';
+import 'package:ujuzi_xpress/utils/LocationTextEditingController.dart';
 import 'package:ujuzi_xpress/utils/UjuziUser.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -36,13 +37,15 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
   PaymentMethod paymentMethod = PaymentMethod.paymentOnPickup;
   TextEditingController dropOffPersonName = new TextEditingController();
   TextEditingController dropOffPersonNumber = new TextEditingController();
-  DeliveryLocation dropOffLocation = new DeliveryLocation();
+  // DeliveryLocation dropOffLocation = new DeliveryLocation();
   TextEditingController pickupPersonName = new TextEditingController();
   TextEditingController pickupPersonNumber = new TextEditingController();
-  DeliveryLocation pickupLocation = new DeliveryLocation();
+  // DeliveryLocation pickupLocation = new DeliveryLocation();
   TextEditingController notes = new TextEditingController();
-  TextEditingController pickupLocationController = new TextEditingController();
-  TextEditingController dropOffLocationController = new TextEditingController();
+  // TextEditingController pickupLocationController = new TextEditingController();
+  LocationTextEditingController pickupLocationController = new LocationTextEditingController() ;
+  LocationTextEditingController dropOffLocationController = new LocationTextEditingController() ;
+  // TextEditingController dropOffLocationController = new TextEditingController();
   FocusNode pickupLocationNode = new FocusNode();
   FocusNode dropoffLocationNode = new FocusNode();
 
@@ -53,12 +56,11 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
   void initState() {
     super.initState();
     setState(() {
-      getPlaceSuggestions("accra","en").then((value) => print(value));
       requestingUser = widget.requestingUser ?? widget.request.requestingUser;
       pickupPersonName.text = requestingUser.username;
       pickupPersonNumber.text = requestingUser.number;
-      pickupLocation = requestingUser.location;
-      pickupLocationController.text = requestingUser.location.locationName;
+      pickupLocationController.location = requestingUser.location;
+      pickupLocationController.location = requestingUser.location;
     });
 
 
@@ -73,10 +75,10 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
          dropOffPersonName.text = widget.request.dropOffPersonName;
          dropOffPersonNumber.text = widget.request.dropOffPersonNumber;
          dropOffLocationController.text = widget.request.dropOffLocation.locationName;
-         dropOffLocation = widget.request.dropOffLocation;
+         dropOffLocationController.location = widget.request.dropOffLocation;
          pickupPersonNumber.text = widget.request.pickupPersonNumber;
          pickupPersonName.text = widget.request.pickupPersonName;
-         pickupLocation = widget.request.pickupLocation;
+         pickupLocationController.location = widget.request.pickupLocation;
          pickupLocationController.text = widget.request.pickupLocation.locationName;
          notes.text = widget.request.notes;
 
@@ -134,7 +136,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                     collapsed: Container(
                       padding: EdgeInsets.all(8),
                       width: size.width,
-                        child: Text("${requestingUser.username}, ${requestingUser.number}, ${pickupLocation.locationName}"),
+                        child: Text("${requestingUser.username}, ${requestingUser.number}, ${pickupLocationController.text}"),
                       color: Colors.white54,
                     ),
 
@@ -192,7 +194,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                             onIconTap: (){
                               determinePosition().then((value) {
                                 setState(() {
-                                  pickupLocation = value;
+                                  pickupLocationController.location = value;
                                   pickupLocationController.text = value.locationName;
                                 });
                               });
@@ -213,13 +215,12 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   labelColor: Colors.grey,
                   widthFactor: 0.85,
                   controller: dropOffLocationController,
-                  value: dropOffLocation.locationName,
+                  value: dropOffLocationController.text,
                   onIconTap: (){
 
                     pickLocation(context).then((value) {
                       if (value != null) {
                         setState(() {
-                          dropOffLocation = value;
                           dropOffLocationController.text = value.locationName;
 
                         });
@@ -359,20 +360,25 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   ),
                 ),
 
-                //todo add date picker
+                //todo add date picker to final popup about payment and stuff
 
 
                 CustomRoundedButton(
                   text: AppLocalizations.of(context).request_delivery.toUpperCase(),
                   onPressed: (){
+                    print("pickup name ${pickupLocationController.location.locationName}");
+                    print("pickup lat ${pickupLocationController.location.location}");
+                    print("dropOff name ${dropOffLocationController.location.locationName}");
+                    print("dropOff lat ${dropOffLocationController.location.location}");
+
                     DeliveryRequest request = DeliveryRequest(
                       requestingUser: requestingUser,
-                      dropOffLocation: dropOffLocation,
+                      dropOffLocation: dropOffLocationController.location,
                       dropOffPersonName: dropOffPersonName.text,
                       dropOffPersonNumber: dropOffPersonNumber.text,
-                      pickupPersonName: pickupPersonNumber.text,
-                      pickupPersonNumber: pickupPersonName.text,
-                      pickupLocation: pickupLocation,
+                      pickupPersonName: pickupPersonName.text,
+                      pickupPersonNumber: pickupPersonNumber.text,
+                      pickupLocation: pickupLocationController.location,
                       requestDate: requestDate,
                       status: DeliveryStatus.pending,
                       paymentMethod: paymentMethod,
@@ -383,7 +389,8 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                       note: notes.text
                     );
 
-                    if (widget.request != null)
+
+                    if (widget.request != null)//old delivery
                       request.setReference(widget.request.reference);
 
                       requestDelivery(request).then((value) =>
@@ -399,3 +406,7 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
     );
   }
 }
+
+
+
+//todo add custom text editing controller for locations

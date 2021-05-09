@@ -34,6 +34,12 @@ class DeliveryLocation{
   LatLng get location => __location;
   String get locationName => __placeName;
 
+  set location(LatLng newLat){
+    this.__location = newLat;
+  }
+
+  set name(String newName) => this.__placeName = newName;
+
   bool equals(Object obj){
     if (this == obj) return true; //if both references point to the same memory location
     if (obj == null || this.runtimeType != obj.runtimeType) return false;
