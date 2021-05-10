@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ujuzi_xpress/utils/models/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
 import 'package:ujuzi_xpress/utils/models/DeliveryRider.dart';
 import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
@@ -29,10 +28,10 @@ Future<void> requestDelivery(DeliveryRequest request){
 }
 
 ///Updates the user's default delivery location
-DocumentReference postUserDetails({UjuziUser user, DeliveryLocation location}){
+DocumentReference postUserDetails({UjuziUser user}){
   CollectionReference reference = firestore.collection("users").doc(user.id).collection("profile");
   DocumentReference doc = reference.doc("info");
-  doc.set(location.asMap());
+  doc.set(user.asMap());
   return doc;
 }
 
@@ -125,7 +124,7 @@ Future<List<DeliveryRequest>> getDeliveries(UjuziUser user) async {
 Future<void> uploadImage({UjuziUser user, File image}) async{
   FirebaseStorage storage = FirebaseStorage.instance;
   await storage.ref("${user.id}/profileImage").putFile(image);
-  user.updateProfileImage(await storage.ref("${user.id}/profileImage").getDownloadURL());
+  user.update(profileUrl: await storage.ref("${user.id}/profileImage").getDownloadURL());
 
 }
 

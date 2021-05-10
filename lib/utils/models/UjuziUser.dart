@@ -12,10 +12,11 @@ class UjuziUser{
   User _firebaseUser;
   DeliveryLocation _location = new DeliveryLocation();
   DocumentReference _reference;
+  String _number = "";
 
   String get username => this._firebaseUser.displayName ?? "User";
   String get id => this._firebaseUser.uid;
-  String get number => this._firebaseUser.phoneNumber ?? "";
+  String get number => this._number ?? "";
   String get profileImageUrl => this._firebaseUser.photoURL;
   String get email => this._firebaseUser.email ?? "";
   DeliveryLocation get location => this._location;
@@ -27,41 +28,37 @@ class UjuziUser{
     this._firebaseUser = user;
     getUserDetails(user.uid)
         .then((value) {
-          if (value != null)
-        this._location = new DeliveryLocation(name: value["locationName"],
-            lat: LatLng(value["latitude"], value["longitude"]) );
+          if (value != null) {
+            this._location =
+            new DeliveryLocation(name: value["location"]["locationName"],
+                lat: LatLng(value["location"]["latitude"],
+                    value["location"]["longitude"]));
+
+            this._number = value["number"];
+          }
       else
         this._location = null;
     }
     );
   }
 
-  void updateUserName(String name){
-    this._firebaseUser.updateProfile(displayName: name);
-  }
+  void update({String number, String mail, DeliveryLocation location, String profileUrl, String userName}){
 
+    if (number != null)
+      this._number = number;
 
-  void updateDefaultLocation(DeliveryLocation location){
-    this._location = location;
-  }
+    if (userName != null)
+      this._firebaseUser.updateProfile(displayName: userName);
 
-  void updateEmail(String mail){
-    this._firebaseUser.updateEmail(mail);
-  }
+    if (mail != null)
+      this._firebaseUser.updateEmail(mail);
 
-  void updateProfileImage(String url){
-    //todo merge all updates into one function
-    this._firebaseUser.updateProfile(photoURL:  url);
-  }
+    if (profileUrl != null)
+      this._firebaseUser.updateProfile(photoURL:  profileUrl);
 
-  // void updateId(String id){
-  //   this.__id = id;
-  // }
+    if (location != null)
+      this._location = location;
 
-  void updateNumber(String newNumber) {
-    //todo complete implementation
-    // postUserDetails(this.)
-    // this._firebaseUser.linkWithPhoneNumber(newNumber, RecaptchaVerifier());
   }
 
 
@@ -69,19 +66,15 @@ class UjuziUser{
 
 
 
+  Map<String, dynamic> asMap(){
+    return {
+      "number" : number,
+      "location" : location.asMap()
+    };
 
-  // Map<String, dynamic> asMap(){
-  //   return {
-  //     "number" : number,
-  //     "username" : username,
-  //     "email" : email,
-  //     "id" : id,
-  //     "location" : location.asMap()
-  //   };
-  //
-  //
-  //
-  // }
+
+
+  }
 
 
 

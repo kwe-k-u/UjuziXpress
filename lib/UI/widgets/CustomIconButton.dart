@@ -44,6 +44,7 @@ class _CustomIconButtonState extends State<CustomIconButton> with SingleTickerPr
         stream: widget.loadStream,
         builder: (context,snapshot){
 
+
           if (snapshot.data == ButtonState.loading) {
             return Theme(
               data: ThemeData(accentColor: Colors.grey),

@@ -41,7 +41,9 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
 
+
         Container(
+          margin: EdgeInsets.only(left: 12.0),
           decoration: BoxDecoration(
             border: Border.all(width: 2.40, color: Colors.black),
               color: Colors.grey.withOpacity(0.14),
@@ -88,6 +90,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
 
         Container(
+          margin: EdgeInsets.only(right: 12.0),
           decoration: BoxDecoration(
             border: Border.all(width: 2.40, color: Colors.black),
               color: Colors.grey.withOpacity(0.14),

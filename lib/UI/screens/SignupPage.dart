@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:ujuzi_xpress/UI/screens/LoginPage.dart';
@@ -8,6 +9,7 @@ import 'package:ujuzi_xpress/UI/widgets/CustomTextButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/signup/sign_up_bloc.dart';
 import 'package:ujuzi_xpress/utils/bloc/authentication/signup/sign_up_event.dart';
+import 'package:ujuzi_xpress/utils/models/LocationTextEditingController.dart';
 import 'package:ujuzi_xpress/utils/resources.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -177,26 +179,36 @@ class _SignupPageState extends State<SignupPage> {
                     ),
 
                     //number
-
-                    InternationalPhoneNumberInput(
-                        countries: ["CD"],
-                      textFieldController: numberController,
-                      hintText: AppLocalizations.of(context).phoneNumber,
-                        validator: (value){
-                          if (value == null || value.isEmpty)
-                            return AppLocalizations.of(context).required_field;
-                          else if (value.length <= 9)
-                            return AppLocalizations.of(context).valid_phone_number;
-                          return "";
-                          },
-                        selectorConfig: SelectorConfig(
-                          selectorType: PhoneInputSelectorType.DROPDOWN,
-                          useEmoji:  true,
-                          setSelectorButtonAsPrefixIcon: false,
+                    Padding(
+                      padding: const EdgeInsets.only(right:100, left:12.0, top: 8.0, bottom: 8.0),
+                      child: InternationalPhoneNumberInput(
+                          countries: ["CD"],
+                        textFieldController: numberController,
+                        inputDecoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.pink)
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white)
+                          ),
                         ),
-                        onInputChanged: (value){
-                      }
-                      ),
+                        hintText: AppLocalizations.of(context).phoneNumber,
+                          validator: (value){
+                            if (value == null || value.isEmpty)
+                              return AppLocalizations.of(context).required_field;
+                            else if (value.length <= 9)
+                              return AppLocalizations.of(context).valid_phone_number;
+                            return "";
+                            },
+                          selectorConfig: SelectorConfig(
+                            selectorType: PhoneInputSelectorType.DROPDOWN,
+                            useEmoji:  true,
+                            setSelectorButtonAsPrefixIcon: false,
+                          ),
+                          onInputChanged: (value){
+                        }
+                        ),
+                    ),
 
                     Spacer(
                       flex: 1,

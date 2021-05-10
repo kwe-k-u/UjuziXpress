@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,12 +19,39 @@ class AppResources {
 
 
   showAlertDialog(String content, BuildContext _context) {
-    //TODO: better design
     showDialog(
         context: _context,
         builder: (context) {
+
           return AlertDialog(
-            content: Text(content),
+            shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+            title: Row (
+              children: [
+                Container(
+                  child: Icon(MaterialCommunityIcons.alert_circle,
+                      size: 40,
+                    color: Colors.red,
+                  ),
+                  margin: EdgeInsets.only(right:12.0),
+                ),
+                Text("WARNING")
+              ],
+            ),
+            content: Container(
+                height: MediaQuery.of(context).size.height * 0.1,
+                child: Center(child: Text(content)
+                )
+            ),
+            actions: [
+              ElevatedButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                    },
+                  child: Text("Okay")
+              )
+            ],
           );
         });
   }

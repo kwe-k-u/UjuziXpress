@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/UI/widgets/LocationTextField.dart';
@@ -32,8 +33,6 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController cardNumber = new TextEditingController();
 
 
-
-
   DeliveryLocation deliveryLocation = new DeliveryLocation();
   String imageUrl;
   DateTime expiryDate = new DateTime.now();
@@ -46,20 +45,110 @@ class _ProfilePageState extends State<ProfilePage> {
   TextStyle selectedText = TextStyle(color: Colors.white);
 
 
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      imageUrl = widget.user.profileImageUrl;
+      username.text = widget.user.username;
+      number.text = widget.user.number;
+      deliveryLocation = widget.user.location;
+      location.text = widget.user.location.locationName;
+    });
+  }
 
 
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery
+        .of(context)
+        .size;
+
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(AppLocalizations
+              .of(context)
+              .profile),
+          centerTitle: true,
+        ),
+        body: FutureBuilder(
+          future: getUserCreditCard(widget.user.id),
+          builder: (context, snapshot) {
+            return Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 8.0),
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.05,
+                  child: ToggleButtons(
+                    borderWidth: 1.5,
+                    isSelected: selectedArray,
+                    color: Colors.black,
+                    borderColor: Colors.black,
+                    borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                    fillColor: Colors.deepPurple,
+                    onPressed: (index) {
+                      selectedArray = [false, false];
+                      setState(() {
+                        selectedArray[index] = true;
+                      });
+                    },
+                    children: [
+                      Container(
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.45,
+                        child: Text(
+                          AppLocalizations
+                              .of(context)
+                              .profile,
+                          textAlign: TextAlign.center,
+                          style: selectedArray.elementAt(0)
+                              ? selectedText
+                              : TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.45,
+                        child: Text(
+                          AppLocalizations
+                              .of(context)
+                              .credit_card,
+                          textAlign: TextAlign.center,
+                          style: selectedArray.elementAt(1)
+                              ? selectedText
+                              : TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Expanded(
+                    flex: 1,
+                    child: display(size, selectedArray.elementAt(0), snapshot))
 
 
-
-
-
-
-
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
 
 
   Widget display(Size size, bool profileBool, AsyncSnapshot snapshot) {
-
-
     if (profileBool) {
       return SingleChildScrollView(
         child: Container(
@@ -79,7 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 child: ProfileImage(
                   url: widget.user.profileImageUrl,
-                  onPressed: ()async{
+                  onPressed: () async {
                     final image = await resources.pickImage();
                     await uploadImage(image: image, user: widget.user);
                   },
@@ -88,22 +177,55 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
               CustomTextField(
-                label:   AppLocalizations.of(context).username,
+                label: AppLocalizations
+                    .of(context)
+                    .username,
                 labelColor: Colors.grey,
                 color: Colors.black,
                 widthFactor: 0.85,
                 controller: username,
               ),
-              CustomTextField(
-                label:   AppLocalizations.of(context).phoneNumber,
-                labelColor: Colors.grey,
-                color: Colors.black,
-                widthFactor: 0.85,
-                controller: number,
+
+
+              Padding(
+                padding: const EdgeInsets.only(
+                    right: 50, left: 50.0, top: 8.0, bottom: 8.0),
+                child: InternationalPhoneNumberInput(
+                    countries: ["CD"],
+                    textFieldController: number,
+                    inputDecoration: InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.pink)
+                      ),
+                    ),
+                    hintText: AppLocalizations
+                        .of(context)
+                        .phoneNumber,
+                    validator: (value) {
+                      if (value == null || value.isEmpty)
+                        return AppLocalizations
+                            .of(context)
+                            .required_field;
+                      else if (value.length <= 9)
+                        return AppLocalizations
+                            .of(context)
+                            .valid_phone_number;
+                      return "";
+                    },
+                    selectorConfig: SelectorConfig(
+                      selectorType: PhoneInputSelectorType.DROPDOWN,
+                      useEmoji: true,
+                      setSelectorButtonAsPrefixIcon: false,
+                    ),
+                    onInputChanged: (value) {}
+                ),
               ),
+
               LocationTextField(
                 focusNode: new FocusNode(),
-                label:   AppLocalizations.of(context).default_pickup_person_location,
+                label: AppLocalizations
+                    .of(context)
+                    .default_pickup_person_location,
                 color: Colors.black,
                 labelColor: Colors.grey,
                 widthFactor: 0.85,
@@ -113,7 +235,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     setState(() {
                       location.text = value.locationName;
                       deliveryLocation = value;
-                      deliveryLocation = new DeliveryLocation(name: value.locationName, lat: value.location);
+                      deliveryLocation = new DeliveryLocation(name: value
+                          .locationName, lat: value.location);
                     });
                   });
                 },
@@ -122,14 +245,19 @@ class _ProfilePageState extends State<ProfilePage> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: CustomRoundedButton(
-                  text:   AppLocalizations.of(context).update_profile.toUpperCase(),
+                  text: AppLocalizations
+                      .of(context)
+                      .update_profile
+                      .toUpperCase(),
                   textColor: Colors.white,
                   onPressed: () {
+                    if (widget.user.username != username.text)
+                      widget.user.update(userName: username.text);
+                    if (widget.user.number != number.text)
+                      widget.user.update(number: number.text);
 
-                    if (widget.user.username != username.text) widget.user.updateUserName(username.text);
-                    if (widget.user.number != number.text) widget.user.updateNumber(number.text);
-                    widget.user.updateDefaultLocation(deliveryLocation);
-                    postUserDetails(user: widget.user, location :deliveryLocation);
+                    widget.user.update(location:deliveryLocation);
+                    postUserDetails(user: widget.user);
                     Navigator.pop(context, widget.user);
                   },
                 ),
@@ -139,8 +267,6 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       );
     }
-
-
 
 
     if (snapshot.data.exists) {
@@ -159,7 +285,9 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CustomTextField(
-              label:   AppLocalizations.of(context).cardholder_name,
+              label: AppLocalizations
+                  .of(context)
+                  .cardholder_name,
               labelColor: Colors.grey,
               color: Colors.black,
               controller: cardHolderName,
@@ -167,38 +295,46 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
 
             Container(
-              width: size.width,
-              padding: EdgeInsets.only(left: 30.0),
-              margin: EdgeInsets.only(top:30, bottom:4.0),
-                child: Text("Expiry date", style: TextStyle(color: Colors.grey),)
+                width: size.width,
+                padding: EdgeInsets.only(left: 30.0),
+                margin: EdgeInsets.only(top: 30, bottom: 4.0),
+                child: Text(
+                  "Expiry date", style: TextStyle(color: Colors.grey),)
             ),
 
             GestureDetector(
-              onTap: (){
-                DatePicker.showDatePicker(
-                    context,
-                    showTitleActions: true,
-                    minTime: DateTime((DateTime.now().year - 20), 1, 1),
-                    maxTime: DateTime((DateTime.now().year + 20), 12, 1),
-                    onConfirm: (date) {
-                      if (date != null)
-                        setState(() {
-                          expiryDate = date;
-                        });
-                    },
-                    currentTime: expiryDate,
-                    locale: Localizations.localeOf(context)
-                );
-              },
-              child:Padding(
-                  padding: const EdgeInsets.only(top:4.0, bottom: 8.0, left: 24, right: 24),
-                  child: CustomDatePicker(date: expiryDate,)
-              )
+                onTap: () {
+                  DatePicker.showDatePicker(
+                      context,
+                      showTitleActions: true,
+                      minTime: DateTime((DateTime
+                          .now()
+                          .year - 20), 1, 1),
+                      maxTime: DateTime((DateTime
+                          .now()
+                          .year + 20), 12, 1),
+                      onConfirm: (date) {
+                        if (date != null)
+                          setState(() {
+                            expiryDate = date;
+                          });
+                      },
+                      currentTime: expiryDate,
+                      locale: Localizations.localeOf(context)
+                  );
+                },
+                child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 4.0, bottom: 8.0, left: 24, right: 24),
+                    child: CustomDatePicker(date: expiryDate,)
+                )
             ),
 
 
             CustomTextField(
-              label: AppLocalizations.of(context).card_number,
+              label: AppLocalizations
+                  .of(context)
+                  .card_number,
               labelColor: Colors.grey,
               color: Colors.black,
               controller: cardNumber,
@@ -206,7 +342,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
 
             CustomTextField(
-              label: AppLocalizations.of(context).ccv,
+              label: AppLocalizations
+                  .of(context)
+                  .ccv,
               labelColor: Colors.grey,
               color: Colors.black,
               controller: ccv,
@@ -214,22 +352,21 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
 
 
-
-
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: CustomRoundedButton(
-                text: AppLocalizations.of(context).update_card_details.toUpperCase(),
+                text: AppLocalizations
+                    .of(context)
+                    .update_card_details
+                    .toUpperCase(),
                 textColor: Colors.white,
-                onPressed: (){
-
-
+                onPressed: () {
                   postUserCreditCard(
-                    user: widget.user,
-                    ccv: ccv.text,
-                    expiryDate: expiryDate,
-                    cardNumber: cardNumber.text,
-                    holderName: cardHolderName.text
+                      user: widget.user,
+                      ccv: ccv.text,
+                      expiryDate: expiryDate,
+                      cardNumber: cardNumber.text,
+                      holderName: cardHolderName.text
                   );
 
                   Navigator.pop(context);
@@ -243,102 +380,4 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
 
-
-
-
-
-
-
-
-
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-
-
-       imageUrl = widget.user.profileImageUrl;
-       username.text = widget.user.username;
-       number.text = widget.user.number;
-       deliveryLocation = widget.user.location;
-       location.text = widget.user.location.locationName;
-    });
-  }
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
-    return GestureDetector(
-      onTap: (){
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context).profile),
-          centerTitle: true,
-        ),
-        body: FutureBuilder(
-          future: getUserCreditCard(widget.user.id),
-          builder: (context, snapshot){
-            return Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: 8.0),
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  child: ToggleButtons(
-                    borderWidth: 1.5,
-                    isSelected: selectedArray,
-                    color: Colors.black,
-                    borderColor: Colors.black,
-                    borderRadius: BorderRadius.all(Radius.circular(24.0)),
-                    fillColor: Colors.deepPurple,
-                    onPressed: (index) {
-                      selectedArray = [false, false];
-                      setState(() {
-                        selectedArray[index] = true;
-                      });
-                    },
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        child: Text(
-                          AppLocalizations.of(context).profile,
-                          textAlign: TextAlign.center,
-                          style: selectedArray.elementAt(0)
-                              ? selectedText
-                              : TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        child: Text(
-                          AppLocalizations.of(context).credit_card,
-                          textAlign: TextAlign.center,
-                          style: selectedArray.elementAt(1)
-                              ? selectedText
-                              : TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                Expanded(
-                  flex: 1,
-                child: display(size, selectedArray.elementAt(0), snapshot))
-
-
-              ],
-            );
-
-
-          },
-        ),
-      ),
-    );
-  }
 }
