@@ -219,6 +219,7 @@ Rider assignedRider;
                                 elevation: 0,
                                 widthFactor: 0.25,
                                 heightPadding: 15.0,
+                                buttonColor: Colors.black,
                                 onPressed: () {
                                   Navigator.push(
                                       context, MaterialPageRoute(

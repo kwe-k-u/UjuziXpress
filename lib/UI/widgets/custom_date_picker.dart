@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomDatePicker extends StatefulWidget {
-  @required final DateTime date;
+  final DateTime date;
   
-  CustomDatePicker({Key key, this.date}) : super(key: key);
+  CustomDatePicker({
+    Key key,
+    @required this.date})
+      : super(key: key);
 
   @override
   _CustomDatePickerState createState() => _CustomDatePickerState();

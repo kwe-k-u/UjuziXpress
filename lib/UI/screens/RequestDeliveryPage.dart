@@ -5,8 +5,8 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
 import 'package:ujuzi_xpress/UI/widgets/LocationTextField.dart';
+import 'package:ujuzi_xpress/UI/widgets/PaymentOptionsSheet.dart';
 import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
-import 'package:ujuzi_xpress/utils/services/FirebaseDatabase.dart';
 import 'package:ujuzi_xpress/utils/services/LocationHandler.dart';
 import 'package:ujuzi_xpress/utils/models/LocationTextEditingController.dart';
 import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
@@ -364,35 +364,39 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                 CustomRoundedButton(
                   text: AppLocalizations.of(context).request_delivery.toUpperCase(),
                   onPressed: (){
-                    print("pickup name ${pickupLocationController.location.locationName}");
-                    print("pickup lat ${pickupLocationController.location.location}");
-                    print("dropOff name ${dropOffLocationController.location.locationName}");
-                    print("dropOff lat ${dropOffLocationController.location.location}");
-
-                    DeliveryRequest request = DeliveryRequest(
-                      requestingUser: requestingUser,
-                      dropOffLocation: dropOffLocationController.location,
-                      dropOffPersonName: dropOffPersonName.text,
-                      dropOffPersonNumber: dropOffPersonNumber.text,
-                      pickupPersonName: pickupPersonName.text,
-                      pickupPersonNumber: pickupPersonNumber.text,
-                      pickupLocation: pickupLocationController.location,
-                      requestDate: requestDate,
-                      status: DeliveryStatus.pending,
-                      paymentMethod: paymentMethod,
-                      packageType: packageType,
-                      startDate: startDate,
-                      completionDate: completionDate,
-                      deliveryID: deliveryID,
-                      note: notes.text
+                    showModalBottomSheet(
+                      enableDrag: false,
+                      context: context,
+                      builder: (context) => PaymentOptionsSheet()
                     );
 
 
-                    if (widget.request != null)//old delivery
-                      request.setReference(widget.request.reference);
 
-                      requestDelivery(request).then((value) =>
-                          Navigator.pop(context));
+
+                    // DeliveryRequest request = DeliveryRequest(
+                    //   requestingUser: requestingUser,
+                    //   dropOffLocation: dropOffLocationController.location,
+                    //   dropOffPersonName: dropOffPersonName.text,
+                    //   dropOffPersonNumber: dropOffPersonNumber.text,
+                    //   pickupPersonName: pickupPersonName.text,
+                    //   pickupPersonNumber: pickupPersonNumber.text,
+                    //   pickupLocation: pickupLocationController.location,
+                    //   requestDate: requestDate,
+                    //   status: DeliveryStatus.pending,
+                    //   paymentMethod: paymentMethod,
+                    //   packageType: packageType,
+                    //   startDate: startDate,
+                    //   completionDate: completionDate,
+                    //   deliveryID: deliveryID,
+                    //   note: notes.text
+                    // );
+                    //
+                    //
+                    // if (widget.request != null)//old delivery
+                    //   request.setReference(widget.request.reference);
+                    //
+                    //   requestDelivery(request).then((value) =>
+                    //       Navigator.pop(context));
                   },
                 )
 
