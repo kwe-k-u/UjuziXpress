@@ -220,7 +220,6 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                       if (value != null) {
                         setState(() {
                           dropOffLocationController.text = value.locationName;
-
                         });
                       }
                     });
@@ -358,16 +357,34 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   ),
                 ),
 
-                //todo add date picker to final popup about payment and stuff
-
-
                 CustomRoundedButton(
                   text: AppLocalizations.of(context).request_delivery.toUpperCase(),
                   onPressed: (){
+                    DeliveryRequest request = DeliveryRequest(
+                        requestingUser: requestingUser,
+                        dropOffLocation: dropOffLocationController.location,
+                        dropOffPersonName: dropOffPersonName.text,
+                        dropOffPersonNumber: dropOffPersonNumber.text,
+                        pickupPersonName: pickupPersonName.text,
+                        pickupPersonNumber: pickupPersonNumber.text,
+                        pickupLocation: pickupLocationController.location,
+                        requestDate: requestDate,
+                        status: DeliveryStatus.pending,
+                        paymentMethod: paymentMethod,
+                        packageType: packageType,
+                        startDate: startDate,
+                        completionDate: completionDate,
+                        deliveryID: deliveryID,
+                        note: notes.text
+                    );
+
+
+                    if (widget.request != null)//old delivery
+                      request.setReference(widget.request.reference);
                     showModalBottomSheet(
                       enableDrag: false,
                       context: context,
-                      builder: (context) => PaymentOptionsSheet()
+                      builder: (context) => PaymentOptionsSheet(request: request,)
                     );
 
 
