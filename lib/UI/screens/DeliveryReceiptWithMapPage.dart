@@ -109,12 +109,14 @@ Rider assignedRider;
                 GoogleMap(
                   myLocationButtonEnabled: false,
                   zoomControlsEnabled: false,
+                  zoomGesturesEnabled: true,
                   initialCameraPosition: initialPosition,
                   onMapCreated: (controller) =>
                   _googleMapController = controller,
                   markers: markers.toSet(),
                   polylines: {
                     if (directions != null)
+
                       Polyline(
                         polylineId: const PolylineId('overview_polyline'),
                         color: Colors.red,
