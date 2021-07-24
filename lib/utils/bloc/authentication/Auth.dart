@@ -8,24 +8,24 @@ Future<User> signInWithGoogle() async {
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   await googleSignIn.signOut();
-  final GoogleSignInAccount googleUser = await googleSignIn.signIn();
-  final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+  final GoogleSignInAccount? googleUser = await (googleSignIn.signIn());
+  final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
 
 
   // Create a new credential
   final GoogleAuthCredential googleCredential = GoogleAuthProvider.credential(
     accessToken: googleAuth.accessToken,
     idToken: googleAuth.idToken,
-  );
+  ) as GoogleAuthCredential;
 
   // Once signed in, return the UserCredential
   UserCredential credential =  await firebaseAuth.signInWithCredential(googleCredential);
-  User user = credential.user;
+  User user = credential.user!;
 
   assert(!user.isAnonymous);
   assert (await user.getIdToken() != null);
 
-  final User currentUser = firebaseAuth.currentUser;
+  final User currentUser = firebaseAuth.currentUser!;
   assert(currentUser.uid == user.uid);
 
   return user;
@@ -34,7 +34,7 @@ Future<User> signInWithGoogle() async {
 
 
 
-Future<User> signUpWithEmail(String email, String password, String username, String phoneNumber) async{
+Future<User?> signUpWithEmail(String email, String password, String username, String phoneNumber) async{
 
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   try {
@@ -43,20 +43,20 @@ Future<User> signUpWithEmail(String email, String password, String username, Str
         email: email,
         password: password,
     );
-    userCredential.user.sendEmailVerification();
+    userCredential.user!.sendEmailVerification();
 
     // Once signed in, return the UserCredential
     UserCredential credential =  await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-    User user = credential.user;
+    User user = credential.user!;
 
     assert(!user.isAnonymous);
     assert (await user.getIdToken() != null);
 
-    final User currentUser = firebaseAuth.currentUser;
+    final User currentUser = firebaseAuth.currentUser!;
     //update display name
     await currentUser.updateDisplayName( username);
     //update phone number
-    await updateUserPhoneNumber(phoneNumber, currentUser); //todo implement
+    // await updateUserPhoneNumber(phoneNumber, currentUser);
 
     assert(currentUser.uid == user.uid);
     await user.reload();
@@ -76,28 +76,31 @@ Future<User> signUpWithEmail(String email, String password, String username, Str
 }
 
 
-Future<void> updateUserPhoneNumber(String phoneNumber, User currentUser) async{
+Future<void> updateUserPhoneNumber(String phoneNumber, User currentUser, String sms) async{
 
   FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      timeout: const Duration(minutes: 2),
+      timeout: const Duration(minutes: 4),
       verificationCompleted: (credential) async {
         await currentUser.updatePhoneNumber(credential);
         // either this occurs or the user needs to manually enter the SMS code
       },
-      verificationFailed: null,
+      verificationFailed: (exception){//todo handle verification exception
+         },
       codeSent: (verificationId, [forceResendingToken]) async {
-        String smsCode;
         // get the SMS code from the user somehow (probably using a text field)
         final AuthCredential credential =
-        PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
-        await FirebaseAuth.instance.currentUser.updatePhoneNumber(credential);
+        PhoneAuthProvider.credential(verificationId: verificationId, smsCode: sms);
+        await FirebaseAuth.instance.currentUser!.updatePhoneNumber(credential as PhoneAuthCredential);
       },
-      codeAutoRetrievalTimeout: null);
+      codeAutoRetrievalTimeout: (e){
+        //todo show timeout pop up
+      }
+  );
 }
 
 
-Future<User> logInWithEmail(String email, String password) async{
+Future<User?> logInWithEmail(String email, String password) async{
 
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   try {
@@ -107,13 +110,13 @@ Future<User> logInWithEmail(String email, String password) async{
         password: password);
 
     // Once signed in, return the UserCredential
-    UserCredential credential =  await firebaseAuth.signInWithCredential(userCredential.credential);
-    User user = credential.user;
+    UserCredential credential =  await firebaseAuth.signInWithCredential(userCredential.credential!);
+    User user = credential.user!;
 
     assert(!user.isAnonymous);
     assert (await user.getIdToken() != null);
 
-    final User currentUser = firebaseAuth.currentUser;
+    final User currentUser = firebaseAuth.currentUser!;
     assert(currentUser.uid == user.uid);
 
     return user;

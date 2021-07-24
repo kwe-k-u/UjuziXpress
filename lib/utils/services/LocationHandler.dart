@@ -1,14 +1,7 @@
 
-
-
-
-
-
-
-
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ujuzi_xpress/UI/screens/PickLocationPage.dart';
@@ -29,12 +22,9 @@ Future<DeliveryLocation> determinePosition() async {
 Future<String> getAddressFromPosition(Position position) async {
   try {
 
-//todo reimplement
-  return '';
-    // Address place = (await Geocoder.local.findAddressesFromCoordinates(new Coordinates(position.latitude, position.longitude))).first;
+    String location = await getAddressFromLatLng(LatLng(position.latitude, position.longitude));
+    return location;
 
-    // return  place.addressLine;
-    // return  "${place.adminArea}, ${place.addressLine} ${place.countryName}";
   } catch (e) {
     return "${e.toString()}";
   }
@@ -43,11 +33,9 @@ Future<String> getAddressFromPosition(Position position) async {
 
 Future<String> getAddressFromLatLng(LatLng latLng) async {
   try {
+    Placemark placemark = (await placemarkFromCoordinates(latLng.latitude, latLng.longitude) ).first;
+    return placemark.name ?? "";
 
-
-    // Address place = (await Geocoder.local.findAddressesFromCoordinates(new Coordinates(latLng.latitude, latLng.longitude))).first;
-//todo reimpment
-    return  "place.addressLine";
   } catch (e) {
     return "${e.toString()}";
   }
@@ -57,17 +45,15 @@ Future<String> getAddressFromLatLng(LatLng latLng) async {
 
 
 Future<LatLng> getLatLngFromAddress(String place) async{
-  // Address location = (await Geocoder.local.findAddressesFromQuery(place)).first;
-
-  // LatLng latLng = LatLng(location.coordinates.latitude, location.coordinates.longitude);
-
-  return LatLng(3, 3);//todo reimplement
+  Location location = (await locationFromAddress(place)).first;
+  LatLng latLng = new LatLng(location.latitude, location.longitude);
+  return latLng;
 }
 
 
 
-Future<DeliveryLocation> pickLocation(BuildContext context) async{
-  DeliveryLocation location = await Navigator.push(context, MaterialPageRoute(
+Future<DeliveryLocation?> pickLocation(BuildContext context) async{
+  DeliveryLocation? location = await Navigator.push(context, MaterialPageRoute(
     builder: (context)=> PickLocationPage()
   ));
 
@@ -76,7 +62,7 @@ Future<DeliveryLocation> pickLocation(BuildContext context) async{
 
 
 
-Future<Directions> getDirections(LatLng pickup, LatLng dropOff) async{
+Future<Directions?> getDirections(LatLng pickup, LatLng dropOff) async{
 
   Dio dio = new Dio();
   final response = await dio.get(

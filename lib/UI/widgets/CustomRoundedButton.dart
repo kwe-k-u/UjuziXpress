@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomRoundedButton extends StatelessWidget {
-  final Function onPressed;
-  final String text;
+  final Function? onPressed;
+  final String? text;
   final Color buttonColor;
   final double widthFactor;
   final double heightPadding;
-  final Color textColor;
-  final double elevation;
+  final Color? textColor;
+  final double? elevation;
 
   CustomRoundedButton({
     this.text,
@@ -37,8 +37,8 @@ class CustomRoundedButton extends StatelessWidget {
               ),
           )
       ),
-        onPressed: onPressed,
-            child: Text(text,
+        onPressed: onPressed as void Function()?,
+            child: Text(text!,
               style: TextStyle(color: textColor,),
             )
         );

@@ -16,7 +16,7 @@ final bool enabled;
 
 class _MapUiState extends State<MapUi> {
   CameraPosition position = CameraPosition(target: LatLng(-22,401));
-  GoogleMapController _controller ;
+  late GoogleMapController _controller ;
   List<Marker> markers = [];
 
 
@@ -37,9 +37,9 @@ class _MapUiState extends State<MapUi> {
             _controller = controler;
             determinePosition().then((value) {
               _controller.animateCamera(
-                  CameraUpdate.newLatLngZoom(value.location,14.0));
+                  CameraUpdate.newLatLngZoom(value.location!,14.0));
 
-            }).onError((error, stackTrace) {
+            }).onError((dynamic error, stackTrace) {
               _controller.animateCamera(CameraUpdate.newCameraPosition(position));
             });
           });

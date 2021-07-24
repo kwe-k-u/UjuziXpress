@@ -6,7 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
-  @required final DeliveryRequest deliveryRequest;
+  @required final DeliveryRequest? deliveryRequest;
 
 
   DeliveryReceiptWithTextOnlyPage({this.deliveryRequest});
@@ -15,17 +15,17 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
 
   Widget displayStatus(BuildContext context){
-    switch(deliveryRequest.status){
+    switch(deliveryRequest!.status){
       case DeliveryStatus.complete:
-        return Text(AppLocalizations.of(context).complete,style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),);
+        return Text(AppLocalizations.of(context)!.complete,style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),);
       case DeliveryStatus.ongoing:
-        return Text(AppLocalizations.of(context).in_progress.toUpperCase(),style: TextStyle(color: Colors.indigo, fontWeight: FontWeight.bold),);
+        return Text(AppLocalizations.of(context)!.in_progress.toUpperCase(),style: TextStyle(color: Colors.indigo, fontWeight: FontWeight.bold),);
       case DeliveryStatus.pending:
-        return Text(AppLocalizations.of(context).pending.toUpperCase(),style: TextStyle(color: Colors.yellow, fontWeight: FontWeight.bold),);
+        return Text(AppLocalizations.of(context)!.pending.toUpperCase(),style: TextStyle(color: Colors.yellow, fontWeight: FontWeight.bold),);
       case DeliveryStatus.cancelled:
-        return Text(AppLocalizations.of(context).cancelled.toUpperCase(),style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),);
+        return Text(AppLocalizations.of(context)!.cancelled.toUpperCase(),style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),);
       default:
-        return Text(AppLocalizations.of(context).error);
+        return Text(AppLocalizations.of(context)!.error);
     }
   }
   
@@ -33,21 +33,21 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
   
   
   String translateStatus(BuildContext context){
-    switch(deliveryRequest.status){
+    switch(deliveryRequest!.status){
       case DeliveryStatus.complete:
-        return AppLocalizations.of(context).complete.toUpperCase();
+        return AppLocalizations.of(context)!.complete.toUpperCase();
       case DeliveryStatus.ongoing:
-        return AppLocalizations.of(context).in_transit.toUpperCase();
+        return AppLocalizations.of(context)!.in_transit.toUpperCase();
       case DeliveryStatus.pending:
-        return AppLocalizations.of(context).pending.toUpperCase();
+        return AppLocalizations.of(context)!.pending.toUpperCase();
       case DeliveryStatus.cancelled:
-        return AppLocalizations.of(context).cancelled.toUpperCase();
+        return AppLocalizations.of(context)!.cancelled.toUpperCase();
       default:
-        return AppLocalizations.of(context).error.toUpperCase();
+        return AppLocalizations.of(context)!.error.toUpperCase();
     }
   }
 
-  String displayDate(DateTime date){
+  String displayDate(DateTime? date){
     if (date == null)
       return "";
 
@@ -61,7 +61,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        title: Text(AppLocalizations.of(context).order.toUpperCase(),
+        title: Text(AppLocalizations.of(context)!.order.toUpperCase(),
           style: TextStyle(
               color: Colors.black
           ),
@@ -92,16 +92,16 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
 
               CustomIcon(
-                status: deliveryRequest.status,
+                status: deliveryRequest!.status,
                 enabled: true,
               ),
 
 
               ListTile(
-                title: Text("${AppLocalizations.of(context).order_no} ${deliveryRequest.deliveryID}"),
+                title: Text("${AppLocalizations.of(context)!.order_no} ${deliveryRequest!.deliveryID}"),
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top:4.0),
-                  child: Text("${AppLocalizations.of(context).order_date} ${displayDate(deliveryRequest.requestDate)}"),
+                  child: Text("${AppLocalizations.of(context)!.order_date} ${displayDate(deliveryRequest!.requestDate)}"),
                 ),
               ),
 
@@ -110,7 +110,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                     children: [
                       TextSpan(
-                        text: "${AppLocalizations.of(context).date_completed} \t",
+                        text: "${AppLocalizations.of(context)!.date_completed} \t",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
@@ -119,7 +119,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                       TextSpan(
 
-                        text: displayDate(deliveryRequest.completionDate),
+                        text: displayDate(deliveryRequest!.completionDate),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
 
@@ -134,7 +134,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                     children: [
                       TextSpan(
-                        text: "${AppLocalizations.of(context).package_type}:\t",
+                        text: "${AppLocalizations.of(context)!.package_type}:\t",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
@@ -173,7 +173,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                         children: [
                           TextSpan(
-                            text: "${AppLocalizations.of(context).from}\t",
+                            text: "${AppLocalizations.of(context)!.from}\t",
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               color: Colors.black,
@@ -182,7 +182,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                           TextSpan(
 
-                            text: AppLocalizations.of(context).pickup_person_details,
+                            text: AppLocalizations.of(context)!.pickup_person_details,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
 
@@ -200,7 +200,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                     children: [
                       TextSpan(
-                        text: "${AppLocalizations.of(context).pickup_person_name}\t",
+                        text: "${AppLocalizations.of(context)!.pickup_person_name}\t",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
@@ -227,7 +227,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                           children: [
                             TextSpan(
-                              text: "${AppLocalizations.of(context).to}\t",
+                              text: "${AppLocalizations.of(context)!.to}\t",
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 color: Colors.black,
@@ -236,7 +236,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                             TextSpan(
 
-                              text: AppLocalizations.of(context).dropoff_person_details,
+                              text: AppLocalizations.of(context)!.dropoff_person_details,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
 
@@ -258,7 +258,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                     children: [
                       TextSpan(
-                        text: "${AppLocalizations.of(context).pickup_person_name}:\t",
+                        text: "${AppLocalizations.of(context)!.pickup_person_name}:\t",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
@@ -267,7 +267,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                       TextSpan(
 
-                        text: deliveryRequest.dropOffPersonName,
+                        text: deliveryRequest!.dropOffPersonName,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
 
@@ -283,7 +283,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                     children: [
                       TextSpan(
-                        text: "${AppLocalizations.of(context).number}:\t",
+                        text: "${AppLocalizations.of(context)!.number}:\t",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
@@ -292,7 +292,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                       TextSpan(
 
-                        text: deliveryRequest.dropOffPersonNumber,
+                        text: deliveryRequest!.dropOffPersonNumber,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
 
@@ -308,7 +308,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                     children: [
                       TextSpan(
-                        text: "${AppLocalizations.of(context).location}:\t",
+                        text: "${AppLocalizations.of(context)!.location}:\t",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
@@ -317,7 +317,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
 
                       TextSpan(
 
-                        text: deliveryRequest.dropOffLocation.locationName,
+                        text: deliveryRequest!.dropOffLocation!.locationName,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
 

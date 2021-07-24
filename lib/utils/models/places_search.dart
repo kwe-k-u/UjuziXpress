@@ -1,7 +1,7 @@
 
 class PlaceSearch{
-  String name;
-  String placeId;
+  String? name;
+  String? placeId;
 
 
   PlaceSearch({this.name, this.placeId});

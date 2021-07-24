@@ -24,7 +24,7 @@ class LoginBloc {
   Stream<ButtonState> get loginButtonStateStream =>
       _loadingButtonStreamController.stream;
 
-  BuildContext _context;
+  late BuildContext _context;
   AppResources _appResources = AppResources();
 
   createInstance() {
@@ -41,7 +41,7 @@ class LoginBloc {
 
       case EmailLoginEvent:
         //signing in with password and email
-        EmailLoginEvent loginEvent = _loginEvent;
+        EmailLoginEvent loginEvent = _loginEvent as EmailLoginEvent;
 
         if ((loginEvent.username == null || loginEvent.username.isEmpty) &&
             (loginEvent.password == null || loginEvent.password.isEmpty)) {
@@ -130,7 +130,7 @@ class LoginBloc {
 
 
 
-  Future<User> loginWithEmail(String username, String password) async {
+  Future<User?> loginWithEmail(String username, String password) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: username,

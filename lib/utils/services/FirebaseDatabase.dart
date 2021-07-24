@@ -17,18 +17,18 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
 /// If the request is new, a new firebase reference is given, else existing reference is updated
 Future<void> requestDelivery(DeliveryRequest request){
   if (request.reference != null){
-    return request.reference.update(request.asMap());
+    return request.reference!.update(request.asMap());
 
   } else {
     CollectionReference reference = firestore.collection("users").doc(
-        request.requestingUser.id).collection("deliveryRequest");
+        request.requestingUser!.id).collection("deliveryRequest");
     return reference.add(request.asMap());
   }
 
 }
 
 ///Updates the user's default delivery location
-DocumentReference postUserDetails({UjuziUser user}){
+DocumentReference postUserDetails({required UjuziUser user}){
   CollectionReference reference = firestore.collection("users").doc(user.id).collection("profile");
   DocumentReference doc = reference.doc("info");
   doc.set(user.asMap());
@@ -37,11 +37,11 @@ DocumentReference postUserDetails({UjuziUser user}){
 
 ///Updates the user's credit card info
 DocumentReference postUserCreditCard({
-  UjuziUser user,
-  String cardNumber,
-  String ccv,
-  DateTime expiryDate,
-  String holderName}) {
+  required UjuziUser user,
+  String? cardNumber,
+  String? ccv,
+  DateTime? expiryDate,
+  String? holderName}) {
 
 
 
@@ -71,7 +71,7 @@ DocumentReference postUserCreditCard({
 
 //GETTERS
 
-Future<DocumentSnapshot> getUserDetails(String id){
+Future<DocumentSnapshot>? getUserDetails(String id){
 
   try {
     DocumentReference reference = firestore.collection('users')
@@ -87,7 +87,7 @@ Future<DocumentSnapshot> getUserDetails(String id){
 
 
 
-Future<DocumentSnapshot> getUserCreditCard(String id){
+Future<DocumentSnapshot>? getUserCreditCard(String id){
   try {
   DocumentReference reference = firestore.collection('users').doc(id).collection("profile").doc("creditCard");
   return reference.get();
@@ -107,7 +107,7 @@ Future<List<DeliveryRequest>> getDeliveries(UjuziUser user) async {
   QuerySnapshot snapshot = await reference.orderBy("status", descending: true).get();
 
   snapshot.docs.forEach((element) {
-    DeliveryRequest delivery = DeliveryRequest.fromMap(element.data());
+    DeliveryRequest delivery = DeliveryRequest.fromMap(element.data() as Map<String, dynamic>);
     delivery.setReference(element.reference);
 
     requests.add(delivery);
@@ -121,15 +121,15 @@ Future<List<DeliveryRequest>> getDeliveries(UjuziUser user) async {
 
 
 
-Future<void> uploadImage({UjuziUser user, File image}) async{
+Future<void> uploadImage({required UjuziUser user, required File image}) async{
   FirebaseStorage storage = FirebaseStorage.instance;
   await storage.ref("${user.id}/profileImage").putFile(image);
   user.update(profileUrl: await storage.ref("${user.id}/profileImage").getDownloadURL());
 
 }
 
-Future<Rider> getAssignedRider(String id) async{
-  Rider rider;
+Future<Rider?> getAssignedRider(String? id) async{
+  Rider? rider;
 
 
   var request = http.Request('GET', Uri.parse('https://us-central1-ujuzi-express.cloudfunctions.net/get_Assigned_Rider?deliveryId=56aYbxpnJH5e5gbM1EdI'));
@@ -141,9 +141,9 @@ Future<Rider> getAssignedRider(String id) async{
     final request = await response.stream.bytesToString();
     final Map<String,dynamic> data = json.decode(request);
 
-    String name;
-    String profileImage;
-    String number;
+    String? name;
+    String? profileImage;
+    String? number;
 
     if (data.containsKey("name"))
       name = data['name']['stringValue'];

@@ -4,7 +4,7 @@ import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
 
 
 class DeliveryStatusTile extends StatelessWidget {
-  final DeliveryStatus status;
+  final DeliveryStatus? status;
 
   DeliveryStatusTile({this.status});
 

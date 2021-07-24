@@ -6,14 +6,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class CustomIcon extends StatelessWidget {
-  IconData _icon;
-  final DeliveryStatus status;
-  String text;
+  IconData? _icon;
+  final DeliveryStatus? status;
+  late String text;
   final bool enabled;
   Color color = Colors.grey;
 
   CustomIcon({
-    @required this.status,
+    required this.status,
     this.enabled = false
   });
 
@@ -40,26 +40,26 @@ class CustomIcon extends StatelessWidget {
     switch (this.status){
       case DeliveryStatus.pending:
         this._icon = Icons.timer;
-        this.text = AppLocalizations.of(context).pending;
+        this.text = AppLocalizations.of(context)!.pending;
         break;
 
 
       case DeliveryStatus.ongoing:
         this._icon = Icons.local_shipping_outlined;
-        this.text = AppLocalizations.of(context).in_transit;
+        this.text = AppLocalizations.of(context)!.in_transit;
         break;
 
 
       case DeliveryStatus.complete:
         this._icon = Icons.check_circle_outline;
-        this.text = AppLocalizations.of(context).complete;
+        this.text = AppLocalizations.of(context)!.complete;
         break;
 
         //Cancelled and others
       default:
         this._icon = Ionicons.stop_circle_outline;
         this.color = Colors.red;
-        this.text = AppLocalizations.of(context).canceled;
+        this.text = AppLocalizations.of(context)!.canceled;
     }
 
   }

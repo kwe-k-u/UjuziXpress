@@ -13,7 +13,7 @@ class PickLocationPage extends StatefulWidget {
 
 class _PickLocationPageState extends State<PickLocationPage> {
   CameraPosition position = CameraPosition(target: LatLng(-22,401));
-  GoogleMapController _controller ;
+  late GoogleMapController _controller ;
   List<Marker> markers = [];
   DeliveryLocation location = new DeliveryLocation(name: "");
 
@@ -39,7 +39,7 @@ class _PickLocationPageState extends State<PickLocationPage> {
                     _controller = controler;
                     determinePosition().then((value) {
                       _controller.animateCamera(
-                          CameraUpdate.newLatLngZoom(value.location,14.0));
+                          CameraUpdate.newLatLngZoom(value.location!,14.0));
 
                     });
                   });
@@ -65,10 +65,10 @@ class _PickLocationPageState extends State<PickLocationPage> {
             ),
 
 
-            Text(location.locationName),
+            Text(location.locationName!),
 
             CustomRoundedButton(
-              text: AppLocalizations.of(context).select,
+              text: AppLocalizations.of(context)!.select,
               onPressed: (){
                 Navigator.pop(context, location);
               },

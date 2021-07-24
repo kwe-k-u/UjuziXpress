@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileImage extends StatefulWidget {
-  @required final String url;
+  @required final String? url;
   final bool enabled;
-  final Function onPressed;
+  final Function? onPressed;
 
 
-  ProfileImage({Key key, this.url, this.enabled = false, this.onPressed}) : super(key: key);
+  ProfileImage({Key? key, this.url, this.enabled = false, this.onPressed}) : super(key: key);
 
 
   @override
@@ -24,7 +24,7 @@ class _ProfileImageState extends State<ProfileImage> {
         ConstrainedBox(
           child: Image.network(
 
-            widget.url,
+            widget.url!,
             errorBuilder: (context,snapshot, stacktrace){
               return CircleAvatar(
                 minRadius: 20,
@@ -41,7 +41,7 @@ class _ProfileImageState extends State<ProfileImage> {
       ),
 
 
-      onTap: widget.onPressed,
+      onTap: widget.onPressed as void Function()?,
     );
   }
 }

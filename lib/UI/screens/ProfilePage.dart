@@ -16,7 +16,7 @@ import 'package:ujuzi_xpress/utils/resources.dart';
 
 class ProfilePage extends StatefulWidget {
   @required
-  final UjuziUser user;
+  final UjuziUser? user;
   ProfilePage({this.user});
 
   @override
@@ -34,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
   DeliveryLocation deliveryLocation = new DeliveryLocation();
-  String imageUrl;
+  String? imageUrl;
   DateTime expiryDate = new DateTime.now();
   AppResources resources = new AppResources();
 
@@ -49,11 +49,11 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     setState(() {
-      imageUrl = widget.user.profileImageUrl;
-      username.text = widget.user.username;
-      number.text = widget.user.number;
-      deliveryLocation = widget.user.location;
-      location.text = widget.user.location.locationName;
+      imageUrl = widget.user!.profileImageUrl;
+      username.text = widget.user!.username;
+      number.text = widget.user!.number;
+      deliveryLocation = widget.user!.location;
+      location.text = widget.user!.location.locationName!;
     });
   }
 
@@ -71,12 +71,12 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations
-              .of(context)
+              .of(context)!
               .profile),
           centerTitle: true,
         ),
         body: FutureBuilder(
-          future: getUserCreditCard(widget.user.id),
+          future: getUserCreditCard(widget.user!.id),
           builder: (context, snapshot) {
             return Column(
               children: [
@@ -107,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             .width * 0.45,
                         child: Text(
                           AppLocalizations
-                              .of(context)
+                              .of(context)!
                               .profile,
                           textAlign: TextAlign.center,
                           style: selectedArray.elementAt(0)
@@ -122,7 +122,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             .width * 0.45,
                         child: Text(
                           AppLocalizations
-                              .of(context)
+                              .of(context)!
                               .credit_card,
                           textAlign: TextAlign.center,
                           style: selectedArray.elementAt(1)
@@ -167,10 +167,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
                 child: ProfileImage(
-                  url: widget.user.profileImageUrl,
+                  url: widget.user!.profileImageUrl,
                   onPressed: () async {
-                    final image = await resources.pickImage();
-                    await uploadImage(image: image, user: widget.user);
+                    final image = await (resources.pickImage());
+                    await uploadImage(image: image!, user: widget.user!);
                   },
                 ),
               ),
@@ -178,7 +178,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
               CustomTextField(
                 label: AppLocalizations
-                    .of(context)
+                    .of(context)!
                     .username,
                 labelColor: Colors.grey,
                 color: Colors.black,
@@ -199,16 +199,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     hintText: AppLocalizations
-                        .of(context)
+                        .of(context)!
                         .phoneNumber,
                     validator: (value) {
                       if (value == null || value.isEmpty)
                         return AppLocalizations
-                            .of(context)
+                            .of(context)!
                             .required_field;
                       else if (value.length <= 9)
                         return AppLocalizations
-                            .of(context)
+                            .of(context)!
                             .valid_phone_number;
                       return "";
                     },
@@ -224,7 +224,7 @@ class _ProfilePageState extends State<ProfilePage> {
               LocationTextField(
                 focusNode: new FocusNode(),
                 label: AppLocalizations
-                    .of(context)
+                    .of(context)!
                     .default_pickup_person_location,
                 color: Colors.black,
                 labelColor: Colors.grey,
@@ -233,7 +233,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onIconTap: () {
                   determinePosition().then((value) {
                     setState(() {
-                      location.text = value.locationName;
+                      location.text = value.locationName!;
                       deliveryLocation = value;
                       deliveryLocation = new DeliveryLocation(name: value
                           .locationName, lat: value.location);
@@ -246,18 +246,18 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: const EdgeInsets.all(16.0),
                 child: CustomRoundedButton(
                   text: AppLocalizations
-                      .of(context)
+                      .of(context)!
                       .update_profile
                       .toUpperCase(),
                   textColor: Colors.white,
                   onPressed: () {
-                    if (widget.user.username != username.text)
-                      widget.user.update(userName: username.text);
-                    if (widget.user.number != number.text)
-                      widget.user.update(number: number.text);
+                    if (widget.user!.username != username.text)
+                      widget.user!.update(userName: username.text);
+                    if (widget.user!.number != number.text)
+                      widget.user!.update(number: number.text);
 
-                    widget.user.update(location:deliveryLocation);
-                    postUserDetails(user: widget.user);
+                    widget.user!.update(location:deliveryLocation);
+                    postUserDetails(user: widget.user!);
                     Navigator.pop(context, widget.user);
                   },
                 ),
@@ -286,7 +286,7 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             CustomTextField(
               label: AppLocalizations
-                  .of(context)
+                  .of(context)!
                   .cardholder_name,
               labelColor: Colors.grey,
               color: Colors.black,
@@ -333,7 +333,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
             CustomTextField(
               label: AppLocalizations
-                  .of(context)
+                  .of(context)!
                   .card_number,
               labelColor: Colors.grey,
               color: Colors.black,
@@ -343,7 +343,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
             CustomTextField(
               label: AppLocalizations
-                  .of(context)
+                  .of(context)!
                   .ccv,
               labelColor: Colors.grey,
               color: Colors.black,
@@ -356,13 +356,13 @@ class _ProfilePageState extends State<ProfilePage> {
               padding: const EdgeInsets.all(16.0),
               child: CustomRoundedButton(
                 text: AppLocalizations
-                    .of(context)
+                    .of(context)!
                     .update_card_details
                     .toUpperCase(),
                 textColor: Colors.white,
                 onPressed: () {
                   postUserCreditCard(
-                      user: widget.user,
+                      user: widget.user!,
                       ccv: ccv.text,
                       expiryDate: expiryDate,
                       cardNumber: cardNumber.text,

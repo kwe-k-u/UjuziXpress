@@ -11,7 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class HistoryPage extends StatefulWidget {
-  @required final UjuziUser user;
+  @required final UjuziUser? user;
   HistoryPage({this.user});
 
   @override
@@ -20,9 +20,9 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   List<bool> selectedArray = [true, false, false];
-  int __index;
-  List<DeliveryRequest> requests = [];
-  DeliveryHistory history;
+  int? __index;
+  List<DeliveryRequest>? requests = [];
+  late DeliveryHistory history;
 
 
 
@@ -66,18 +66,18 @@ class _HistoryPageState extends State<HistoryPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).my_orders),
+        title: Text(AppLocalizations.of(context)!.my_orders),
         centerTitle: true,
       ),
 
 
       body: Container(
         child: FutureBuilder(
-          future: getDeliveries(widget.user),
+          future: getDeliveries(widget.user!),
           builder: (context, snapshot){
 
             if (snapshot.connectionState == ConnectionState.done){
-              history = new DeliveryHistory(snapshot.data);
+              history = new DeliveryHistory(snapshot.data as List<DeliveryRequest>);
               if (__index == null)  requests = history.pending;
               return Column(
                 children: [
@@ -100,7 +100,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       children: [
                         Container(
                           width: MediaQuery.of(context).size.width * 0.3,
-                          child: Text(AppLocalizations.of(context).pending,
+                          child: Text(AppLocalizations.of(context)!.pending,
 
                             textAlign: TextAlign.center,
                             style: selectedArray.elementAt(0) ? selectedText : TextStyle(fontWeight: FontWeight.bold),),
@@ -109,14 +109,14 @@ class _HistoryPageState extends State<HistoryPage> {
 
                         Container(
                           width: MediaQuery.of(context).size.width * 0.3,
-                          child:  Text(AppLocalizations.of(context).complete,
+                          child:  Text(AppLocalizations.of(context)!.complete,
                             textAlign: TextAlign.center,
                             style: selectedArray.elementAt(1) ? selectedText : TextStyle(fontWeight: FontWeight.bold),),
                         ),
 
                         Container(
                           width: MediaQuery.of(context).size.width * 0.3,
-                          child: Text(AppLocalizations.of(context).cancelled,
+                          child: Text(AppLocalizations.of(context)!.cancelled,
                             textAlign: TextAlign.center,
                             style: selectedArray.elementAt(2) ? selectedText : TextStyle(fontWeight: FontWeight.bold),),
                         ),
@@ -125,15 +125,15 @@ class _HistoryPageState extends State<HistoryPage> {
                   ),
 
                   Expanded(
-                    child:  requests.isNotEmpty ? ListView.builder(
-                        itemCount: requests.length,
+                    child:  requests!.isNotEmpty ? ListView.builder(
+                        itemCount: requests!.length,
                         itemBuilder: (context,index){
                           return DeliveryListTile(
                             user: widget.user,
-                            deliveryRequest: requests.elementAt(index),
+                            deliveryRequest: requests!.elementAt(index),
                           );
                         })
-                    : Center(child: Text(AppLocalizations.of(context).no_requests),),
+                    : Center(child: Text(AppLocalizations.of(context)!.no_requests),),
                   )
                 ],
               );

@@ -18,7 +18,7 @@ class AppResources {
 
 
 
-  showAlertDialog(String content, BuildContext _context) {
+  showAlertDialog(String? content, BuildContext _context) {
     showDialog(
         context: _context,
         builder: (context) {
@@ -41,7 +41,7 @@ class AppResources {
             ),
             content: Container(
                 height: MediaQuery.of(context).size.height * 0.1,
-                child: Center(child: Text(content)
+                child: Center(child: Text(content!)
                 )
             ),
             actions: [
@@ -71,7 +71,7 @@ class AppResources {
 
 
 
-  showSnackBar({String actionLabel = "",String content = "", BuildContext context}) {
+  showSnackBar({String actionLabel = "",String content = "", required BuildContext context}) {
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.orangeAccent,
@@ -85,7 +85,7 @@ class AppResources {
   }
 
 
-  Future<File> pickImage() async{
+  Future<File?> pickImage() async{
 
     final picker = ImagePicker();
 

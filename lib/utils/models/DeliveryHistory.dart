@@ -2,14 +2,14 @@
 import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
 
 class DeliveryHistory{
-  List<DeliveryRequest> __pendingDeliveries;
-  List<DeliveryRequest> __canceledDeliveries;
-  List<DeliveryRequest> __completedDeliveries;
+  List<DeliveryRequest>? __pendingDeliveries;
+  List<DeliveryRequest>? __canceledDeliveries;
+  List<DeliveryRequest>? __completedDeliveries;
 
 
-  List<DeliveryRequest> get pending=> __pendingDeliveries;
-  List<DeliveryRequest> get canceled => __canceledDeliveries;
-  List<DeliveryRequest> get completed => __completedDeliveries;
+  List<DeliveryRequest>? get pending=> __pendingDeliveries;
+  List<DeliveryRequest>? get canceled => __canceledDeliveries;
+  List<DeliveryRequest>? get completed => __completedDeliveries;
 
 
   //list of deliveries from firebase
@@ -23,15 +23,15 @@ class DeliveryHistory{
 
       switch(request.status){
         case DeliveryStatus.cancelled:
-          __canceledDeliveries.add(request);
+          __canceledDeliveries!.add(request);
           break;
 
         case DeliveryStatus.complete:
-          __completedDeliveries.add(request);
+          __completedDeliveries!.add(request);
           break;
 
         default:
-          __pendingDeliveries.add(request);
+          __pendingDeliveries!.add(request);
       }
     });
 

@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       children: [
                         Text(
-                          AppLocalizations.of(context).login.toUpperCase(),
+                          AppLocalizations.of(context)!.login.toUpperCase(),
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     Center(
                         child: Text(
-                      AppLocalizations.of(context).connect_with,
+                      AppLocalizations.of(context)!.connect_with,
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -131,11 +131,11 @@ class _LoginPageState extends State<LoginPage> {
 
                     //Email
                     CustomTextField(
-                      label: AppLocalizations.of(context).email,
+                      label: AppLocalizations.of(context)!.email,
                       controller: emailController,
                       validator: (value){
                         if (value == null || value.isEmpty)
-                          return AppLocalizations.of(context).required_field;
+                          return AppLocalizations.of(context)!.required_field;
                       },
                     ),
 
@@ -143,12 +143,12 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: CustomTextField(
-                        label: AppLocalizations.of(context).password,
+                        label: AppLocalizations.of(context)!.password,
                         controller: passwordController,
                         obscureText: true,
                         validator: (value){
                           if (value == null || value.isEmpty)
-                            return AppLocalizations.of(context).required_field;
+                            return AppLocalizations.of(context)!.required_field;
                         },
                       ),
                     ),
@@ -161,8 +161,8 @@ class _LoginPageState extends State<LoginPage> {
                     Center(
                       child: CustomTextButton(
                         foreText:
-                            AppLocalizations.of(context).dont_have_an_account_yet,
-                        actionText: AppLocalizations.of(context).sign_up,
+                            AppLocalizations.of(context)!.dont_have_an_account_yet,
+                        actionText: AppLocalizations.of(context)!.sign_up,
                         onPressed: () {
                           Navigator.push(
                               context,
@@ -183,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                           loadStream: _loginBloc.loginButtonStateStream,
                           onPressed: () {
 
-                            if (formKey.currentState.validate()){
+                            if (formKey.currentState!.validate()){
                               _loginBloc.loginEventSink.add(EmailLoginEvent(context,emailController.text, passwordController.text));
 
                             }

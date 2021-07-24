@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
 
-  @required final String label;
-  final TextEditingController controller;
+  @required final String? label;
+  final TextEditingController? controller;
   final bool obscureText;
   final Color color;
   final Color labelColor;
   final Color selectedColor;
-  final TextInputType inputType;
+  final TextInputType? inputType;
   final double widthFactor;
   final bool expanded;
-  final String value;
-  final Function(String) validator;
-  final Function(String value) onChanged;
+  final String? value;
+  final String? Function(String?)? validator;
+  final Function(String value)? onChanged;
 
   CustomTextField({
     this.label,
@@ -60,7 +60,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             Padding(
               padding: const EdgeInsets.only(top: 12.0, bottom: 20),
               child: Text(
-                  widget.label,
+                  widget.label!,
                   style: TextStyle(color: widget.labelColor)
               ),
             ),

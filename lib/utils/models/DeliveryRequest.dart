@@ -1,7 +1,6 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ujuzi_xpress/utils/models/DeliveryLocation.dart';
 import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
@@ -13,60 +12,60 @@ import 'package:ujuzi_xpress/utils/models/UjuziUser.dart';
 
 
 class DeliveryRequest{
-  String __deliveryID; // unique identifier for deliveries
-  UjuziUser __requestingUser; // the ujuzi user who requested the delivery //todo is this a duplicate of pickup person?
-  DateTime __requestDate; // the date and time at which the delivery request was made
-  DateTime __startDate; //the date and time at which the delivery commenced
-  DateTime __completionDate; //the date and time at which the delivery completed
-  DeliveryStatus  __status; // the status of the delivery
-  PackageType __package; // the type of package delivered
-  String __dropOffPersonName;
-  String __dropOffPersonNumber;
-  DeliveryLocation __dropOffLocation;
-  String __pickupPersonName;
-  String __pickupPersonNumber;
-  DeliveryLocation __pickupLocation;
-  String __notes;
-  PaymentMethod _paymentMethod;
-  DocumentReference __reference;
+  String? __deliveryID; // unique identifier for deliveries
+  UjuziUser? __requestingUser; // the ujuzi user who requested the delivery //todo is this a duplicate of pickup person?
+  DateTime? __requestDate; // the date and time at which the delivery request was made
+  DateTime? __startDate; //the date and time at which the delivery commenced
+  DateTime? __completionDate; //the date and time at which the delivery completed
+  DeliveryStatus?  __status; // the status of the delivery
+  PackageType? __package; // the type of package delivered
+  String? __dropOffPersonName;
+  String? __dropOffPersonNumber;
+  DeliveryLocation? __dropOffLocation;
+  String? __pickupPersonName;
+  String? __pickupPersonNumber;
+  DeliveryLocation? __pickupLocation;
+  String? __notes;
+  PaymentMethod? _paymentMethod;
+  DocumentReference? __reference;
 
-String get deliveryID => this.__deliveryID;
-UjuziUser get requestingUser => this.__requestingUser;
-DeliveryStatus get status => this.__status;
-PackageType get packageType => this.__package;
-  String get pickupPersonName => this.__pickupPersonName;
-  String get pickupPersonNumber => this.__pickupPersonNumber;
-  DeliveryLocation get pickupLocation => this.__pickupLocation;
-  String get dropOffPersonName => this.__dropOffPersonName;
-  String get dropOffPersonNumber => this.__dropOffPersonNumber;
-  DeliveryLocation get dropOffLocation => this.__dropOffLocation;
-DateTime get requestDate => this.__requestDate;
-DateTime get startDate => this.__startDate;
-DateTime get completionDate => this.__completionDate;
+String? get deliveryID => this.__deliveryID;
+UjuziUser? get requestingUser => this.__requestingUser;
+DeliveryStatus? get status => this.__status;
+PackageType? get packageType => this.__package;
+  String? get pickupPersonName => this.__pickupPersonName;
+  String? get pickupPersonNumber => this.__pickupPersonNumber;
+  DeliveryLocation? get pickupLocation => this.__pickupLocation;
+  String? get dropOffPersonName => this.__dropOffPersonName;
+  String? get dropOffPersonNumber => this.__dropOffPersonNumber;
+  DeliveryLocation? get dropOffLocation => this.__dropOffLocation;
+DateTime? get requestDate => this.__requestDate;
+DateTime? get startDate => this.__startDate;
+DateTime? get completionDate => this.__completionDate;
 // DeliveryLocation get pickupLocation => this.__pickupPerson.location;
-String get notes => this.__notes;
-PaymentMethod get paymentMethod => this._paymentMethod;
-DocumentReference get reference => this.__reference;
+String? get notes => this.__notes;
+PaymentMethod? get paymentMethod => this._paymentMethod;
+DocumentReference? get reference => this.__reference;
 
 
 
 
   DeliveryRequest({
-    String deliveryID,
-    @required UjuziUser requestingUser,
-    @required DeliveryLocation dropOffLocation,
-    @required DeliveryLocation pickupLocation,
-    DateTime startDate,
-    DateTime completionDate,
-    @required DateTime requestDate,
-    @required String pickupPersonName,
-    @required String pickupPersonNumber,
-    @required String dropOffPersonName,
-    @required String dropOffPersonNumber,
-    @required DeliveryStatus status,
-    @required PackageType packageType,
-    @required PaymentMethod paymentMethod,
-    String note,
+    String? deliveryID,
+    required UjuziUser? requestingUser,
+    required DeliveryLocation dropOffLocation,
+    required DeliveryLocation pickupLocation,
+    DateTime? startDate,
+    DateTime? completionDate,
+    required DateTime? requestDate,
+    required String? pickupPersonName,
+    required String? pickupPersonNumber,
+    required String? dropOffPersonName,
+    required String? dropOffPersonNumber,
+    required DeliveryStatus status,
+    required PackageType? packageType,
+    required PaymentMethod? paymentMethod,
+    String? note,
   }){
     this.__requestingUser = requestingUser;
     this.__requestDate = requestDate;
@@ -104,7 +103,7 @@ DocumentReference get reference => this.__reference;
     this.__startDate = date;
   }
 
-  void setReference(DocumentReference reference) => this.__reference = reference;
+  void setReference(DocumentReference? reference) => this.__reference = reference;
 
   void setPaymentMethod(PaymentMethod method){
     this._paymentMethod = method;
@@ -209,13 +208,13 @@ DocumentReference get reference => this.__reference;
      */
     String id = "";
     // String source = "UUIDD"
-    String source = this.requestingUser.id.substring(this.requestingUser.id.length-5)
-        + __parseInt(this.requestDate.day)
-        + __parseInt(this.requestDate.month)
-        + __parseInt(this.requestDate.year) //obtaining last two digits
-        + __parseInt(this.requestDate.hour)
-        + __parseInt(this.requestDate.minute)
-        + __parseInt(this.requestDate.second);
+    String source = this.requestingUser!.id.substring(this.requestingUser!.id.length-5)
+        + __parseInt(this.requestDate!.day)
+        + __parseInt(this.requestDate!.month)
+        + __parseInt(this.requestDate!.year) //obtaining last two digits
+        + __parseInt(this.requestDate!.hour)
+        + __parseInt(this.requestDate!.minute)
+        + __parseInt(this.requestDate!.second);
 
     //shuffling the deliveryid
     for (int index in [0,5,7,9,11,8,13,3,15,14,2,1,4,12,10,6,16])
@@ -239,17 +238,17 @@ DocumentReference get reference => this.__reference;
       "deliveryID" : deliveryID ?? __generateID(),
       'requestDate' : requestDate.toString(),
       'startDate' : startDate.toString(),
-      'dropOffLocation' : dropOffLocation.asMap(),
-      'pickupLocation' : pickupLocation.asMap(),
+      'dropOffLocation' : dropOffLocation!.asMap(),
+      'pickupLocation' : pickupLocation!.asMap(),
       'completionDate' : completionDate.toString(),
-      'status' :status.index,
-      'packageType' : packageType.index,
+      'status' :status!.index,
+      'packageType' : packageType!.index,
       'note' : notes,
       'dropOffPersonName' : dropOffPersonName,
       'dropOffPersonNumber' : dropOffPersonNumber,
       'pickupPersonNumber' : pickupPersonNumber,
       'pickupPersonName' : pickupPersonName,
-      'paymentMethod' : paymentMethod.index
+      'paymentMethod' : paymentMethod!.index
     };
   }
 
@@ -266,7 +265,7 @@ DocumentReference get reference => this.__reference;
 
     DateTime startDate = DateTime.now();
     DateTime completionDate = DateTime.now();
-    int statusIndex;
+    int? statusIndex;
     (value["status"].runtimeType == int) ? statusIndex = value["status"] : statusIndex = int.parse(value["status"]);
 
     DeliveryRequest request = new DeliveryRequest(
@@ -288,7 +287,7 @@ DocumentReference get reference => this.__reference;
       startDate:   startDate,
       pickupPersonName: value["pickupPersonName"],
       pickupPersonNumber: value["pickupPersonNumber"],
-      status: DeliveryStatus.values[statusIndex],
+      status: DeliveryStatus.values[statusIndex!],
       packageType: PackageType.values[value["packageType"]],
       paymentMethod: PaymentMethod.values[value["paymentMethod"]],
 

@@ -4,10 +4,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ujuzi_xpress/utils/services/LocationHandler.dart';
 
 class DeliveryLocation{
-  String __placeName;
-  LatLng __location;
+  String? __placeName;
+  LatLng? __location;
 
-  DeliveryLocation({String name, LatLng lat}){
+  DeliveryLocation({String? name, LatLng? lat}){
     __placeName = name;
     __location = lat;
   }
@@ -30,10 +30,10 @@ class DeliveryLocation{
     getAddressFromLatLng(newLatLng).then((value) => this.__placeName = value);
   }
 
-  LatLng get location => __location;
-  String get locationName => __placeName;
+  LatLng? get location => __location;
+  String? get locationName => __placeName;
 
-  set location(LatLng newLat){
+  set location(LatLng? newLat){
     this.__location = newLat;
   }
 
@@ -43,7 +43,7 @@ class DeliveryLocation{
     if (this == obj) return true; //if both references point to the same memory location
     if (obj == null || this.runtimeType != obj.runtimeType) return false;
 
-    DeliveryLocation loc =  obj;
+    DeliveryLocation loc =  obj as DeliveryLocation;
     return this.location == loc.location
         && this.locationName == loc.locationName;
   }
@@ -51,8 +51,8 @@ class DeliveryLocation{
   Map<String, dynamic> asMap(){
     return {
       "locationName" : this.locationName,
-      "latitude" : this.location.latitude,
-      "longitude" : this.location.longitude
+      "latitude" : this.location!.latitude,
+      "longitude" : this.location!.longitude
     };
   }
 

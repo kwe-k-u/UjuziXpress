@@ -13,7 +13,7 @@ import 'package:ujuzi_xpress/utils/services/FirebaseDatabase.dart';
 class PaymentOptionsSheet extends StatefulWidget {
   final DeliveryRequest request;
 
-  const PaymentOptionsSheet({Key key, @required this.request}) : super(key: key);
+  const PaymentOptionsSheet({Key? key, required this.request}) : super(key: key);
 
   @override
   _PaymentOptionsSheetState createState() => _PaymentOptionsSheetState();

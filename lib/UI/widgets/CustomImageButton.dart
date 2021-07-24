@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 
 class CustomImageButton extends StatelessWidget {
-  final Function onPressed;
-  final String path;
+  final Function? onPressed;
+  final String? path;
   final double widthFactor;
 
   CustomImageButton({
@@ -21,9 +21,9 @@ class CustomImageButton extends StatelessWidget {
 
 
     return GestureDetector(
-        onTap: onPressed,
+        onTap: onPressed as void Function()?,
         child: Image.asset(
-          path,
+          path!,
           width: size.width * widthFactor,
         ),
     );

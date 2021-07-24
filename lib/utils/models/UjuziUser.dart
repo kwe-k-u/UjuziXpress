@@ -9,40 +9,36 @@ import 'package:ujuzi_xpress/utils/services/FirebaseDatabase.dart';
 
 
 class UjuziUser{
-  User _firebaseUser;
+  late User _firebaseUser;
   DeliveryLocation _location = new DeliveryLocation();
-  DocumentReference _reference;
-  String _number = "";
+  DocumentReference? _reference;
+  String? _number = "";
 
   String get username => this._firebaseUser.displayName ?? "User";
   String get id => this._firebaseUser.uid;
   String get number => this._number ?? "";
-  String get profileImageUrl => this._firebaseUser.photoURL;
+  String? get profileImageUrl => this._firebaseUser.photoURL;
   String get email => this._firebaseUser.email ?? "";
   DeliveryLocation get location => this._location;
-  DocumentReference get reference => this._reference;
+  DocumentReference? get reference => this._reference;
 
 
-  UjuziUser({User user,String number}){
+  UjuziUser({required User user,String? number}){
 
     this._firebaseUser = user;
-    getUserDetails(user.uid)
+    getUserDetails(user.uid)!
         .then((value) {
-          if (value != null) {
             this._location =
             new DeliveryLocation(name: value["location"]["locationName"],
                 lat: LatLng(value["location"]["latitude"],
                     value["location"]["longitude"]));
 
             this._number = value["number"];
-          }
-      else
-        this._location = null;
-    }
+        }
     );
   }
 
-  void update({String number, String mail, DeliveryLocation location, String profileUrl, String userName}){
+  void update({String? number, String? mail, DeliveryLocation? location, String? profileUrl, String? userName}){
 
     if (number != null)
       this._number = number;

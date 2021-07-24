@@ -4,10 +4,10 @@ import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 
 
 class CustomIconButton extends StatefulWidget {
-  final Function onPressed;
+  final Function? onPressed;
   final IconData icon;
-  final Color color;
-  final Stream<dynamic> loadStream;
+  final Color? color;
+  final Stream<dynamic>? loadStream;
 
   CustomIconButton({
     this.onPressed,
@@ -22,7 +22,7 @@ class CustomIconButton extends StatefulWidget {
 }
 
 class _CustomIconButtonState extends State<CustomIconButton> with SingleTickerProviderStateMixin{
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
 
 
@@ -39,7 +39,7 @@ class _CustomIconButtonState extends State<CustomIconButton> with SingleTickerPr
     return MaterialButton(
       padding: EdgeInsets.all(8.0),
       color: widget.color,
-      onPressed: widget.onPressed,
+      onPressed: widget.onPressed as void Function()?,
       child: StreamBuilder(
         stream: widget.loadStream,
         builder: (context,snapshot){

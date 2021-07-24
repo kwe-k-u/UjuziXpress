@@ -8,20 +8,20 @@ import 'package:argon_buttons_flutter/argon_buttons_flutter.dart' as arg;
 class LocationTextField extends StatefulWidget {
 
   final String label;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final bool obscureText;
   final Color color;
   final Color labelColor;
   final Color selectedColor;
   final double widthFactor;
-  final String value;
-  final Function(String) validator;
-  final Function(String value) onChanged;
+  final String? value;
+  final Function(String)? validator;
+  final Function(String value)? onChanged;
   final Function onIconTap;
   final FocusNode focusNode;
 
   LocationTextField({
-    @required this.label,
+    required this.label,
     this.value,
     this.validator,
     this.controller,
@@ -31,8 +31,8 @@ class LocationTextField extends StatefulWidget {
     this.labelColor = Colors.white,
     this.widthFactor =0.7,
     this.onChanged,
-    @required this.focusNode,
-    @required this.onIconTap,
+    required this.focusNode,
+    required this.onIconTap,
 
 
   });
@@ -71,7 +71,7 @@ class _LocationTextFieldState extends State<LocationTextField> {
                     },
                     child: TextFormField(
 
-                      validator: widget.validator,
+                      validator: widget.validator as String? Function(String?)?,
                       obscureText: widget.obscureText,
                       controller: widget.controller,
                       keyboardType: TextInputType.text,
@@ -143,12 +143,12 @@ class _LocationTextFieldState extends State<LocationTextField> {
                         return ListTile(
                           onTap: (){
                             setState(() {
-                              widget.controller.text = places[index].name;
+                              widget.controller!.text = places[index].name!;
                             });
 
                           },
                           subtitle: Divider(color: Colors.white, thickness: 2.0,),
-                          title: Text(places[index].name),
+                          title: Text(places[index].name!),
                           tileColor: Colors.grey.shade300,
                         );
                       }),

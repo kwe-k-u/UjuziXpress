@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Ujuzi Express',
       theme: ThemeData(
-        primarySwatch: resources.primaryColour,
+        primarySwatch: resources.primaryColour as MaterialColor?,
       ),
     localizationsDelegates: [
       AppLocalizations.delegate,

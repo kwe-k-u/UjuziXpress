@@ -21,18 +21,18 @@ class DeliveryReceiptWithMapPage extends StatefulWidget {
 
   @override
   _DeliveryReceiptWithMapPageState createState() => _DeliveryReceiptWithMapPageState();
-  @required final DeliveryRequest deliveryRequest;
+  @required final DeliveryRequest? deliveryRequest;
 
   DeliveryReceiptWithMapPage({this.deliveryRequest});
 }
 
 class _DeliveryReceiptWithMapPageState extends State<DeliveryReceiptWithMapPage> {
-CameraPosition initialPosition;
+late CameraPosition initialPosition;
 List<Marker> markers = [];
-Directions directions;
-GoogleMapController _googleMapController;
+Directions? directions;
+GoogleMapController? _googleMapController;
 AppResources resources = new AppResources();
-Rider assignedRider;
+Rider? assignedRider;
 
 
 
@@ -47,14 +47,14 @@ Rider assignedRider;
 
 
     initialPosition =  CameraPosition(
-        target: widget.deliveryRequest.pickupLocation.location,
+        target: widget.deliveryRequest!.pickupLocation!.location!,
         zoom: 14
         );
 
 
 
 
-    getDirections(widget.deliveryRequest.pickupLocation.location, widget.deliveryRequest.dropOffLocation.location)
+    getDirections(widget.deliveryRequest!.pickupLocation!.location!, widget.deliveryRequest!.dropOffLocation!.location!)
     .then((value) {
       setState(() {
         directions = value;
@@ -81,16 +81,16 @@ Rider assignedRider;
     if (markers.isEmpty){
 
       markers.add(new Marker(
-          markerId: MarkerId(AppLocalizations.of(context).pickup_location),
-          position: widget.deliveryRequest.pickupLocation.location,
+          markerId: MarkerId(AppLocalizations.of(context)!.pickup_location),
+          position: widget.deliveryRequest!.pickupLocation!.location!,
           icon: BitmapDescriptor.defaultMarkerWithHue(120),
           infoWindow: InfoWindow(title: "pickup")
       ));
 
 
       markers.add(new Marker(
-          markerId: MarkerId(AppLocalizations.of(context).dropoff_location),
-          position: widget.deliveryRequest.dropOffLocation.location
+          markerId: MarkerId(AppLocalizations.of(context)!.dropoff_location),
+          position: widget.deliveryRequest!.dropOffLocation!.location!
       ));
     }
 
@@ -99,10 +99,10 @@ Rider assignedRider;
 
 
       body: FutureBuilder(
-        future: getAssignedRider(widget.deliveryRequest.deliveryID),
+        future: getAssignedRider(widget.deliveryRequest!.deliveryID),
         builder: (context, snapshot){
           if (snapshot.connectionState == ConnectionState.done) {
-            assignedRider = snapshot.data;
+            assignedRider = snapshot.data as Rider?;
 
             return Stack(
               children: [
@@ -121,7 +121,7 @@ Rider assignedRider;
                         polylineId: const PolylineId('overview_polyline'),
                         color: Colors.red,
                         width: 5,
-                        points: directions.polylinePoints
+                        points: directions!.polylinePoints
                             .map((e) {
                           return LatLng(e.latitude, e.longitude);
                         })
@@ -149,7 +149,7 @@ Rider assignedRider;
                         ],
                       ),
                       child: Text(
-                        '${directions.totalDistance}, ${directions
+                        '${directions!.totalDistance}, ${directions!
                             .totalDuration}',
                         style: const TextStyle(
                           fontSize: 18.0,
@@ -198,24 +198,24 @@ Rider assignedRider;
                               ),
 
                               DeliveryStatusTile(
-                                status: widget.deliveryRequest.status,
+                                status: widget.deliveryRequest!.status,
                               ),
 
                               ListTile(
-                                leading: ProfileImage(url: assignedRider.imageUrl,),
-                                title: Text(assignedRider.name),
-                                subtitle: Text(assignedRider.phoneNumber),
+                                leading: ProfileImage(url: assignedRider!.imageUrl,),
+                                title: Text(assignedRider!.name),
+                                subtitle: Text(assignedRider!.phoneNumber),
                                 trailing: OutlinedButton.icon(
                                     onPressed: () {
                                       launch(
-                                          "tel://${assignedRider.phoneNumber}");
+                                          "tel://${assignedRider!.phoneNumber}");
                                     },
                                     icon: Icon(Icons.call), label: Text("")),
                               ),
 
                               CustomRoundedButton(
                                 text: AppLocalizations
-                                    .of(context)
+                                    .of(context)!
                                     .view_package_information,
                                 textColor: Colors.white,
                                 elevation: 0,

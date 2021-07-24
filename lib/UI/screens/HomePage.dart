@@ -14,7 +14,7 @@ import 'package:ujuzi_xpress/utils/resources.dart';
 
 
 class HomePage extends StatefulWidget {
-  @required final UjuziUser user;
+  @required final UjuziUser? user;
   HomePage({this.user});
 
 
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ProfileImage(
-                url: widget.user.profileImageUrl,
+                url: widget.user!.profileImageUrl,
                 onPressed: (){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context)=> ProfilePage(user: widget.user,))
@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.only(left:8.0, right: 8.0, top:24.0,bottom: 4.0),
               child: ProfileImage(
-                url: widget.user.profileImageUrl,
+                url: widget.user!.profileImageUrl,
                 onPressed: (){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context)=> ProfilePage(user: widget.user,))
@@ -74,14 +74,14 @@ class _HomePageState extends State<HomePage> {
 
             RichText(
                 text: TextSpan(
-                    text: AppLocalizations.of(context).welcome,
+                    text: AppLocalizations.of(context)!.welcome,
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
                       color: Colors.black,
                     ),
                     children: [
                       TextSpan(
-                        text: "\t${widget.user.username}",
+                        text: "\t${widget.user!.username}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0,
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
 
 
             ListTile(
-              title: Text(AppLocalizations.of(context).profile),
+              title: Text(AppLocalizations.of(context)!.profile),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context)=>ProfilePage(user: widget.user))
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
             ),
 
             ListTile(
-              title: Text(AppLocalizations.of(context).view_history),//
+              title: Text(AppLocalizations.of(context)!.view_history),//
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context)=>HistoryPage(user: widget.user))
@@ -113,17 +113,17 @@ class _HomePageState extends State<HomePage> {
 
             ListTile(
               onTap: (){_resources.launchUrl("https://www.ujuzibrain.com/");},
-              title: Text(AppLocalizations.of(context).raise_a_claim),//report problem
+              title: Text(AppLocalizations.of(context)!.raise_a_claim),//report problem
             ),
 
             ListTile(
               onTap: (){_resources.launchUrl("https://www.ujuzibrain.com/");},
-              title: Text(AppLocalizations.of(context).terms_and_conditions),
+              title: Text(AppLocalizations.of(context)!.terms_and_conditions),
             ),
 
             OutlinedButton(
 
-              child: Text(AppLocalizations.of(context).sign_out),
+              child: Text(AppLocalizations.of(context)!.sign_out),
                 onPressed: (){
                 FirebaseAuth.instance.signOut().then((value) {
 
@@ -168,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                             heightPadding: MediaQuery.of(context).size.height * 0.02,
                             textColor: Colors.black,
                             widthFactor: 0.3,
-                            text: AppLocalizations.of(context).create_order.toUpperCase()
+                            text: AppLocalizations.of(context)!.create_order.toUpperCase()
                         ),
 
                         Container(
@@ -184,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                               elevation: 0,
                               heightPadding: MediaQuery.of(context).size.height * 0.02,
                               textColor: Colors.black,
-                              text: AppLocalizations.of(context).view_order.toUpperCase()
+                              text: AppLocalizations.of(context)!.view_order.toUpperCase()
                           ),
                         ),
 

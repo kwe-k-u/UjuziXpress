@@ -5,8 +5,8 @@ class CustomDatePicker extends StatefulWidget {
   final DateTime date;
   
   CustomDatePicker({
-    Key key,
-    @required this.date})
+    Key? key,
+    required this.date})
       : super(key: key);
 
   @override
@@ -23,18 +23,18 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
 
     final List<dynamic> months = [
-      AppLocalizations.of(context).jan,
-      AppLocalizations.of(context).feb,
-      AppLocalizations.of(context).mar,
-      AppLocalizations.of(context).apr,
-      AppLocalizations.of(context).may,
-      AppLocalizations.of(context).jun,
-      AppLocalizations.of(context).jul,
-      AppLocalizations.of(context).aug,
-      AppLocalizations.of(context).sept,
-      AppLocalizations.of(context).oct,
-      AppLocalizations.of(context).nov,
-      AppLocalizations.of(context).dec
+      AppLocalizations.of(context)!.jan,
+      AppLocalizations.of(context)!.feb,
+      AppLocalizations.of(context)!.mar,
+      AppLocalizations.of(context)!.apr,
+      AppLocalizations.of(context)!.may,
+      AppLocalizations.of(context)!.jun,
+      AppLocalizations.of(context)!.jul,
+      AppLocalizations.of(context)!.aug,
+      AppLocalizations.of(context)!.sept,
+      AppLocalizations.of(context)!.oct,
+      AppLocalizations.of(context)!.nov,
+      AppLocalizations.of(context)!.dec
     ];
     
     
@@ -57,11 +57,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(2.0),
-                child: Text(AppLocalizations.of(context).day),
+                child: Text(AppLocalizations.of(context)!.day),
               ),
               Text(widget.date.day.toString(), style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.subtitle1.fontSize
+                  fontSize: Theme.of(context).textTheme.subtitle1!.fontSize
               ),),
             ],
           ),
@@ -80,11 +80,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(2.0),
-                child: Text(AppLocalizations.of(context).month),
+                child: Text(AppLocalizations.of(context)!.month),
               ),
               Text(months.elementAt(widget.date.month-1), style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.subtitle1.fontSize
+                  fontSize: Theme.of(context).textTheme.subtitle1!.fontSize
               ),),
             ],
           ),
@@ -104,11 +104,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(2.0),
-                child: Text(AppLocalizations.of(context).year),
+                child: Text(AppLocalizations.of(context)!.year),
               ),
               Text(widget.date.year.toString(), style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.subtitle1.fontSize
+                  fontSize: Theme.of(context).textTheme.subtitle1!.fontSize
               ),),
             ],
           ),

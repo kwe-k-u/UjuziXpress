@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class BackgroundWidget extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
 
   BackgroundWidget({this.child});
 
@@ -18,7 +18,7 @@ class BackgroundWidget extends StatelessWidget {
           width: size.width,
           height: size.height,),
 
-        child
+        child!
       ]
     );
   }

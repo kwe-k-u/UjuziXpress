@@ -23,6 +23,6 @@ class LocationTextEditingController extends TextEditingController{
 
   set location(DeliveryLocation location) {
     _deliveryLocation = location;
-    text = location.locationName;
+    text = location.locationName!;
   }
 }

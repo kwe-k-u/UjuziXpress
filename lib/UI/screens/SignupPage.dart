@@ -81,7 +81,7 @@ class _SignupPageState extends State<SignupPage> {
                     Row(
                       children: [
                         Text(
-                          AppLocalizations.of(context).sign_up.toUpperCase(),
+                          AppLocalizations.of(context)!.sign_up.toUpperCase(),
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     Center(
                         child: Text(
-                      AppLocalizations.of(context).signinwith.toUpperCase(),
+                      AppLocalizations.of(context)!.signinwith.toUpperCase(),
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -139,42 +139,42 @@ class _SignupPageState extends State<SignupPage> {
                     ),
 
                     CustomTextField(
-                      label: AppLocalizations.of(context).username,
+                      label: AppLocalizations.of(context)!.username,
                       inputType: TextInputType.name,
                       controller: nameController,
                       validator: (value) {
                         if (value == null || value.isEmpty)
 
-                          return AppLocalizations.of(context).required_field;
+                          return AppLocalizations.of(context)!.required_field;
                         else if (value.trim().length <= 2)
-                          return AppLocalizations.of(context).name_longer_than_two_characters;
+                          return AppLocalizations.of(context)!.name_longer_than_two_characters;
                       },
                     ),
 
                     //Email
                     CustomTextField(
-                      label: AppLocalizations.of(context).email,
+                      label: AppLocalizations.of(context)!.email,
                       inputType: TextInputType.emailAddress,
                       controller: emailController,
                       validator: (value){
                         if (value == null || value.isEmpty)
-                          return AppLocalizations.of(context).required_field;
+                          return AppLocalizations.of(context)!.required_field;
                         else if ( (!value.contains("@") && !value.contains(".com")) ||(value.length <= 8))
-                          return AppLocalizations.of(context).valid_email;
+                          return AppLocalizations.of(context)!.valid_email;
                       },
                     ),
 
                     //Password
                     CustomTextField(
-                      label: AppLocalizations.of(context).password,
+                      label: AppLocalizations.of(context)!.password,
                       obscureText: true,
                       controller: passwordController,
                       validator: (value){
                         if (value == null || value.isEmpty)
-                          return AppLocalizations.of(context).required_field;
+                          return AppLocalizations.of(context)!.required_field;
 
                         else if (value.trim().length <= 8)
-                          return AppLocalizations.of(context).name_longer_than_eight_characters;
+                          return AppLocalizations.of(context)!.name_longer_than_eight_characters;
                       },
                     ),
 
@@ -192,12 +192,12 @@ class _SignupPageState extends State<SignupPage> {
                               borderSide: BorderSide(color: Colors.white)
                           ),
                         ),
-                        hintText: AppLocalizations.of(context).phoneNumber,
+                        hintText: AppLocalizations.of(context)!.phoneNumber,
                           validator: (value){
                             if (value == null || value.isEmpty)
-                              return AppLocalizations.of(context).required_field;
+                              return AppLocalizations.of(context)!.required_field;
                             else if (value.length <= 9)
-                              return AppLocalizations.of(context).valid_phone_number;
+                              return AppLocalizations.of(context)!.valid_phone_number;
                             return "";
                             },
                           selectorConfig: SelectorConfig(
@@ -217,7 +217,7 @@ class _SignupPageState extends State<SignupPage> {
                     Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomTextButton(
-                          actionText: AppLocalizations.of(context).login,
+                          actionText: AppLocalizations.of(context)!.login,
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -236,14 +236,14 @@ class _SignupPageState extends State<SignupPage> {
                           loadStream: _signUpBloc.signUpButtonStateStream,
                           onPressed: () async {
 
-                            if(formKey.currentState.validate()) {
+                            if(formKey.currentState!.validate()) {
 
                               _signUpBloc.signUpEventSink.add(
                                   EmailSignUpEvent(context,emailController.text, passwordController.text, nameController.text, numberController.text)
                               );
 
                             }else{
-                              resources.showSnackBar(context: context, content: AppLocalizations.of(context).requirements_not_met);
+                              resources.showSnackBar(context: context, content: AppLocalizations.of(context)!.requirements_not_met);
                             }
 
                           },

@@ -9,29 +9,29 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeliveryListTile extends StatelessWidget {
 final DeliveryRequest deliveryRequest;
-final UjuziUser user;
+final UjuziUser? user;
 
-DeliveryListTile({@required this.deliveryRequest, this.user});
+DeliveryListTile({required this.deliveryRequest, this.user});
 
 
 
 Widget displayStatus(BuildContext context){
   switch(deliveryRequest.status){
     case DeliveryStatus.complete:
-      return Text(AppLocalizations.of(context).complete.toUpperCase(),style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),);
+      return Text(AppLocalizations.of(context)!.complete.toUpperCase(),style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),);
     case DeliveryStatus.ongoing:
-      return Text(AppLocalizations.of(context).in_progress.toUpperCase(),style: TextStyle(color: Colors.indigo, fontWeight: FontWeight.bold),);
+      return Text(AppLocalizations.of(context)!.in_progress.toUpperCase(),style: TextStyle(color: Colors.indigo, fontWeight: FontWeight.bold),);
     case DeliveryStatus.pending:
-      return Text(AppLocalizations.of(context).pending.toUpperCase(),style: TextStyle(color: Colors.yellow, fontWeight: FontWeight.bold),);
+      return Text(AppLocalizations.of(context)!.pending.toUpperCase(),style: TextStyle(color: Colors.yellow, fontWeight: FontWeight.bold),);
     case DeliveryStatus.cancelled:
-      return Text(AppLocalizations.of(context).cancelled.toUpperCase(),style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),);
+      return Text(AppLocalizations.of(context)!.cancelled.toUpperCase(),style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),);
     default:
-      return Text(AppLocalizations.of(context).error);
+      return Text(AppLocalizations.of(context)!.error);
   }
 }
 
 String displayDate(){
-  DateTime date = deliveryRequest.requestDate;
+  DateTime date = deliveryRequest.requestDate!;
 
   return "${date.day}/${date.month}/${date.year}";
 }
@@ -66,14 +66,14 @@ String displayDate(){
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ListTile(
-              title: Text("${AppLocalizations.of(context).order_no}: ${deliveryRequest.deliveryID}"),
+              title: Text("${AppLocalizations.of(context)!.order_no}: ${deliveryRequest.deliveryID}"),
               subtitle: Padding(
                 padding: const EdgeInsets.only(top:4.0),
-                child: Text("${AppLocalizations.of(context).order_date}: ${displayDate()}"),
+                child: Text("${AppLocalizations.of(context)!.order_date}: ${displayDate()}"),
               ),
               trailing: Column(
                 children: [
-                  Text(AppLocalizations.of(context).status),
+                  Text(AppLocalizations.of(context)!.status),
                   displayStatus(context),
                 ],
               ),
@@ -102,7 +102,7 @@ String displayDate(){
 
                       children: [
                         TextSpan(
-                            text: "${AppLocalizations.of(context).from}:\t",
+                            text: "${AppLocalizations.of(context)!.from}:\t",
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
                               color: Colors.black,
@@ -111,7 +111,7 @@ String displayDate(){
 
                         TextSpan(
 
-                          text: deliveryRequest.pickupLocation.locationName,
+                          text: deliveryRequest.pickupLocation!.locationName,
 
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -139,7 +139,7 @@ String displayDate(){
 
                         children: [
                           TextSpan(
-                            text: "${AppLocalizations.of(context).to}:\t",
+                            text: "${AppLocalizations.of(context)!.to}:\t",
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               color: Colors.black,
@@ -148,7 +148,7 @@ String displayDate(){
 
                           TextSpan(
 
-                            text: deliveryRequest.dropOffLocation.locationName,
+                            text: deliveryRequest.dropOffLocation!.locationName,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
 

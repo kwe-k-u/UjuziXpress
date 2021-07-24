@@ -27,7 +27,7 @@ class SignUpBloc {
   Stream<ButtonState> get signUpButtonStateStream =>
       _loadingButtonStreamController.stream;
 
-  BuildContext _context;
+  late BuildContext _context;
   AppResources _appResources = AppResources();
 
   createInstance() {
@@ -42,7 +42,7 @@ class SignUpBloc {
     switch (signupEvent.runtimeType) {
 
       case EmailSignUpEvent:
-        EmailSignUpEvent _signupEvent = signupEvent;
+        EmailSignUpEvent _signupEvent = signupEvent as EmailSignUpEvent;
 
         if (
             _signupEvent.email == null ||
@@ -57,7 +57,7 @@ class SignUpBloc {
           _signUpStateSink.add(SignUpError('One or more fields are empty'));
         } else {
 
-          User value = await signUpWithEmail(_signupEvent.email, _signupEvent.password, _signupEvent.username, _signupEvent.phoneNumber);
+          User? value = await signUpWithEmail(_signupEvent.email, _signupEvent.password, _signupEvent.username, _signupEvent.phoneNumber);
 
           if(value == null){
             print("Error");
