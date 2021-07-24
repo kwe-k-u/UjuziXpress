@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:ujuzi_xpress/UI/screens/DeliveryReceiptWithMapPage.dart';
 import 'package:ujuzi_xpress/UI/screens/RequestDeliveryPage.dart';
 import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
@@ -91,7 +91,7 @@ String displayDate(){
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Icon(
-                    Entypo.paper_plane,
+                    Ionicons.paper_plane,
                     size: 20,
                     color: Colors.deepPurple,
                   ),

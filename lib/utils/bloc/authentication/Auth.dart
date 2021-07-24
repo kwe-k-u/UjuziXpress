@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 
@@ -55,7 +54,7 @@ Future<User> signUpWithEmail(String email, String password, String username, Str
 
     final User currentUser = firebaseAuth.currentUser;
     //update display name
-    await currentUser.updateProfile(displayName: username);
+    await currentUser.updateDisplayName( username);
     //update phone number
     await updateUserPhoneNumber(phoneNumber, currentUser); //todo implement
 
@@ -129,42 +128,42 @@ Future<User> logInWithEmail(String email, String password) async{
 
 
 
-Future<User> signInWithTwitter() async {
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
-
-  // Create a TwitterLogin instance
-  final TwitterLogin twitterLogin = new TwitterLogin(
-    consumerKey: "",//todo add twitter api key
-    consumerSecret:"", //todo add twitter api key secret
-  );
-
-  // Trigger the sign-in flow
-  final TwitterLoginResult loginResult = await twitterLogin.authorize();
-  print("\n\nlogin ${loginResult.errorMessage}");
-
-  print("session ${loginResult.session}");
-  // Get the Logged In session
-  final TwitterSession twitterSession = loginResult.session;
-
-  // Create a credential from the access token
-  final twitterAuthCredential = TwitterAuthProvider.credential(
-    accessToken: twitterSession.token,
-    secret: twitterSession.secret,
-  );
-
-  // Once signed in, return the UserCredential
-  UserCredential credential =  await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
-  User user = credential.user;
-
-  assert(!user.isAnonymous);
-  assert (await user.getIdToken() != null);
-
-  final User currentUser = firebaseAuth.currentUser;
-  assert(currentUser.uid == user.uid);
-
-  return user;
-}
+// Future<User> signInWithTwitter() async {
+//   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+//
+//
+//   // Create a TwitterLogin instance
+//   final TwitterLogin twitterLogin = new TwitterLogin(
+//     consumerKey: "",//todo add twitter api key
+//     consumerSecret:"", //todo add twitter api key secret
+//   );
+//
+//   // Trigger the sign-in flow
+//   final TwitterLoginResult loginResult = await twitterLogin.authorize();
+//   print("\n\nlogin ${loginResult.errorMessage}");
+//
+//   print("session ${loginResult.session}");
+//   // Get the Logged In session
+//   final TwitterSession twitterSession = loginResult.session;
+//
+//   // Create a credential from the access token
+//   final twitterAuthCredential = TwitterAuthProvider.credential(
+//     accessToken: twitterSession.token,
+//     secret: twitterSession.secret,
+//   );
+//
+//   // Once signed in, return the UserCredential
+//   UserCredential credential =  await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
+//   User user = credential.user;
+//
+//   assert(!user.isAnonymous);
+//   assert (await user.getIdToken() != null);
+//
+//   final User currentUser = firebaseAuth.currentUser;
+//   assert(currentUser.uid == user.uid);
+//
+//   return user;
+// }
 
 
 

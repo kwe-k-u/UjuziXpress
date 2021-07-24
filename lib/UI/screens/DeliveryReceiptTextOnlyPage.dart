@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:ujuzi_xpress/UI/widgets/custom_status_icon.dart';
 import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -165,7 +165,7 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
-                    child: Icon(Entypo.paper_plane,
+                    child: Icon(Ionicons.paper_plane,
                       color: Colors.deepPurple,), 
                   ),
                   RichText(

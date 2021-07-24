@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:ujuzi_xpress/utils/models/DeliveryRequest.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -45,7 +45,7 @@ class CustomIcon extends StatelessWidget {
 
 
       case DeliveryStatus.ongoing:
-        this._icon = FlutterIcons.shipping_fast_faw5s;
+        this._icon = Icons.local_shipping_outlined;
         this.text = AppLocalizations.of(context).in_transit;
         break;
 
@@ -57,7 +57,7 @@ class CustomIcon extends StatelessWidget {
 
         //Cancelled and others
       default:
-        this._icon = FlutterIcons.circle_slash_oct;
+        this._icon = Ionicons.stop_circle_outline;
         this.color = Colors.red;
         this.text = AppLocalizations.of(context).canceled;
     }

@@ -83,15 +83,16 @@ class LoginBloc {
 
 
       case TwitterLoginEvent:
-        signInWithTwitter().then((value){
-          if (value != null) {
-            UjuziUser user = new UjuziUser(user: value);
-            _loginStateSink.add(LoginAuthenticated(user));
-
-          } else{
-            _loginStateSink.add(LoginError('Error authenticating with Twitter. Retry in a couple minutes'));
-          }
-        });
+        //todo reimplement
+        // signInWithTwitter().then((value){
+        //   if (value != null) {
+        //     UjuziUser user = new UjuziUser(user: value);
+        //     _loginStateSink.add(LoginAuthenticated(user));
+        //
+        //   } else{
+        //     _loginStateSink.add(LoginError('Error authenticating with Twitter. Retry in a couple minutes'));
+        //   }
+        // });
         break;
 
 

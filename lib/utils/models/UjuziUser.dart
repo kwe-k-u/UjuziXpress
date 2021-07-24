@@ -48,13 +48,13 @@ class UjuziUser{
       this._number = number;
 
     if (userName != null)
-      this._firebaseUser.updateProfile(displayName: userName);
+      this._firebaseUser.updateDisplayName( userName);
 
     if (mail != null)
       this._firebaseUser.updateEmail(mail);
 
     if (profileUrl != null)
-      this._firebaseUser.updateProfile(photoURL:  profileUrl);
+      this._firebaseUser.updatePhotoURL( profileUrl);
 
     if (location != null)
       this._location = location;

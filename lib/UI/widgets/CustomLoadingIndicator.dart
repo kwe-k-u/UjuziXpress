@@ -20,7 +20,7 @@ class _CustomLoadingIndicatorState extends State<CustomLoadingIndicator> {
       width: size.width * 0.07,
       height: size.width * 0.07,
       child: LoadingIndicator(
-        color: Colors.black,
+        colors: [Colors.black],
         indicatorType: Indicator.ballBeat,
       ),
     );

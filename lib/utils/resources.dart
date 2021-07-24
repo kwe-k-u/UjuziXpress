@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 ///File containing the various nonwidget resources that will be used on
@@ -30,7 +30,7 @@ class AppResources {
             title: Row (
               children: [
                 Container(
-                  child: Icon(MaterialCommunityIcons.alert_circle,
+                  child: Icon(Ionicons.alert_circle,
                       size: 40,
                     color: Colors.red,
                   ),
@@ -89,7 +89,7 @@ class AppResources {
 
     final picker = ImagePicker();
 
-      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         return File(pickedFile.path);
         }
