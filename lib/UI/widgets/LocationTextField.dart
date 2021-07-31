@@ -108,9 +108,9 @@ class _LocationTextFieldState extends State<LocationTextField> {
 
                 arg.ArgonButton(
                   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
-                  height: MediaQuery.of(context).size.width * 0.05,
+                  height: MediaQuery.of(context).size.width * 0.1,
                   roundLoadingShape: true,
-                  width: MediaQuery.of(context).size.width * 0.05,
+                  width: MediaQuery.of(context).size.width * 0.1,
                   borderRadius: 5.0,
                   color: Colors.transparent,
                   elevation: 0,

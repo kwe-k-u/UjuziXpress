@@ -42,7 +42,7 @@ dependencies:
   firebase_storage: ^10.0.1
   flutter_datetime_picker: ^1.5.1
   flutter_polyline_points: ^1.0.0
-  geolocator: ^7.3.1
+  geolocator: ^7.4.0
 #  geocoder: ^0.2.1
   geocoding: ^2.0.0
   google_maps_flutter: ^2.0.6
