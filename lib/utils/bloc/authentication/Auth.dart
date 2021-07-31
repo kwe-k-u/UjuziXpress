@@ -23,7 +23,7 @@ Future<User> signInWithGoogle() async {
   User user = credential.user!;
 
   assert(!user.isAnonymous);
-  assert (await user.getIdToken() != null);
+  // assert (await user.getIdToken() != null);
 
   final User currentUser = firebaseAuth.currentUser!;
   assert(currentUser.uid == user.uid);
@@ -50,7 +50,7 @@ Future<User?> signUpWithEmail(String email, String password, String username, St
     User user = credential.user!;
 
     assert(!user.isAnonymous);
-    assert (await user.getIdToken() != null);
+    // assert (await user.getIdToken() != null);
 
     final User currentUser = firebaseAuth.currentUser!;
     //update display name
@@ -114,7 +114,7 @@ Future<User?> logInWithEmail(String email, String password) async{
     User user = credential.user!;
 
     assert(!user.isAnonymous);
-    assert (await user.getIdToken() != null);
+    // assert (await user.getIdToken() != null);
 
     final User currentUser = firebaseAuth.currentUser!;
     assert(currentUser.uid == user.uid);

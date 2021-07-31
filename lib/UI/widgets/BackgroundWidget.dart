@@ -16,7 +16,8 @@ class BackgroundWidget extends StatelessWidget {
           scale: 0.001,
           fit: BoxFit.fill,
           width: size.width,
-          height: size.height,),
+          height: size.height,
+        ),
 
         child!
       ]

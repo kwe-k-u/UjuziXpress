@@ -45,13 +45,9 @@ class SignUpBloc {
         EmailSignUpEvent _signupEvent = signupEvent as EmailSignUpEvent;
 
         if (
-            _signupEvent.email == null ||
             _signupEvent.email.isEmpty ||
-            _signupEvent.username == null ||
             _signupEvent.username.isEmpty ||
-            _signupEvent.password == null ||
             _signupEvent.password.isEmpty ||
-            _signupEvent.phoneNumber == null ||
             _signupEvent.phoneNumber.isEmpty
         ) {
           _signUpStateSink.add(SignUpError('One or more fields are empty'));
@@ -76,11 +72,11 @@ class SignUpBloc {
         case GoogleSignUpEvent:
 
           signInWithGoogle().then((value){
-            if (value != null) {
+            try {
               UjuziUser user = new UjuziUser(user: value);
               _signUpStateSink.add(SignUpAuthenticated(user));
 
-            } else{
+            } catch (e){
               _signUpStateSink.add(SignUpError('Error authenticating with Google. Retry in a couple minutes'));
             }
           });

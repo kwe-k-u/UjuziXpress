@@ -50,7 +50,7 @@ class _CustomIconButtonState extends State<CustomIconButton> with SingleTickerPr
               data: ThemeData(accentColor: Colors.grey),
               child: Transform.scale(
                 scale: 0.5,
-                child: CustomLoadingIndicator(),
+                child:  CustomLoadingIndicator(),
               ),
             );
           }

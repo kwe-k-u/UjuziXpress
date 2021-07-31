@@ -43,13 +43,12 @@ class LoginBloc {
         //signing in with password and email
         EmailLoginEvent loginEvent = _loginEvent as EmailLoginEvent;
 
-        if ((loginEvent.username == null || loginEvent.username.isEmpty) &&
-            (loginEvent.password == null || loginEvent.password.isEmpty)) {
+        if (loginEvent.username.isEmpty && loginEvent.password.isEmpty) {
           _loginStateSink.add(LoginError('Username and Password fields are empty'));
-        } else if (loginEvent.username == null || loginEvent.username.isEmpty) {
+        } else if ( loginEvent.username.isEmpty) {
           _loginStateSink.add(LoginError('Email field is empty'));
 
-        } else if (loginEvent.password == null || loginEvent.password.isEmpty) {
+        } else if ( loginEvent.password.isEmpty) {
           _loginStateSink.add(LoginError('Password field is empty'));
 
         } else if (loginEvent.username.isNotEmpty &&
@@ -71,11 +70,11 @@ class LoginBloc {
 
         case GoogleLoginEvent:
           signInWithGoogle().then((value){
-            if (value != null) {
+            try{
               UjuziUser user = new UjuziUser(user: value);
               _loginStateSink.add(LoginAuthenticated(user));
 
-            } else{
+            } catch(e){
               _loginStateSink.add(LoginError('Error authenticating with Google. Retry in a couple minutes'));
             }
           });

@@ -314,7 +314,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           .now()
                           .year + 20), 12, 1),
                       onConfirm: (date) {
-                        if (date != null)
                           setState(() {
                             expiryDate = date;
                           });

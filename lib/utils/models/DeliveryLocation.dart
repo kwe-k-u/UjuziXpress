@@ -41,7 +41,7 @@ class DeliveryLocation{
 
   bool equals(Object obj){
     if (this == obj) return true; //if both references point to the same memory location
-    if (obj == null || this.runtimeType != obj.runtimeType) return false;
+    if (this.runtimeType != obj.runtimeType) return false;
 
     DeliveryLocation loc =  obj as DeliveryLocation;
     return this.location == loc.location
