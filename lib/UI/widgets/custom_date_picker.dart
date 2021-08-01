@@ -1,12 +1,17 @@
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomDatePicker extends StatefulWidget {
-  final DateTime date;
-  
+  DateTime date;
+  Function (DateTime) onChanged;
+
   CustomDatePicker({
     Key? key,
-    required this.date})
+    required this.date,
+    required this.onChanged
+  })
       : super(key: key);
 
   @override
@@ -19,102 +24,35 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   
   @override
   Widget build(BuildContext context) {
-  Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
 
-
-    final List<dynamic> months = [
-      AppLocalizations.of(context)!.jan,
-      AppLocalizations.of(context)!.feb,
-      AppLocalizations.of(context)!.mar,
-      AppLocalizations.of(context)!.apr,
-      AppLocalizations.of(context)!.may,
-      AppLocalizations.of(context)!.jun,
-      AppLocalizations.of(context)!.jul,
-      AppLocalizations.of(context)!.aug,
-      AppLocalizations.of(context)!.sept,
-      AppLocalizations.of(context)!.oct,
-      AppLocalizations.of(context)!.nov,
-      AppLocalizations.of(context)!.dec
-    ];
-    
-    
-    
-    
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-
-
-        Container(
-          margin: EdgeInsets.only(left: 12.0),
-          decoration: BoxDecoration(
-            border: Border.all(width: 2.40, color: Colors.black),
-              color: Colors.grey.withOpacity(0.14),
-            borderRadius: BorderRadius.circular(20.0)
+    return Container(
+      padding: const EdgeInsets.only(left: 8.0),
+      width: size.width * 0.7,
+      child: DateTimeFormField(
+        initialValue: widget.date,
+        decoration:  InputDecoration(
+          border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black, width: 1.5)
           ),
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Text(AppLocalizations.of(context)!.day),
-              ),
-              Text(widget.date.day.toString(), style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.subtitle1!.fontSize
-              ),),
-            ],
-          ),
-          width: size.width * 0.2,
+
+          alignLabelWithHint: true,
         ),
-
-
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(width: 2.40, color: Colors.black),
-              color: Colors.grey.withOpacity(0.14),
-            borderRadius: BorderRadius.circular(20.0)
-          ),
-          padding: EdgeInsets.all( 8.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Text(AppLocalizations.of(context)!.month),
-              ),
-              Text(months.elementAt(widget.date.month-1), style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.subtitle1!.fontSize
-              ),),
-            ],
-          ),
-          width: size.width * 0.3,
-        ),
-
-
-        Container(
-          margin: EdgeInsets.only(right: 12.0),
-          decoration: BoxDecoration(
-            border: Border.all(width: 2.40, color: Colors.black),
-              color: Colors.grey.withOpacity(0.14),
-            borderRadius: BorderRadius.circular(20.0)
-          ),
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Text(AppLocalizations.of(context)!.year),
-              ),
-              Text(widget.date.year.toString(), style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.subtitle1!.fontSize
-              ),),
-            ],
-          ),
-          width: size.width * 0.2,
-        ),
-      ],
+        mode: DateTimeFieldPickerMode.date,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        onDateSelected: (DateTime value) {
+          widget.onChanged(value);
+        },
+      ),
     );
+
+    
   }
 }
+
+
+
+
+
+
+

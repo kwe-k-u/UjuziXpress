@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             return SplashPage();
           }
 
-          return Center(child: CircularProgressIndicator(),);
+          return const Center(child: CircularProgressIndicator(),);
         },
       ),
     );

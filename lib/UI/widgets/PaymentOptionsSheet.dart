@@ -37,19 +37,22 @@ class _PaymentOptionsSheetState extends State<PaymentOptionsSheet> {
 
     return Container(
       height: size.height * 0.4,
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
 
           //date of delivery
-          ListTile(//todo for changing request start date
+          ListTile(
             enabled: false,
-            title: Text("When should delivery begin?"),
+            title: Text(AppLocalizations.of(context)!.when_delivery_begin),
             subtitle: Padding(
               padding: const EdgeInsets.all(8.0),
               child: CustomDatePicker(
-                date: DateTime.now(),
+                date: widget.request.startDate ?? DateTime.now(),
+                onChanged: (value){
+                  widget.request.setStartDate(value);
+                },
               ),
             ),
           ),
@@ -58,7 +61,7 @@ class _PaymentOptionsSheetState extends State<PaymentOptionsSheet> {
           //payment method
           ListTile(
             enabled: false,
-            title: Text("How do you want to pay?"),
+            title: Text(AppLocalizations.of(context)!.how_do_you_pay),
             subtitle: Row(
               children: [
                 Spacer(
@@ -77,7 +80,7 @@ class _PaymentOptionsSheetState extends State<PaymentOptionsSheet> {
                             )
                         )
                     ),
-                    child: Text("With Card"), //todo localisations
+                    child: Text(AppLocalizations.of(context)!.with_card),
                     onPressed: (){
                       updateSelection(0);
                     }),
@@ -97,7 +100,7 @@ class _PaymentOptionsSheetState extends State<PaymentOptionsSheet> {
                             )
                         )
                     ),
-                    child: Text("On Delivery"), //todo localisations
+                    child: Text(AppLocalizations.of(context)!.on_delivery),
                     onPressed: (){
                     updateSelection(1);
 
@@ -117,7 +120,7 @@ class _PaymentOptionsSheetState extends State<PaymentOptionsSheet> {
                         )
                     ),
 
-                    child: Text("On Pickup"), //todo localisations
+                    child: Text(AppLocalizations.of(context)!.on_pickup),
                     onPressed: (){
                       updateSelection(2);
                     }),
@@ -133,7 +136,7 @@ class _PaymentOptionsSheetState extends State<PaymentOptionsSheet> {
           CustomRoundedButton(
             elevation: 0,
             widthFactor: 0.3,
-            text: "Complete Payment",
+            text: AppLocalizations.of(context)!.complete_delivery,
             textColor: Colors.white,
             onPressed: (){
               {

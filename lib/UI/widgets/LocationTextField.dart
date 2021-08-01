@@ -107,14 +107,14 @@ class _LocationTextFieldState extends State<LocationTextField> {
                 ),
 
                 arg.ArgonButton(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
                   height: MediaQuery.of(context).size.width * 0.1,
                   roundLoadingShape: true,
                   width: MediaQuery.of(context).size.width * 0.1,
                   borderRadius: 5.0,
                   color: Colors.transparent,
                   elevation: 0,
-                  child: Icon(Icons.my_location),
+                  child: const Icon(Icons.my_location),
 
                   onTap: (startLoading, stopLoading, btnState) {
                     startLoading();
@@ -147,7 +147,7 @@ class _LocationTextFieldState extends State<LocationTextField> {
                             });
 
                           },
-                          subtitle: Divider(color: Colors.white, thickness: 2.0,),
+                          subtitle: const Divider(color: Colors.white, thickness: 2.0,),
                           title: Text(places[index].name!),
                           tileColor: Colors.grey.shade300,
                         );

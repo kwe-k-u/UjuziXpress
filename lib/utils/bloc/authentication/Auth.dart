@@ -85,7 +85,9 @@ Future<void> updateUserPhoneNumber(String phoneNumber, User currentUser, String 
         await currentUser.updatePhoneNumber(credential);
         // either this occurs or the user needs to manually enter the SMS code
       },
-      verificationFailed: (exception){//todo handle verification exception
+      verificationFailed: (exception){
+
+        //todo handle verification exception
          },
       codeSent: (verificationId, [forceResendingToken]) async {
         // get the SMS code from the user somehow (probably using a text field)

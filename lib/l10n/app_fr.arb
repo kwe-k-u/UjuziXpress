@@ -1,16 +1,16 @@
 {
-  "signin": "se connecter",
-  "signinwith" : "inscrivez-vous avec",
+  "signin": "Se connecter",
+  "signinwith" : "Inscrivez-vous avec",
   "username": "Nom d'utilisateur",
   "email": "Email",
-  "password": "le mot de passe",
+  "password": "Le mot de passe",
   "phoneNumber": "Numéro de téléphone",
   "@signin": {
     "description": "The conventional newborn programmer greeting"
   },
 
 
-  "login": "connexion",
+  "login": "Connexion",
   "connect_with" : "Se connecter avec",
   "sign_up" : "Inscrivez-vous",
   "dont_have_an_account_yet" : "Vous n'avez pas encore de compte?",
@@ -32,7 +32,7 @@
   "payment_on_delivery": "Paiement à la livraison",
   "payment_on_pickup": "Paiement à la prise en charge",
   "payment_via_credit_card": "Paiement par carte de crédit",
-  "request_delivery": "demander la livraison",
+  "request_delivery": "Demander la livraison",
 
 
 
@@ -43,37 +43,37 @@
   "may": "May",
   "jun": "Jun",
   "jul": "Jul",
-  "aug": "août",
+  "aug": "Août",
   "sept": "Sept",
   "oct": "Oct",
   "nov": "Nov",
   "dec": "Dec",
 
   "default_pickup_person_location": "Emplacement par défaut de la personne de ramassage",
-  "update_profile": "mettre à jour le profil",
+  "update_profile": "Mettre à jour le profil",
   "cardholder_name": "Nom du titulaire de la carte",
-  "day": "jour",
+  "day": "Jour",
   "credit_card": "Carte de crédit",
   "profile": "Profil",
 
-  "select": "sélectionner",
-  "complete": "complété",
-  "in_progress": "en cours",
-  "pending": "en attente",
-  "cancelled": "annulé",
-  "canceled": "annulé",
-  "error": "erreur",
+  "select": "Sélectionner",
+  "complete": "Complété",
+  "in_progress": "En cours",
+  "pending": "En attente",
+  "cancelled": "Annulé",
+  "canceled": "Annulé",
+  "error": "Erreur",
 
-  "order_no": "ordre No",
-  "order": "ordre",
-  "order_date": "date de la ordre",
+  "order_no": "Ordre No",
+  "order": "Ordre",
+  "order_date": "Date de la ordre",
   "status": "Statut",
   "date_completed": "Date de fin",
-  "from": "de",
+  "from": "De",
   "to": "à",
   "dropoff_person_details": "Détails de la personne à déposer",
-  "number": "numero",
-  "location": "emplacement",
+  "number": "Numero",
+  "location": "Emplacement",
 
   "pickup_location": "Lieu de prise en charge",
   "dropoff_location": "Lieu de dépose",
@@ -87,21 +87,28 @@
   "terms_and_conditions": "Termes et conditions",
   "sign_out": "Déconnexion",
   "view_order": "Afficher la commande",
-  "create_order": "créer une commande",
+  "create_order": "Créer une commande",
 
   "in_transit": "En transit",
   "month": "Mois",
-  "year": "an",
+  "year": "An",
   "card_number": "Numéro de carte",
   "ccv": "CCV",
   "update_card_details": "Mettre à jour les détails de la carte",
 
 
   "required_field": "C'est un champ obligatoire",
-  "valid_email": "entrez une adresse e-mail valide",
+  "valid_email": "Entrez une adresse e-mail valide",
   "valid_phone_number": "Entrez un numéro de téléphone valide",
   "requirements_not_met": "Conditions d'enregistrement non satisfaites",
   "name_longer_than_two_characters": "Le nom doit comporter plus de 2 caractères",
-  "name_longer_than_eight_characters": "Le mot de passe doit contenir plus de 8 caractères"
+  "name_longer_than_eight_characters": "Le mot de passe doit contenir plus de 8 caractères",
+  "expiry_date": "Date d'expiration",
+  "when_delivery_begin": "Quand la livraison doit-elle commencer ?",
+  "how_do_you_pay" : "Comment voulez-vous payer?",
+  "with_card": "Avec Carte",
+  "on_delivery": "À la livraison",
+  "on_pickup": "Au ramassage",
+  "complete_payment": "Paiement complet"
 
 }

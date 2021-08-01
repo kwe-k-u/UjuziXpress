@@ -58,7 +58,7 @@ class _CustomIconButtonState extends State<CustomIconButton> with SingleTickerPr
           return Icon(widget.icon, size: 32.0, color: Colors.white,);
         },
       ),
-      shape: CircleBorder(),
+      shape: const CircleBorder(),
     );
   }
 

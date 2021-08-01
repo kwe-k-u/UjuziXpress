@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomRoundedButton.dart';
 import 'package:ujuzi_xpress/UI/widgets/CustomTextField.dart';
@@ -298,37 +298,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: size.width,
                 padding: EdgeInsets.only(left: 30.0),
                 margin: EdgeInsets.only(top: 30, bottom: 4.0),
-                child: Text(
-                  "Expiry date", style: TextStyle(color: Colors.grey),)
+                child: Text(AppLocalizations.of(context)!.expiry_date,
+                  style: TextStyle(color: Colors.grey),)
             ),
 
-            GestureDetector(
-                onTap: () {
-                  DatePicker.showDatePicker(
-                      context,
-                      showTitleActions: true,
-                      minTime: DateTime((DateTime
-                          .now()
-                          .year - 20), 1, 1),
-                      maxTime: DateTime((DateTime
-                          .now()
-                          .year + 20), 12, 1),
-                      onConfirm: (date) {
-                          setState(() {
-                            expiryDate = date;
-                          });
-                      },
-                      currentTime: expiryDate,
-                      locale: Localizations.localeOf(context)
-                  );
-                },
-                child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 4.0, bottom: 8.0, left: 24, right: 24),
-                    child: CustomDatePicker(date: expiryDate,)
-                )
-            ),
-
+            CustomDatePicker(date: expiryDate,),
 
             CustomTextField(
               label: AppLocalizations

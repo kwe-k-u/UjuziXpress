@@ -1,6 +1,6 @@
 {
-  "signin": "sign in",
-  "signinwith" : "sign up with",
+  "signin": "Sign in",
+  "signinwith" : "Sign up with",
   "username": "Username",
   "email": "Email",
   "password": "Password",
@@ -32,7 +32,7 @@
   "payment_on_delivery": "Payment on delivery",
   "payment_on_pickup": "Payment on pick up",
   "payment_via_credit_card": "Payment via Credit Card",
-  "request_delivery": "request delivery",
+  "request_delivery": "Request delivery",
 
 
   "jan": "Jan",
@@ -49,30 +49,30 @@
   "dec": "Dec",
 
   "default_pickup_person_location": "Default pick up person location",
-  "update_profile": "update profile",
+  "update_profile": "Update profile",
   "cardholder_name": "Card holder Name",
-  "day": "day",
+  "day": "Day",
   "credit_card": "Credit card",
   "profile": "Profile",
 
   "select": "Select",
-  "complete": "complete",
-  "in_progress": "in progress",
-  "pending": "pending",
-  "cancelled": "cancelled",
-  "canceled": "cancelled",
-  "error": "error",
+  "complete": "Complete",
+  "in_progress": "In progress",
+  "pending": "Pending",
+  "cancelled": "Cancelled",
+  "canceled": "Canceled",
+  "error": "Error",
 
-  "order_no": "order No",
-  "order": "order ",
-  "order_date": "order date",
+  "order_no": "Order No",
+  "order": "Order ",
+  "order_date": "Order date",
   "status": "Status",
   "date_completed": "Date completed",
-  "from": "from",
-  "to": "to",
+  "from": "From",
+  "to": "To",
   "dropoff_person_details": "Drop off person details",
-  "number": "number",
-  "location": "location",
+  "number": "Number",
+  "location": "Location",
 
   "pickup_location": "Pick up location",
   "dropoff_location": "Drop off location",
@@ -86,7 +86,7 @@
   "terms_and_conditions": "Terms and conditions",
   "sign_out": "Sign out",
   "view_order": "View order",
-  "create_order": "create order",
+  "create_order": "Create order",
 
   "in_transit": "In transit",
   "month": "Month",
@@ -100,6 +100,14 @@
   "valid_phone_number": "Enter a valid phone number",
   "requirements_not_met" : "Registration requirements not met",
   "name_longer_than_two_characters" : "Name has to be longer than 2 characters",
-  "name_longer_than_eight_characters" : "Password must have more than 8 characters"
+  "name_longer_than_eight_characters" : "Password must have more than 8 characters",
+  "expiry_date": "Expiry date",
+
+  "when_delivery_begin" : "When should delivery begin ?",
+  "how_do_you_pay" : "How do you want to pay?",
+  "with_card" : "With Card",
+  "on_delivery" : "On Delivery",
+  "on_pickup" : "On Pickup",
+  "complete_payment" : "Complete Payment"
 
 }

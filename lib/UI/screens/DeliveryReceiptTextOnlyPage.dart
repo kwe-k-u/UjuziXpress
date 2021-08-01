@@ -62,14 +62,14 @@ class DeliveryReceiptWithTextOnlyPage extends StatelessWidget {
         elevation: 0.0,
         centerTitle: true,
         title: Text(AppLocalizations.of(context)!.order.toUpperCase(),
-          style: TextStyle(
+          style: const TextStyle(
               color: Colors.black
           ),
         ),
         backgroundColor: Colors.transparent,
         leading: IconButton(
           color: Colors.deepPurple,
-          icon: Icon(Icons.arrow_back_ios_outlined),
+          icon: const Icon(Icons.arrow_back_ios_outlined),
           onPressed: (){
             Navigator.pop(context);
           },

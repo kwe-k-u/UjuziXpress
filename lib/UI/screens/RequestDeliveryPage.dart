@@ -328,34 +328,34 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                   ],
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.only(left: 36.0, bottom: 8.0, top: 8.0),
-
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("${AppLocalizations.of(context)!.payment_method}: "),
-
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
-                        child: DropdownButton(
-                          onChanged: (dynamic value){
-                            setState(() {
-                              paymentMethod = value;
-                            });
-                          },
-                          hint: Text(AppLocalizations.of(context)!.payment_method),
-                          value: paymentMethod,
-                          items: [
-                            DropdownMenuItem(value: PaymentMethod.paymentOnDelivery, child: Text(AppLocalizations.of(context)!.payment_on_delivery)),
-                            DropdownMenuItem(value: PaymentMethod.paymentOnPickup, child: Text(AppLocalizations.of(context)!.payment_on_pickup)),
-                            DropdownMenuItem(value: PaymentMethod.creditCard, child: Text(AppLocalizations.of(context)!.payment_via_credit_card)),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 36.0, bottom: 8.0, top: 8.0),
+                //
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     children: [
+                //       Text("${AppLocalizations.of(context)!.payment_method}: "),
+                //
+                //       Padding(
+                //         padding: const EdgeInsets.only(left: 12.0),
+                //         child: DropdownButton(
+                //           onChanged: (dynamic value){
+                //             setState(() {
+                //               paymentMethod = value;
+                //             });
+                //           },
+                //           hint: Text(AppLocalizations.of(context)!.payment_method),
+                //           value: paymentMethod,
+                //           items: [
+                //             DropdownMenuItem(value: PaymentMethod.paymentOnDelivery, child: Text(AppLocalizations.of(context)!.payment_on_delivery)),
+                //             DropdownMenuItem(value: PaymentMethod.paymentOnPickup, child: Text(AppLocalizations.of(context)!.payment_on_pickup)),
+                //             DropdownMenuItem(value: PaymentMethod.creditCard, child: Text(AppLocalizations.of(context)!.payment_via_credit_card)),
+                //           ],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
 
                 CustomRoundedButton(
                   text: AppLocalizations.of(context)!.request_delivery.toUpperCase(),
@@ -384,36 +384,13 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
                     showModalBottomSheet(
                       enableDrag: false,
                       context: context,
-                      builder: (context) => PaymentOptionsSheet(request: request,)
+                      builder: (context) => PaymentOptionsSheet(
+                        request: request,)
                     );
 
 
 
 
-                    // DeliveryRequest request = DeliveryRequest(
-                    //   requestingUser: requestingUser,
-                    //   dropOffLocation: dropOffLocationController.location,
-                    //   dropOffPersonName: dropOffPersonName.text,
-                    //   dropOffPersonNumber: dropOffPersonNumber.text,
-                    //   pickupPersonName: pickupPersonName.text,
-                    //   pickupPersonNumber: pickupPersonNumber.text,
-                    //   pickupLocation: pickupLocationController.location,
-                    //   requestDate: requestDate,
-                    //   status: DeliveryStatus.pending,
-                    //   paymentMethod: paymentMethod,
-                    //   packageType: packageType,
-                    //   startDate: startDate,
-                    //   completionDate: completionDate,
-                    //   deliveryID: deliveryID,
-                    //   note: notes.text
-                    // );
-                    //
-                    //
-                    // if (widget.request != null)//old delivery
-                    //   request.setReference(widget.request.reference);
-                    //
-                    //   requestDelivery(request).then((value) =>
-                    //       Navigator.pop(context));
                   },
                 )
 
@@ -427,5 +404,3 @@ class _RequestDeliveryPageState extends State<RequestDeliveryPage> {
 }
 
 
-
-//todo add custom text editing controller for locations

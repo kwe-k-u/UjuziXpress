@@ -26,7 +26,7 @@ class _ProfileImageState extends State<ProfileImage> {
 
             widget.url!,
             errorBuilder: (context,snapshot, stacktrace){
-              return CircleAvatar(
+              return const CircleAvatar(
                 minRadius: 20,
                 maxRadius: 40,
                 child: Icon(Icons.error, size: 40.0,),
@@ -34,7 +34,7 @@ class _ProfileImageState extends State<ProfileImage> {
             },
           ),
           constraints: BoxConstraints(minHeight:100, maxHeight: 150, minWidth: 60, maxWidth: 90),
-        ) : CircleAvatar(
+        ) : const CircleAvatar(
           minRadius: 20,
           maxRadius: 40,
           child: Icon(Icons.person, size: 40.0,),),
